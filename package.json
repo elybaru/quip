@@ -1,0 +1,15 @@
+{
+    "name": "quip",
+    "private": true,
+    "dependencies": {
+        "@hotwired/turbo-rails": "^7.1.3",
+        "esbuild": "^0.14.47",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "react-router-dom": "^6.3.0"
+    },
+    "scripts": {
+        "build": "esbuild --bundle app/javascript/application.js --outfile=app/assets/javascripts/application.js",
+        "watch": "esbuild --watch --bundle app/javascript/application.js --outfile=app/assets/javascripts/application.js"
+    }
+}
