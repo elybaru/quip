@@ -24916,23 +24916,6 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       });
     }, null);
   }
-  function Navigate(_ref2) {
-    let {
-      to,
-      replace,
-      state
-    } = _ref2;
-    !useInRouterContext() ? true ? invariant(false, "<Navigate> may be used only in the context of a <Router> component.") : invariant(false) : void 0;
-    true ? warning2(!(0, import_react.useContext)(NavigationContext).static, "<Navigate> must not be used on the initial render in a <StaticRouter>. This is a no-op, but you should modify your code so the <Navigate> is only ever rendered in response to some user interaction or state change.") : void 0;
-    let navigate = useNavigate2();
-    (0, import_react.useEffect)(() => {
-      navigate(to, {
-        replace,
-        state
-      });
-    });
-    return null;
-  }
   function Route(_props) {
     true ? invariant(false, "A <Route> is only ever to be used as the child of <Routes> element, never rendered directly. Please wrap your <Route> in a <Routes>.") : invariant(false);
   }
@@ -25217,7 +25200,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   var App = () => {
     return /* @__PURE__ */ import_react6.default.createElement("div", {
       className: "wrapper"
-    }, /* @__PURE__ */ import_react6.default.createElement("h1", null, "Quip"));
+    }, /* @__PURE__ */ import_react6.default.createElement("h1", null, "I am in the App component"));
   };
   var app_default = App;
 
@@ -25227,16 +25210,14 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   };
   import_react_dom.default.render(/* @__PURE__ */ import_react8.default.createElement(BrowserRouter, null, /* @__PURE__ */ import_react8.default.createElement(Routes, null, /* @__PURE__ */ import_react8.default.createElement(Route, {
     path: "/login",
-    element: /* @__PURE__ */ import_react8.default.createElement("h1", null, "This is the login route")
+    element: /* @__PURE__ */ import_react8.default.createElement("h1", null, "This is the Login Route!")
   }), /* @__PURE__ */ import_react8.default.createElement(Route, {
     path: "/signup",
     element: /* @__PURE__ */ import_react8.default.createElement("h1", null, "This is the Signup")
   }), /* @__PURE__ */ import_react8.default.createElement(Route, {
-    path: "*",
-    element: /* @__PURE__ */ import_react8.default.createElement(Navigate, {
-      to: "/"
-    })
-  })), /* @__PURE__ */ import_react8.default.createElement(Index, null)), document.getElementById("index"));
+    path: "/",
+    element: /* @__PURE__ */ import_react8.default.createElement(Index, null)
+  }))), document.getElementById("index"));
 })();
 /*
 object-assign

@@ -14,13 +14,14 @@ const Index = () => {
 ReactDOM.render(
     <BrowserRouter>
         <Routes>
-                <Route path='/login' element={<h1>This is the login route</h1>}>
-                </Route>
-                <Route path='/signup' element={<h1>This is the Signup</h1>}>
-                </Route>
-                {/* <Route path="*" element={<Navigate to="/" />} /> */}
-            </Routes>
-        <Index />
+            <Route path='/login' element={<h1>This is the Login Route!</h1>}>
+            </Route>
+            <Route path='/signup' element={<h1>This is the Signup</h1>}>
+            </Route>
+            <Route path='/' element={<Index />}>
+            </Route>
+            {/* <Route path="*" element={<Navigate to="/" />} /> */}
+        </Routes>
     </BrowserRouter>,
     document.getElementById('index')
 )

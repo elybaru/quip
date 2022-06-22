@@ -41,7 +41,7 @@ const App = () => {
 
     return (
         <div className="wrapper">
-            <h1>Quip</h1>
+            <h1>I am in the App component</h1>
             {/* <Routes>
                 <Route path='/' element={<Home setUser={setUser} />}>
                 </Route>
