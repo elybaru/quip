@@ -1,5 +1,8 @@
-class SessionsController < ApplicationController
+class Api::SessionsController < ApplicationController
     skip_before_action :authorize, only: [:create]
+
+    def show
+    end
 
     def create
         user = User.find_by(username: params[:username])

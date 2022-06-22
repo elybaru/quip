@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import App from "./app"
 
 const Index = () => {
@@ -13,6 +13,13 @@ const Index = () => {
 
 ReactDOM.render(
     <BrowserRouter>
+        <Routes>
+                <Route path='/login' element={<h1>This is the login route</h1>}>
+                </Route>
+                <Route path='/signup' element={<h1>This is the Signup</h1>}>
+                </Route>
+                {/* <Route path="*" element={<Navigate to="/" />} /> */}
+            </Routes>
         <Index />
     </BrowserRouter>,
     document.getElementById('index')
