@@ -1604,7 +1604,7 @@
             }
             return dispatcher.useContext(Context, unstable_observedBits);
           }
-          function useState5(initialState) {
+          function useState6(initialState) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState);
           }
@@ -2192,7 +2192,7 @@
           exports.useMemo = useMemo3;
           exports.useReducer = useReducer;
           exports.useRef = useRef3;
-          exports.useState = useState5;
+          exports.useState = useState6;
           exports.version = ReactVersion;
         })();
       }
@@ -3000,11 +3000,11 @@
       if (true) {
         (function() {
           "use strict";
-          var React6 = require_react();
+          var React7 = require_react();
           var _assign = require_object_assign();
           var Scheduler = require_scheduler();
           var tracing = require_tracing();
-          var ReactSharedInternals = React6.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React7.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           function warn(format) {
             {
               for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -3036,7 +3036,7 @@
               Function.prototype.apply.call(console[level], console, argsWithFormat);
             }
           }
-          if (!React6) {
+          if (!React7) {
             {
               throw Error("ReactDOM was loaded before React. Make sure you load the React package before loading ReactDOM.");
             }
@@ -4252,7 +4252,7 @@
           var didWarnInvalidChild = false;
           function flattenChildren(children) {
             var content = "";
-            React6.Children.forEach(children, function(child) {
+            React7.Children.forEach(children, function(child) {
               if (child == null) {
                 return;
               }
@@ -4263,7 +4263,7 @@
           function validateProps(element, props) {
             {
               if (typeof props.children === "object" && props.children !== null) {
-                React6.Children.forEach(props.children, function(child) {
+                React7.Children.forEach(props.children, function(child) {
                   if (child == null) {
                     return;
                   }
@@ -11456,7 +11456,7 @@
           }
           var fakeInternalInstance = {};
           var isArray = Array.isArray;
-          var emptyRefsObject = new React6.Component().refs;
+          var emptyRefsObject = new React7.Component().refs;
           var didWarnAboutStateAssignmentForComponent;
           var didWarnAboutUninitializedState;
           var didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate;
@@ -24236,7 +24236,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   addEventListener("turbo:submit-start", overrideMethodWithFormmethod);
 
   // app/javascript/components/index.jsx
-  var import_react8 = __toESM(require_react());
+  var import_react9 = __toESM(require_react());
   var import_react_dom = __toESM(require_react_dom());
 
   // node_modules/react-router-dom/index.js
@@ -24813,7 +24813,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     !useInRouterContext() ? true ? invariant(false, "useLocation() may be used only in the context of a <Router> component.") : invariant(false) : void 0;
     return (0, import_react.useContext)(LocationContext).location;
   }
-  function useNavigate2() {
+  function useNavigate() {
     !useInRouterContext() ? true ? invariant(false, "useNavigate() may be used only in the context of a <Router> component.") : invariant(false) : void 0;
     let {
       basename,
@@ -24915,6 +24915,23 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         }
       });
     }, null);
+  }
+  function Navigate(_ref2) {
+    let {
+      to,
+      replace,
+      state
+    } = _ref2;
+    !useInRouterContext() ? true ? invariant(false, "<Navigate> may be used only in the context of a <Router> component.") : invariant(false) : void 0;
+    true ? warning2(!(0, import_react.useContext)(NavigationContext).static, "<Navigate> must not be used on the initial render in a <StaticRouter>. This is a no-op, but you should modify your code so the <Navigate> is only ever rendered in response to some user interaction or state change.") : void 0;
+    let navigate = useNavigate();
+    (0, import_react.useEffect)(() => {
+      navigate(to, {
+        replace,
+        state
+      });
+    });
+    return null;
   }
   function Route(_props) {
     true ? invariant(false, "A <Route> is only ever to be used as the child of <Routes> element, never rendered directly. Please wrap your <Route> in a <Routes>.") : invariant(false);
@@ -25168,7 +25185,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       replace: replaceProp,
       state
     } = _temp === void 0 ? {} : _temp;
-    let navigate = useNavigate2();
+    let navigate = useNavigate();
     let location2 = useLocation();
     let path = useResolvedPath(to);
     return (0, import_react2.useCallback)((event) => {
@@ -25184,40 +25201,158 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   }
 
   // app/javascript/components/app.jsx
-  var import_react6 = __toESM(require_react());
   var import_react7 = __toESM(require_react());
+  var import_react8 = __toESM(require_react());
 
   // app/javascript/components/signup.jsx
   var import_react3 = __toESM(require_react());
+  var Signup = ({ setUser }) => {
+    const defaultFormData = {
+      username: "",
+      password: ""
+    };
+    let navigate = useNavigate();
+    const [formData, setFormData] = (0, import_react3.useState)(defaultFormData);
+    const handleFormChange = (e) => {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      fetch("/api/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+      }).then((r) => r.json()).then((data) => {
+        setFormData(defaultFormData);
+        setUser(data);
+        navigate("/");
+      });
+    };
+    return /* @__PURE__ */ import_react3.default.createElement("div", {
+      className: "content-wrapper"
+    }, /* @__PURE__ */ import_react3.default.createElement("form", {
+      onSubmit: handleSubmit
+    }, /* @__PURE__ */ import_react3.default.createElement("div", null, /* @__PURE__ */ import_react3.default.createElement("h2", null, "Create an Account")), /* @__PURE__ */ import_react3.default.createElement("label", null, "Username", /* @__PURE__ */ import_react3.default.createElement("input", {
+      type: "text",
+      name: "username",
+      value: formData.username,
+      onChange: handleFormChange
+    })), /* @__PURE__ */ import_react3.default.createElement("label", null, "Password", /* @__PURE__ */ import_react3.default.createElement("input", {
+      type: "password",
+      name: "password",
+      value: formData.password,
+      onChange: handleFormChange
+    })), /* @__PURE__ */ import_react3.default.createElement("input", {
+      type: "submit",
+      value: "Submit"
+    })));
+  };
+  var signup_default = Signup;
 
   // app/javascript/components/login.jsx
   var import_react4 = __toESM(require_react());
+  var Login = ({ setUser }) => {
+    const defaultFormData = {
+      username: "",
+      password: ""
+    };
+    const [formData, setFormData] = (0, import_react4.useState)(defaultFormData);
+    const navigate = useNavigate();
+    const handleFormChange = (e) => {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+      }).then((r) => r.json()).then((data) => {
+        setFormData(defaultFormData);
+        if (data.id) {
+          setUser(data);
+          navigate(`/home`);
+        }
+      });
+    };
+    return /* @__PURE__ */ import_react4.default.createElement("div", {
+      className: "content-wrapper"
+    }, /* @__PURE__ */ import_react4.default.createElement("form", {
+      onSubmit: handleSubmit
+    }, /* @__PURE__ */ import_react4.default.createElement("div", null, /* @__PURE__ */ import_react4.default.createElement("h2", null, "Login")), /* @__PURE__ */ import_react4.default.createElement("label", null, "Username", /* @__PURE__ */ import_react4.default.createElement("input", {
+      type: "text",
+      name: "username",
+      value: formData.username,
+      onChange: handleFormChange
+    })), /* @__PURE__ */ import_react4.default.createElement("label", null, "Password", /* @__PURE__ */ import_react4.default.createElement("input", {
+      type: "password",
+      name: "password",
+      value: formData.password,
+      onChange: handleFormChange
+    })), /* @__PURE__ */ import_react4.default.createElement("input", {
+      type: "submit",
+      value: "Submit"
+    })));
+  };
+  var login_default = Login;
 
   // app/javascript/components/home.jsx
   var import_react5 = __toESM(require_react());
 
+  // app/javascript/components/header.jsx
+  var import_react6 = __toESM(require_react());
+  var Header = () => {
+    return /* @__PURE__ */ import_react6.default.createElement("div", null, "I am the header component.");
+  };
+  var header_default = Header;
+
   // app/javascript/components/app.jsx
   var App = () => {
-    return /* @__PURE__ */ import_react6.default.createElement("div", {
+    const [user, setUser] = (0, import_react8.useState)(null);
+    (0, import_react8.useEffect)(() => {
+      console.log("In useEffect");
+      fetch("/api/me").then((r) => {
+        if (r.ok) {
+          r.json().then((user2) => setUser(user2));
+        }
+      });
+    }, []);
+    if (!user)
+      return /* @__PURE__ */ import_react7.default.createElement("div", {
+        className: "wrapper"
+      }, /* @__PURE__ */ import_react7.default.createElement("div", {
+        className: "header"
+      }, "I am the app component.", /* @__PURE__ */ import_react7.default.createElement(header_default, null)), /* @__PURE__ */ import_react7.default.createElement(Routes, null, /* @__PURE__ */ import_react7.default.createElement(Route, {
+        path: "/login",
+        element: /* @__PURE__ */ import_react7.default.createElement(login_default, {
+          setUser
+        })
+      }), /* @__PURE__ */ import_react7.default.createElement(Route, {
+        path: "/signup",
+        element: /* @__PURE__ */ import_react7.default.createElement(signup_default, {
+          setUser
+        })
+      }), /* @__PURE__ */ import_react7.default.createElement(Route, {
+        path: "*",
+        element: /* @__PURE__ */ import_react7.default.createElement(Navigate, {
+          to: "/"
+        })
+      })));
+    return /* @__PURE__ */ import_react7.default.createElement("div", {
       className: "wrapper"
-    }, /* @__PURE__ */ import_react6.default.createElement("h1", null, "I am in the App component"));
+    }, /* @__PURE__ */ import_react7.default.createElement("h1", null, "I am in the App component"));
   };
   var app_default = App;
 
   // app/javascript/components/index.jsx
   var Index = () => {
-    return /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement(app_default, null));
+    return /* @__PURE__ */ import_react9.default.createElement("div", null, /* @__PURE__ */ import_react9.default.createElement(app_default, null));
   };
-  import_react_dom.default.render(/* @__PURE__ */ import_react8.default.createElement(BrowserRouter, null, /* @__PURE__ */ import_react8.default.createElement(Routes, null, /* @__PURE__ */ import_react8.default.createElement(Route, {
-    path: "/login",
-    element: /* @__PURE__ */ import_react8.default.createElement("h1", null, "This is the Login Route!")
-  }), /* @__PURE__ */ import_react8.default.createElement(Route, {
-    path: "/signup",
-    element: /* @__PURE__ */ import_react8.default.createElement("h1", null, "This is the Signup")
-  }), /* @__PURE__ */ import_react8.default.createElement(Route, {
-    path: "/",
-    element: /* @__PURE__ */ import_react8.default.createElement(Index, null)
-  }))), document.getElementById("index"));
+  import_react_dom.default.render(/* @__PURE__ */ import_react9.default.createElement(BrowserRouter, null, /* @__PURE__ */ import_react9.default.createElement(Index, null)), document.getElementById("index"));
 })();
 /*
 object-assign

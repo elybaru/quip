@@ -22,12 +22,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_21_190552) do
   end
 
   create_table "memberships", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "conversation_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "messages", force: :cascade do |t|
     t.string "content"
+    t.integer "user_id"
+    t.integer "conversation_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -1,5 +1,21 @@
 # README
 
+
+<!-- <BrowserRouter>
+        {/* <Index /> */}
+        {/* <Routes> */}
+            {/* <Route path='/login' element={<Login />}>
+            </Route>
+            <Route path='/signup' element={<Signup />}>
+            </Route>
+            <Route path='/home' element={<Home />}>
+            </Route> */}
+            {/* <Route path='/' element={<Index />}>
+            </Route>  */}
+            {/* <Route path="*" element={<Navigate to="/" />} /> */}
+     {/* </Routes> */}
+    </BrowserRouter>, -->
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 

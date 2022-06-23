@@ -2,6 +2,7 @@ class Api::UsersController < ApplicationController
     before_action :set_user, only: [:update, :destroy]
 
     skip_before_action :authorize, only: [:create]
+    skip_before_action :verify_authenticity_token
 
     def create
         user = User.create(user_params)
@@ -35,6 +36,6 @@ class Api::UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.permit(:username, :password)
+      params.require(:user).permit(:username, :password)
     end
 end

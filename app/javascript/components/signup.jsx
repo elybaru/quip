@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+
 
 const Signup = ({ setUser }) => {
     const defaultFormData = {
@@ -15,7 +17,7 @@ const Signup = ({ setUser }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        fetch("/signup", {
+        fetch("/api/signup", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
