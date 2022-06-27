@@ -3000,11 +3000,11 @@
       if (true) {
         (function() {
           "use strict";
-          var React7 = require_react();
+          var React8 = require_react();
           var _assign = require_object_assign();
           var Scheduler = require_scheduler();
           var tracing = require_tracing();
-          var ReactSharedInternals = React7.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React8.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           function warn(format) {
             {
               for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -3036,7 +3036,7 @@
               Function.prototype.apply.call(console[level], console, argsWithFormat);
             }
           }
-          if (!React7) {
+          if (!React8) {
             {
               throw Error("ReactDOM was loaded before React. Make sure you load the React package before loading ReactDOM.");
             }
@@ -4252,7 +4252,7 @@
           var didWarnInvalidChild = false;
           function flattenChildren(children) {
             var content = "";
-            React7.Children.forEach(children, function(child) {
+            React8.Children.forEach(children, function(child) {
               if (child == null) {
                 return;
               }
@@ -4263,7 +4263,7 @@
           function validateProps(element, props) {
             {
               if (typeof props.children === "object" && props.children !== null) {
-                React7.Children.forEach(props.children, function(child) {
+                React8.Children.forEach(props.children, function(child) {
                   if (child == null) {
                     return;
                   }
@@ -11456,7 +11456,7 @@
           }
           var fakeInternalInstance = {};
           var isArray = Array.isArray;
-          var emptyRefsObject = new React7.Component().refs;
+          var emptyRefsObject = new React8.Component().refs;
           var didWarnAboutStateAssignmentForComponent;
           var didWarnAboutUninitializedState;
           var didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate;
@@ -24236,7 +24236,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   addEventListener("turbo:submit-start", overrideMethodWithFormmethod);
 
   // app/javascript/components/index.jsx
-  var import_react9 = __toESM(require_react());
+  var import_react10 = __toESM(require_react());
   var import_react_dom = __toESM(require_react_dom());
 
   // node_modules/react-router-dom/index.js
@@ -24916,23 +24916,6 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       });
     }, null);
   }
-  function Navigate(_ref2) {
-    let {
-      to,
-      replace,
-      state
-    } = _ref2;
-    !useInRouterContext() ? true ? invariant(false, "<Navigate> may be used only in the context of a <Router> component.") : invariant(false) : void 0;
-    true ? warning2(!(0, import_react.useContext)(NavigationContext).static, "<Navigate> must not be used on the initial render in a <StaticRouter>. This is a no-op, but you should modify your code so the <Navigate> is only ever rendered in response to some user interaction or state change.") : void 0;
-    let navigate = useNavigate();
-    (0, import_react.useEffect)(() => {
-      navigate(to, {
-        replace,
-        state
-      });
-    });
-    return null;
-  }
   function Route(_props) {
     true ? invariant(false, "A <Route> is only ever to be used as the child of <Routes> element, never rendered directly. Please wrap your <Route> in a <Routes>.") : invariant(false);
   }
@@ -25201,8 +25184,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   }
 
   // app/javascript/components/app.jsx
-  var import_react7 = __toESM(require_react());
   var import_react8 = __toESM(require_react());
+  var import_react9 = __toESM(require_react());
 
   // app/javascript/components/signup.jsx
   var import_react3 = __toESM(require_react());
@@ -25268,7 +25251,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       fetch("/api/login", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "Accept": "application/json"
         },
         body: JSON.stringify(formData)
       }).then((r) => r.json()).then((data) => {
@@ -25302,6 +25286,10 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
 
   // app/javascript/components/home.jsx
   var import_react5 = __toESM(require_react());
+  var Home = () => {
+    return /* @__PURE__ */ import_react5.default.createElement("div", null, "I am the home component.");
+  };
+  var home_default = Home;
 
   // app/javascript/components/header.jsx
   var import_react6 = __toESM(require_react());
@@ -25310,49 +25298,89 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   };
   var header_default = Header;
 
+  // app/javascript/components/navbar.jsx
+  var import_react7 = __toESM(require_react());
+  var Navbar = () => {
+    return /* @__PURE__ */ import_react7.default.createElement("div", null, "I am the Navbar");
+  };
+  var navbar_default = Navbar;
+
   // app/javascript/components/app.jsx
   var App = () => {
-    const [user, setUser] = (0, import_react8.useState)(null);
-    (0, import_react8.useEffect)(() => {
+    const [user, setUser] = (0, import_react9.useState)(null);
+    const [isLoggedin, setIsLoggedIn] = (0, import_react9.useState)(null);
+    let location2 = useLocation();
+    (0, import_react9.useEffect)(() => {
       console.log("In useEffect");
       fetch("/api/me").then((r) => {
         if (r.ok) {
-          r.json().then((user2) => setUser(user2));
+          r.json().then((u) => {
+            console.log(u);
+            setUser(u);
+          });
         }
       });
     }, []);
+    function handleLogoutClick() {
+      fetch("/api/logout", { method: "DELETE" }).then((r) => {
+        if (r.ok) {
+          setUser(null);
+        }
+      });
+    }
     if (!user)
-      return /* @__PURE__ */ import_react7.default.createElement("div", {
+      return /* @__PURE__ */ import_react8.default.createElement("div", {
         className: "wrapper"
-      }, /* @__PURE__ */ import_react7.default.createElement("div", {
+      }, /* @__PURE__ */ import_react8.default.createElement("div", {
         className: "header"
-      }, "I am the app component.", /* @__PURE__ */ import_react7.default.createElement(header_default, null)), /* @__PURE__ */ import_react7.default.createElement(Routes, null, /* @__PURE__ */ import_react7.default.createElement(Route, {
+      }, "I am the app component.", /* @__PURE__ */ import_react8.default.createElement(header_default, null), /* @__PURE__ */ import_react8.default.createElement("div", {
+        className: "item"
+      }, /* @__PURE__ */ import_react8.default.createElement("h1", {
+        className: "logo"
+      }, "Quip")), /* @__PURE__ */ import_react8.default.createElement("div", {
+        className: "item"
+      }, /* @__PURE__ */ import_react8.default.createElement("div", {
+        className: "navlinks"
+      }, /* @__PURE__ */ import_react8.default.createElement("button", null, /* @__PURE__ */ import_react8.default.createElement(Link, {
+        to: "/login"
+      }, "Login"))), /* @__PURE__ */ import_react8.default.createElement("div", {
+        className: "navlinks"
+      }, /* @__PURE__ */ import_react8.default.createElement("button", null, /* @__PURE__ */ import_react8.default.createElement(Link, {
+        to: "/signup"
+      }, "Signup"))))), /* @__PURE__ */ import_react8.default.createElement(Routes, null, /* @__PURE__ */ import_react8.default.createElement(Route, {
         path: "/login",
-        element: /* @__PURE__ */ import_react7.default.createElement(login_default, {
+        element: /* @__PURE__ */ import_react8.default.createElement(login_default, {
           setUser
         })
-      }), /* @__PURE__ */ import_react7.default.createElement(Route, {
+      }), /* @__PURE__ */ import_react8.default.createElement(Route, {
         path: "/signup",
-        element: /* @__PURE__ */ import_react7.default.createElement(signup_default, {
+        element: /* @__PURE__ */ import_react8.default.createElement(signup_default, {
           setUser
         })
-      }), /* @__PURE__ */ import_react7.default.createElement(Route, {
-        path: "*",
-        element: /* @__PURE__ */ import_react7.default.createElement(Navigate, {
-          to: "/"
+      }), /* @__PURE__ */ import_react8.default.createElement(Route, {
+        path: "/",
+        element: /* @__PURE__ */ import_react8.default.createElement(home_default, {
+          setUser
         })
       })));
-    return /* @__PURE__ */ import_react7.default.createElement("div", {
+    return /* @__PURE__ */ import_react8.default.createElement("div", {
       className: "wrapper"
-    }, /* @__PURE__ */ import_react7.default.createElement("h1", null, "I am in the App component"));
+    }, /* @__PURE__ */ import_react8.default.createElement("h1", null, "I am in the App component"), /* @__PURE__ */ import_react8.default.createElement("h2", null, "You are logged in"), /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement("button", {
+      onClick: handleLogoutClick
+    }, "Logout")), /* @__PURE__ */ import_react8.default.createElement(navbar_default, null), /* @__PURE__ */ import_react8.default.createElement(Routes, null, /* @__PURE__ */ import_react8.default.createElement(Route, {
+      path: "/home",
+      element: /* @__PURE__ */ import_react8.default.createElement(home_default, {
+        setUser
+      })
+    })));
   };
   var app_default = App;
 
   // app/javascript/components/index.jsx
   var Index = () => {
-    return /* @__PURE__ */ import_react9.default.createElement("div", null, /* @__PURE__ */ import_react9.default.createElement(app_default, null));
+    return /* @__PURE__ */ import_react10.default.createElement("div", null, /* @__PURE__ */ import_react10.default.createElement(app_default, null));
   };
-  import_react_dom.default.render(/* @__PURE__ */ import_react9.default.createElement(BrowserRouter, null, /* @__PURE__ */ import_react9.default.createElement(Index, null)), document.getElementById("index"));
+  import_react_dom.default.render(/* @__PURE__ */ import_react10.default.createElement(BrowserRouter, null, /* @__PURE__ */ import_react10.default.createElement(Index, null)), document.getElementById("index"));
 })();
 /*
 object-assign

@@ -1,5 +1,6 @@
 class Api::SessionsController < ApplicationController
     skip_before_action :authorize, only: [:create]
+    skip_before_action :verify_authenticity_token
 
     def show
     end

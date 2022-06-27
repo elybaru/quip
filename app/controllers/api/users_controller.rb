@@ -17,6 +17,7 @@ class Api::UsersController < ApplicationController
     end
 
     def auth
+        # session.clear
         user = User.find(session[:user_id])
         render json: user
     end
@@ -36,6 +37,6 @@ class Api::UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:username, :password)
+      params.permit(:username, :password)
     end
 end
