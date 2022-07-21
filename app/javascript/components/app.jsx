@@ -7,6 +7,7 @@ import Login from './login'
 import Home from './home'
 import Header from './header'
 import Navbar from './navbar'
+import MainChatRoom from './mainChatRoom'
 
 const App = () => {
     const [user, setUser] = useState(null);
@@ -20,9 +21,9 @@ const App = () => {
         fetch("/api/me").then((r) => {
             if (r.ok) {
                 r.json().then((u) => {
-                console.log(u)
-                setUser(u)
-            });
+                    console.log(u)
+                    setUser(u)
+                });
             }
         });
     }, []);
@@ -65,11 +66,11 @@ const App = () => {
     return (
         <div className="wrapper">
             <h1>I am in the App component</h1>
-            <h2>You are logged in</h2>
+            <h2>You are logged in </h2>
             <div>
                 <button onClick={handleLogoutClick}>Logout</button>
             </div>
-            <Navbar />
+            <Navbar user={user} />
 
             <Routes>
                 <Route path='/home' element={<Home setUser={setUser} />}>
@@ -78,6 +79,8 @@ const App = () => {
                 </Route> */}
                 {/* <Route path='/signup' element={<Signup setUser={setUser} />}>
                 </Route> */}
+                <Route path='/chatroom' element={<MainChatRoom user={user} />}>
+                </Route>
             </Routes>
         </div>
     )

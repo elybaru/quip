@@ -5,6 +5,7 @@ import App from "./app"
 import Login from './login'
 import Signup from './signup'
 import Home from './home'
+import MessagesBoard from './messages'
 
 const Index = () => {
     return (
@@ -17,6 +18,11 @@ const Index = () => {
 ReactDOM.render(
     <BrowserRouter>
         <Index />
+        <MessagesBoard />
     </BrowserRouter>,
     document.getElementById('index')
 )
+
+// document.addEventListener('DOMContentLoaded', () => {
+//     ReactDOM.render(<MessagesBoard />, document.body.appendChild(document.createElement('div')))
+//   })

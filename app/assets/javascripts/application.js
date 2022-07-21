@@ -1343,12 +1343,12 @@
             var hasWarnedAboutUsingConsumerProvider = false;
             var hasWarnedAboutDisplayNameOnConsumer = false;
             {
-              var Consumer2 = {
+              var Consumer3 = {
                 $$typeof: REACT_CONTEXT_TYPE,
                 _context: context,
                 _calculateChangedBits: context._calculateChangedBits
               };
-              Object.defineProperties(Consumer2, {
+              Object.defineProperties(Consumer3, {
                 Provider: {
                   get: function() {
                     if (!hasWarnedAboutUsingConsumerProvider) {
@@ -1406,7 +1406,7 @@
                   }
                 }
               });
-              context.Consumer = Consumer2;
+              context.Consumer = Consumer3;
             }
             {
               context._currentRenderer = null;
@@ -1604,7 +1604,7 @@
             }
             return dispatcher.useContext(Context, unstable_observedBits);
           }
-          function useState6(initialState) {
+          function useState8(initialState) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState);
           }
@@ -1616,7 +1616,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect3(create, deps) {
+          function useEffect4(create, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create, deps);
           }
@@ -2186,13 +2186,13 @@
           exports.useCallback = useCallback3;
           exports.useContext = useContext2;
           exports.useDebugValue = useDebugValue;
-          exports.useEffect = useEffect3;
+          exports.useEffect = useEffect4;
           exports.useImperativeHandle = useImperativeHandle;
           exports.useLayoutEffect = useLayoutEffect3;
           exports.useMemo = useMemo3;
           exports.useReducer = useReducer;
           exports.useRef = useRef3;
-          exports.useState = useState6;
+          exports.useState = useState8;
           exports.version = ReactVersion;
         })();
       }
@@ -3000,11 +3000,11 @@
       if (true) {
         (function() {
           "use strict";
-          var React8 = require_react();
+          var React10 = require_react();
           var _assign = require_object_assign();
           var Scheduler = require_scheduler();
           var tracing = require_tracing();
-          var ReactSharedInternals = React8.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React10.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           function warn(format) {
             {
               for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -3036,7 +3036,7 @@
               Function.prototype.apply.call(console[level], console, argsWithFormat);
             }
           }
-          if (!React8) {
+          if (!React10) {
             {
               throw Error("ReactDOM was loaded before React. Make sure you load the React package before loading ReactDOM.");
             }
@@ -4252,7 +4252,7 @@
           var didWarnInvalidChild = false;
           function flattenChildren(children) {
             var content = "";
-            React8.Children.forEach(children, function(child) {
+            React10.Children.forEach(children, function(child) {
               if (child == null) {
                 return;
               }
@@ -4263,7 +4263,7 @@
           function validateProps(element, props) {
             {
               if (typeof props.children === "object" && props.children !== null) {
-                React8.Children.forEach(props.children, function(child) {
+                React10.Children.forEach(props.children, function(child) {
                   if (child == null) {
                     return;
                   }
@@ -10627,7 +10627,7 @@
           var immediateQueueCallbackNode = null;
           var isFlushingSyncQueue = false;
           var initialTimeMs$1 = Scheduler_now$1();
-          var now2 = initialTimeMs$1 < 1e4 ? Scheduler_now$1 : function() {
+          var now3 = initialTimeMs$1 < 1e4 ? Scheduler_now$1 : function() {
             return Scheduler_now$1() - initialTimeMs$1;
           };
           function getCurrentPriorityLevel() {
@@ -11456,7 +11456,7 @@
           }
           var fakeInternalInstance = {};
           var isArray = Array.isArray;
-          var emptyRefsObject = new React8.Component().refs;
+          var emptyRefsObject = new React10.Component().refs;
           var didWarnAboutStateAssignmentForComponent;
           var didWarnAboutUninitializedState;
           var didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate;
@@ -16557,7 +16557,7 @@
                         row = row.sibling;
                       }
                     }
-                    if (renderState.tail !== null && now2() > getRenderTargetTime()) {
+                    if (renderState.tail !== null && now3() > getRenderTargetTime()) {
                       workInProgress2.flags |= DidCapture;
                       didSuspendAlready = true;
                       cutOffTailIfNeeded(renderState, false);
@@ -16588,7 +16588,7 @@
                         }
                         return null;
                       }
-                    } else if (now2() * 2 - renderState.renderingStartTime > getRenderTargetTime() && renderLanes2 !== OffscreenLane) {
+                    } else if (now3() * 2 - renderState.renderingStartTime > getRenderTargetTime() && renderLanes2 !== OffscreenLane) {
                       workInProgress2.flags |= DidCapture;
                       didSuspendAlready = true;
                       cutOffTailIfNeeded(renderState, false);
@@ -16616,7 +16616,7 @@
                   renderState.rendering = next;
                   renderState.tail = next.sibling;
                   renderState.lastEffect = workInProgress2.lastEffect;
-                  renderState.renderingStartTime = now2();
+                  renderState.renderingStartTime = now3();
                   next.sibling = null;
                   var suspenseContext = suspenseStackCursor.current;
                   if (didSuspendAlready) {
@@ -17843,7 +17843,7 @@
           var workInProgressRootRenderTargetTime = Infinity;
           var RENDER_TIMEOUT_MS = 500;
           function resetRenderTimer() {
-            workInProgressRootRenderTargetTime = now2() + RENDER_TIMEOUT_MS;
+            workInProgressRootRenderTargetTime = now3() + RENDER_TIMEOUT_MS;
           }
           function getRenderTargetTime() {
             return workInProgressRootRenderTargetTime;
@@ -17876,12 +17876,12 @@
           }
           function requestEventTime() {
             if ((executionContext & (RenderContext | CommitContext)) !== NoContext) {
-              return now2();
+              return now3();
             }
             if (currentEventTime !== NoTimestamp) {
               return currentEventTime;
             }
-            currentEventTime = now2();
+            currentEventTime = now3();
             return currentEventTime;
           }
           function requestUpdateLane(fiber) {
@@ -18072,7 +18072,7 @@
                 var fatalError = workInProgressRootFatalError;
                 prepareFreshStack(root2, NoLanes);
                 markRootSuspended$1(root2, lanes);
-                ensureRootIsScheduled(root2, now2());
+                ensureRootIsScheduled(root2, now3());
                 throw fatalError;
               }
               var finishedWork = root2.current.alternate;
@@ -18080,7 +18080,7 @@
               root2.finishedLanes = lanes;
               finishConcurrentRender(root2, exitStatus, lanes);
             }
-            ensureRootIsScheduled(root2, now2());
+            ensureRootIsScheduled(root2, now3());
             if (root2.callbackNode === originalCallbackNode) {
               return performConcurrentWorkOnRoot.bind(null, root2);
             }
@@ -18103,7 +18103,7 @@
               case RootSuspended: {
                 markRootSuspended$1(root2, lanes);
                 if (includesOnlyRetries(lanes) && !shouldForceFlushFallbacksInDEV()) {
-                  var msUntilTimeout = globalMostRecentFallbackTime + FALLBACK_THROTTLE_MS - now2();
+                  var msUntilTimeout = globalMostRecentFallbackTime + FALLBACK_THROTTLE_MS - now3();
                   if (msUntilTimeout > 10) {
                     var nextLanes = getNextLanes(root2, NoLanes);
                     if (nextLanes !== NoLanes) {
@@ -18130,7 +18130,7 @@
                 if (!shouldForceFlushFallbacksInDEV()) {
                   var mostRecentEventTime = getMostRecentEventTime(root2, lanes);
                   var eventTimeMs = mostRecentEventTime;
-                  var timeElapsedMs = now2() - eventTimeMs;
+                  var timeElapsedMs = now3() - eventTimeMs;
                   var _msUntilTimeout = jnd(timeElapsedMs) - timeElapsedMs;
                   if (_msUntilTimeout > 10) {
                     root2.timeoutHandle = scheduleTimeout(commitRoot.bind(null, root2), _msUntilTimeout);
@@ -18193,14 +18193,14 @@
               var fatalError = workInProgressRootFatalError;
               prepareFreshStack(root2, NoLanes);
               markRootSuspended$1(root2, lanes);
-              ensureRootIsScheduled(root2, now2());
+              ensureRootIsScheduled(root2, now3());
               throw fatalError;
             }
             var finishedWork = root2.current.alternate;
             root2.finishedWork = finishedWork;
             root2.finishedLanes = lanes;
             commitRoot(root2);
-            ensureRootIsScheduled(root2, now2());
+            ensureRootIsScheduled(root2, now3());
             return null;
           }
           function flushDiscreteUpdates() {
@@ -18221,7 +18221,7 @@
               rootsWithPendingDiscreteUpdates = null;
               roots.forEach(function(root2) {
                 markDiscreteUpdatesExpired(root2);
-                ensureRootIsScheduled(root2, now2());
+                ensureRootIsScheduled(root2, now3());
               });
             }
             flushSyncCallbackQueue();
@@ -18399,7 +18399,7 @@
             }
           }
           function markCommitTimeOfFallback() {
-            globalMostRecentFallbackTime = now2();
+            globalMostRecentFallbackTime = now3();
           }
           function markSkippedUpdateLanes(lane) {
             workInProgressRootSkippedLanes = mergeLanes(lane, workInProgressRootSkippedLanes);
@@ -18807,7 +18807,7 @@
             {
               onCommitRoot$1();
             }
-            ensureRootIsScheduled(root2, now2());
+            ensureRootIsScheduled(root2, now3());
             if (hasUncaughtError) {
               hasUncaughtError = false;
               var _error3 = firstUncaughtError;
@@ -19130,7 +19130,7 @@
             var eventTime = requestEventTime();
             markRootPinged(root2, pingedLanes);
             if (workInProgressRoot === root2 && isSubsetOfLanes(workInProgressRootRenderLanes, pingedLanes)) {
-              if (workInProgressRootExitStatus === RootSuspendedWithDelay || workInProgressRootExitStatus === RootSuspended && includesOnlyRetries(workInProgressRootRenderLanes) && now2() - globalMostRecentFallbackTime < FALLBACK_THROTTLE_MS) {
+              if (workInProgressRootExitStatus === RootSuspendedWithDelay || workInProgressRootExitStatus === RootSuspended && includesOnlyRetries(workInProgressRootRenderLanes) && now3() - globalMostRecentFallbackTime < FALLBACK_THROTTLE_MS) {
                 prepareFreshStack(root2, NoLanes);
               } else {
                 workInProgressRootPingedLanes = mergeLanes(workInProgressRootPingedLanes, pingedLanes);
@@ -24177,8 +24177,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     return consumer = newConsumer;
   }
   async function createConsumer2() {
-    const { createConsumer: createConsumer3 } = await Promise.resolve().then(() => (init_src(), src_exports));
-    return createConsumer3();
+    const { createConsumer: createConsumer4 } = await Promise.resolve().then(() => (init_src(), src_exports));
+    return createConsumer4();
   }
   async function subscribeTo(channel, mixin) {
     const { subscriptions } = await getConsumer();
@@ -24236,8 +24236,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   addEventListener("turbo:submit-start", overrideMethodWithFormmethod);
 
   // app/javascript/components/index.jsx
-  var import_react10 = __toESM(require_react());
-  var import_react_dom = __toESM(require_react_dom());
+  var import_react12 = __toESM(require_react());
+  var import_react_dom2 = __toESM(require_react_dom());
 
   // node_modules/react-router-dom/index.js
   var import_react2 = __toESM(require_react());
@@ -25184,8 +25184,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   }
 
   // app/javascript/components/app.jsx
-  var import_react8 = __toESM(require_react());
   var import_react9 = __toESM(require_react());
+  var import_react10 = __toESM(require_react());
 
   // app/javascript/components/signup.jsx
   var import_react3 = __toESM(require_react());
@@ -25287,6 +25287,10 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   // app/javascript/components/home.jsx
   var import_react5 = __toESM(require_react());
   var Home = () => {
+    let navigate = useNavigate();
+    const handleJoinChat = () => {
+      navigate("/chatroom");
+    };
     return /* @__PURE__ */ import_react5.default.createElement("div", null, "I am the home component.");
   };
   var home_default = Home;
@@ -25300,17 +25304,25 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
 
   // app/javascript/components/navbar.jsx
   var import_react7 = __toESM(require_react());
-  var Navbar = () => {
-    return /* @__PURE__ */ import_react7.default.createElement("div", null, "I am the Navbar");
+  var Navbar = ({ user }) => {
+    console.log(user);
+    return /* @__PURE__ */ import_react7.default.createElement("div", null, "I am the Navbar.", /* @__PURE__ */ import_react7.default.createElement("div", null, "Hello, ", user.username, "."));
   };
   var navbar_default = Navbar;
 
+  // app/javascript/components/mainChatRoom.jsx
+  var import_react8 = __toESM(require_react());
+  var mainChatRoom = () => {
+    return /* @__PURE__ */ import_react8.default.createElement("div", null, "I am the main chat room!");
+  };
+  var mainChatRoom_default = mainChatRoom;
+
   // app/javascript/components/app.jsx
   var App = () => {
-    const [user, setUser] = (0, import_react9.useState)(null);
-    const [isLoggedin, setIsLoggedIn] = (0, import_react9.useState)(null);
+    const [user, setUser] = (0, import_react10.useState)(null);
+    const [isLoggedin, setIsLoggedIn] = (0, import_react10.useState)(null);
     let location2 = useLocation();
-    (0, import_react9.useEffect)(() => {
+    (0, import_react10.useEffect)(() => {
       console.log("In useEffect");
       fetch("/api/me").then((r) => {
         if (r.ok) {
@@ -25329,58 +25341,592 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       });
     }
     if (!user)
-      return /* @__PURE__ */ import_react8.default.createElement("div", {
+      return /* @__PURE__ */ import_react9.default.createElement("div", {
         className: "wrapper"
-      }, /* @__PURE__ */ import_react8.default.createElement("div", {
+      }, /* @__PURE__ */ import_react9.default.createElement("div", {
         className: "header"
-      }, "I am the app component.", /* @__PURE__ */ import_react8.default.createElement(header_default, null), /* @__PURE__ */ import_react8.default.createElement("div", {
+      }, "I am the app component.", /* @__PURE__ */ import_react9.default.createElement(header_default, null), /* @__PURE__ */ import_react9.default.createElement("div", {
         className: "item"
-      }, /* @__PURE__ */ import_react8.default.createElement("h1", {
+      }, /* @__PURE__ */ import_react9.default.createElement("h1", {
         className: "logo"
-      }, "Quip")), /* @__PURE__ */ import_react8.default.createElement("div", {
+      }, "Quip")), /* @__PURE__ */ import_react9.default.createElement("div", {
         className: "item"
-      }, /* @__PURE__ */ import_react8.default.createElement("div", {
+      }, /* @__PURE__ */ import_react9.default.createElement("div", {
         className: "navlinks"
-      }, /* @__PURE__ */ import_react8.default.createElement("button", null, /* @__PURE__ */ import_react8.default.createElement(Link, {
+      }, /* @__PURE__ */ import_react9.default.createElement("button", null, /* @__PURE__ */ import_react9.default.createElement(Link, {
         to: "/login"
-      }, "Login"))), /* @__PURE__ */ import_react8.default.createElement("div", {
+      }, "Login"))), /* @__PURE__ */ import_react9.default.createElement("div", {
         className: "navlinks"
-      }, /* @__PURE__ */ import_react8.default.createElement("button", null, /* @__PURE__ */ import_react8.default.createElement(Link, {
+      }, /* @__PURE__ */ import_react9.default.createElement("button", null, /* @__PURE__ */ import_react9.default.createElement(Link, {
         to: "/signup"
-      }, "Signup"))))), /* @__PURE__ */ import_react8.default.createElement(Routes, null, /* @__PURE__ */ import_react8.default.createElement(Route, {
+      }, "Signup"))))), /* @__PURE__ */ import_react9.default.createElement(Routes, null, /* @__PURE__ */ import_react9.default.createElement(Route, {
         path: "/login",
-        element: /* @__PURE__ */ import_react8.default.createElement(login_default, {
+        element: /* @__PURE__ */ import_react9.default.createElement(login_default, {
           setUser
         })
-      }), /* @__PURE__ */ import_react8.default.createElement(Route, {
+      }), /* @__PURE__ */ import_react9.default.createElement(Route, {
         path: "/signup",
-        element: /* @__PURE__ */ import_react8.default.createElement(signup_default, {
+        element: /* @__PURE__ */ import_react9.default.createElement(signup_default, {
           setUser
         })
-      }), /* @__PURE__ */ import_react8.default.createElement(Route, {
+      }), /* @__PURE__ */ import_react9.default.createElement(Route, {
         path: "/",
-        element: /* @__PURE__ */ import_react8.default.createElement(home_default, {
+        element: /* @__PURE__ */ import_react9.default.createElement(home_default, {
           setUser
         })
       })));
-    return /* @__PURE__ */ import_react8.default.createElement("div", {
+    return /* @__PURE__ */ import_react9.default.createElement("div", {
       className: "wrapper"
-    }, /* @__PURE__ */ import_react8.default.createElement("h1", null, "I am in the App component"), /* @__PURE__ */ import_react8.default.createElement("h2", null, "You are logged in"), /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement("button", {
+    }, /* @__PURE__ */ import_react9.default.createElement("h1", null, "I am in the App component"), /* @__PURE__ */ import_react9.default.createElement("h2", null, "You are logged in "), /* @__PURE__ */ import_react9.default.createElement("div", null, /* @__PURE__ */ import_react9.default.createElement("button", {
       onClick: handleLogoutClick
-    }, "Logout")), /* @__PURE__ */ import_react8.default.createElement(navbar_default, null), /* @__PURE__ */ import_react8.default.createElement(Routes, null, /* @__PURE__ */ import_react8.default.createElement(Route, {
+    }, "Logout")), /* @__PURE__ */ import_react9.default.createElement(navbar_default, {
+      user
+    }), /* @__PURE__ */ import_react9.default.createElement(Routes, null, /* @__PURE__ */ import_react9.default.createElement(Route, {
       path: "/home",
-      element: /* @__PURE__ */ import_react8.default.createElement(home_default, {
+      element: /* @__PURE__ */ import_react9.default.createElement(home_default, {
         setUser
+      })
+    }), /* @__PURE__ */ import_react9.default.createElement(Route, {
+      path: "/chatroom",
+      element: /* @__PURE__ */ import_react9.default.createElement(mainChatRoom_default, {
+        user
       })
     })));
   };
   var app_default = App;
 
+  // app/javascript/components/messages.jsx
+  var import_react11 = __toESM(require_react());
+  var import_react_dom = __toESM(require_react_dom());
+
+  // node_modules/@rails/actioncable/app/assets/javascripts/actioncable.esm.js
+  var adapters = {
+    logger: self.console,
+    WebSocket: self.WebSocket
+  };
+  var logger = {
+    log(...messages) {
+      if (this.enabled) {
+        messages.push(Date.now());
+        adapters.logger.log("[ActionCable]", ...messages);
+      }
+    }
+  };
+  var now2 = () => new Date().getTime();
+  var secondsSince2 = (time) => (now2() - time) / 1e3;
+  var ConnectionMonitor2 = class {
+    constructor(connection) {
+      this.visibilityDidChange = this.visibilityDidChange.bind(this);
+      this.connection = connection;
+      this.reconnectAttempts = 0;
+    }
+    start() {
+      if (!this.isRunning()) {
+        this.startedAt = now2();
+        delete this.stoppedAt;
+        this.startPolling();
+        addEventListener("visibilitychange", this.visibilityDidChange);
+        logger.log(`ConnectionMonitor started. stale threshold = ${this.constructor.staleThreshold} s`);
+      }
+    }
+    stop() {
+      if (this.isRunning()) {
+        this.stoppedAt = now2();
+        this.stopPolling();
+        removeEventListener("visibilitychange", this.visibilityDidChange);
+        logger.log("ConnectionMonitor stopped");
+      }
+    }
+    isRunning() {
+      return this.startedAt && !this.stoppedAt;
+    }
+    recordPing() {
+      this.pingedAt = now2();
+    }
+    recordConnect() {
+      this.reconnectAttempts = 0;
+      this.recordPing();
+      delete this.disconnectedAt;
+      logger.log("ConnectionMonitor recorded connect");
+    }
+    recordDisconnect() {
+      this.disconnectedAt = now2();
+      logger.log("ConnectionMonitor recorded disconnect");
+    }
+    startPolling() {
+      this.stopPolling();
+      this.poll();
+    }
+    stopPolling() {
+      clearTimeout(this.pollTimeout);
+    }
+    poll() {
+      this.pollTimeout = setTimeout(() => {
+        this.reconnectIfStale();
+        this.poll();
+      }, this.getPollInterval());
+    }
+    getPollInterval() {
+      const { staleThreshold, reconnectionBackoffRate } = this.constructor;
+      const backoff = Math.pow(1 + reconnectionBackoffRate, Math.min(this.reconnectAttempts, 10));
+      const jitterMax = this.reconnectAttempts === 0 ? 1 : reconnectionBackoffRate;
+      const jitter = jitterMax * Math.random();
+      return staleThreshold * 1e3 * backoff * (1 + jitter);
+    }
+    reconnectIfStale() {
+      if (this.connectionIsStale()) {
+        logger.log(`ConnectionMonitor detected stale connection. reconnectAttempts = ${this.reconnectAttempts}, time stale = ${secondsSince2(this.refreshedAt)} s, stale threshold = ${this.constructor.staleThreshold} s`);
+        this.reconnectAttempts++;
+        if (this.disconnectedRecently()) {
+          logger.log(`ConnectionMonitor skipping reopening recent disconnect. time disconnected = ${secondsSince2(this.disconnectedAt)} s`);
+        } else {
+          logger.log("ConnectionMonitor reopening");
+          this.connection.reopen();
+        }
+      }
+    }
+    get refreshedAt() {
+      return this.pingedAt ? this.pingedAt : this.startedAt;
+    }
+    connectionIsStale() {
+      return secondsSince2(this.refreshedAt) > this.constructor.staleThreshold;
+    }
+    disconnectedRecently() {
+      return this.disconnectedAt && secondsSince2(this.disconnectedAt) < this.constructor.staleThreshold;
+    }
+    visibilityDidChange() {
+      if (document.visibilityState === "visible") {
+        setTimeout(() => {
+          if (this.connectionIsStale() || !this.connection.isOpen()) {
+            logger.log(`ConnectionMonitor reopening stale connection on visibilitychange. visibilityState = ${document.visibilityState}`);
+            this.connection.reopen();
+          }
+        }, 200);
+      }
+    }
+  };
+  ConnectionMonitor2.staleThreshold = 6;
+  ConnectionMonitor2.reconnectionBackoffRate = 0.15;
+  var INTERNAL = {
+    message_types: {
+      welcome: "welcome",
+      disconnect: "disconnect",
+      ping: "ping",
+      confirmation: "confirm_subscription",
+      rejection: "reject_subscription"
+    },
+    disconnect_reasons: {
+      unauthorized: "unauthorized",
+      invalid_request: "invalid_request",
+      server_restart: "server_restart"
+    },
+    default_mount_path: "/cable",
+    protocols: ["actioncable-v1-json", "actioncable-unsupported"]
+  };
+  var { message_types: message_types2, protocols: protocols2 } = INTERNAL;
+  var supportedProtocols2 = protocols2.slice(0, protocols2.length - 1);
+  var indexOf2 = [].indexOf;
+  var Connection2 = class {
+    constructor(consumer2) {
+      this.open = this.open.bind(this);
+      this.consumer = consumer2;
+      this.subscriptions = this.consumer.subscriptions;
+      this.monitor = new ConnectionMonitor2(this);
+      this.disconnected = true;
+    }
+    send(data) {
+      if (this.isOpen()) {
+        this.webSocket.send(JSON.stringify(data));
+        return true;
+      } else {
+        return false;
+      }
+    }
+    open() {
+      if (this.isActive()) {
+        logger.log(`Attempted to open WebSocket, but existing socket is ${this.getState()}`);
+        return false;
+      } else {
+        logger.log(`Opening WebSocket, current state is ${this.getState()}, subprotocols: ${protocols2}`);
+        if (this.webSocket) {
+          this.uninstallEventHandlers();
+        }
+        this.webSocket = new adapters.WebSocket(this.consumer.url, protocols2);
+        this.installEventHandlers();
+        this.monitor.start();
+        return true;
+      }
+    }
+    close({ allowReconnect } = {
+      allowReconnect: true
+    }) {
+      if (!allowReconnect) {
+        this.monitor.stop();
+      }
+      if (this.isOpen()) {
+        return this.webSocket.close();
+      }
+    }
+    reopen() {
+      logger.log(`Reopening WebSocket, current state is ${this.getState()}`);
+      if (this.isActive()) {
+        try {
+          return this.close();
+        } catch (error) {
+          logger.log("Failed to reopen WebSocket", error);
+        } finally {
+          logger.log(`Reopening WebSocket in ${this.constructor.reopenDelay}ms`);
+          setTimeout(this.open, this.constructor.reopenDelay);
+        }
+      } else {
+        return this.open();
+      }
+    }
+    getProtocol() {
+      if (this.webSocket) {
+        return this.webSocket.protocol;
+      }
+    }
+    isOpen() {
+      return this.isState("open");
+    }
+    isActive() {
+      return this.isState("open", "connecting");
+    }
+    isProtocolSupported() {
+      return indexOf2.call(supportedProtocols2, this.getProtocol()) >= 0;
+    }
+    isState(...states) {
+      return indexOf2.call(states, this.getState()) >= 0;
+    }
+    getState() {
+      if (this.webSocket) {
+        for (let state in adapters.WebSocket) {
+          if (adapters.WebSocket[state] === this.webSocket.readyState) {
+            return state.toLowerCase();
+          }
+        }
+      }
+      return null;
+    }
+    installEventHandlers() {
+      for (let eventName in this.events) {
+        const handler = this.events[eventName].bind(this);
+        this.webSocket[`on${eventName}`] = handler;
+      }
+    }
+    uninstallEventHandlers() {
+      for (let eventName in this.events) {
+        this.webSocket[`on${eventName}`] = function() {
+        };
+      }
+    }
+  };
+  Connection2.reopenDelay = 500;
+  Connection2.prototype.events = {
+    message(event) {
+      if (!this.isProtocolSupported()) {
+        return;
+      }
+      const { identifier, message, reason, reconnect, type } = JSON.parse(event.data);
+      switch (type) {
+        case message_types2.welcome:
+          this.monitor.recordConnect();
+          return this.subscriptions.reload();
+        case message_types2.disconnect:
+          logger.log(`Disconnecting. Reason: ${reason}`);
+          return this.close({
+            allowReconnect: reconnect
+          });
+        case message_types2.ping:
+          return this.monitor.recordPing();
+        case message_types2.confirmation:
+          this.subscriptions.confirmSubscription(identifier);
+          return this.subscriptions.notify(identifier, "connected");
+        case message_types2.rejection:
+          return this.subscriptions.reject(identifier);
+        default:
+          return this.subscriptions.notify(identifier, "received", message);
+      }
+    },
+    open() {
+      logger.log(`WebSocket onopen event, using '${this.getProtocol()}' subprotocol`);
+      this.disconnected = false;
+      if (!this.isProtocolSupported()) {
+        logger.log("Protocol is unsupported. Stopping monitor and disconnecting.");
+        return this.close({
+          allowReconnect: false
+        });
+      }
+    },
+    close(event) {
+      logger.log("WebSocket onclose event");
+      if (this.disconnected) {
+        return;
+      }
+      this.disconnected = true;
+      this.monitor.recordDisconnect();
+      return this.subscriptions.notifyAll("disconnected", {
+        willAttemptReconnect: this.monitor.isRunning()
+      });
+    },
+    error() {
+      logger.log("WebSocket onerror event");
+    }
+  };
+  var extend2 = function(object, properties) {
+    if (properties != null) {
+      for (let key in properties) {
+        const value = properties[key];
+        object[key] = value;
+      }
+    }
+    return object;
+  };
+  var Subscription2 = class {
+    constructor(consumer2, params = {}, mixin) {
+      this.consumer = consumer2;
+      this.identifier = JSON.stringify(params);
+      extend2(this, mixin);
+    }
+    perform(action, data = {}) {
+      data.action = action;
+      return this.send(data);
+    }
+    send(data) {
+      return this.consumer.send({
+        command: "message",
+        identifier: this.identifier,
+        data: JSON.stringify(data)
+      });
+    }
+    unsubscribe() {
+      return this.consumer.subscriptions.remove(this);
+    }
+  };
+  var SubscriptionGuarantor2 = class {
+    constructor(subscriptions) {
+      this.subscriptions = subscriptions;
+      this.pendingSubscriptions = [];
+    }
+    guarantee(subscription) {
+      if (this.pendingSubscriptions.indexOf(subscription) == -1) {
+        logger.log(`SubscriptionGuarantor guaranteeing ${subscription.identifier}`);
+        this.pendingSubscriptions.push(subscription);
+      } else {
+        logger.log(`SubscriptionGuarantor already guaranteeing ${subscription.identifier}`);
+      }
+      this.startGuaranteeing();
+    }
+    forget(subscription) {
+      logger.log(`SubscriptionGuarantor forgetting ${subscription.identifier}`);
+      this.pendingSubscriptions = this.pendingSubscriptions.filter((s) => s !== subscription);
+    }
+    startGuaranteeing() {
+      this.stopGuaranteeing();
+      this.retrySubscribing();
+    }
+    stopGuaranteeing() {
+      clearTimeout(this.retryTimeout);
+    }
+    retrySubscribing() {
+      this.retryTimeout = setTimeout(() => {
+        if (this.subscriptions && typeof this.subscriptions.subscribe === "function") {
+          this.pendingSubscriptions.map((subscription) => {
+            logger.log(`SubscriptionGuarantor resubscribing ${subscription.identifier}`);
+            this.subscriptions.subscribe(subscription);
+          });
+        }
+      }, 500);
+    }
+  };
+  var Subscriptions2 = class {
+    constructor(consumer2) {
+      this.consumer = consumer2;
+      this.guarantor = new SubscriptionGuarantor2(this);
+      this.subscriptions = [];
+    }
+    create(channelName, mixin) {
+      const channel = channelName;
+      const params = typeof channel === "object" ? channel : {
+        channel
+      };
+      const subscription = new Subscription2(this.consumer, params, mixin);
+      return this.add(subscription);
+    }
+    add(subscription) {
+      this.subscriptions.push(subscription);
+      this.consumer.ensureActiveConnection();
+      this.notify(subscription, "initialized");
+      this.subscribe(subscription);
+      return subscription;
+    }
+    remove(subscription) {
+      this.forget(subscription);
+      if (!this.findAll(subscription.identifier).length) {
+        this.sendCommand(subscription, "unsubscribe");
+      }
+      return subscription;
+    }
+    reject(identifier) {
+      return this.findAll(identifier).map((subscription) => {
+        this.forget(subscription);
+        this.notify(subscription, "rejected");
+        return subscription;
+      });
+    }
+    forget(subscription) {
+      this.guarantor.forget(subscription);
+      this.subscriptions = this.subscriptions.filter((s) => s !== subscription);
+      return subscription;
+    }
+    findAll(identifier) {
+      return this.subscriptions.filter((s) => s.identifier === identifier);
+    }
+    reload() {
+      return this.subscriptions.map((subscription) => this.subscribe(subscription));
+    }
+    notifyAll(callbackName, ...args) {
+      return this.subscriptions.map((subscription) => this.notify(subscription, callbackName, ...args));
+    }
+    notify(subscription, callbackName, ...args) {
+      let subscriptions;
+      if (typeof subscription === "string") {
+        subscriptions = this.findAll(subscription);
+      } else {
+        subscriptions = [subscription];
+      }
+      return subscriptions.map((subscription2) => typeof subscription2[callbackName] === "function" ? subscription2[callbackName](...args) : void 0);
+    }
+    subscribe(subscription) {
+      if (this.sendCommand(subscription, "subscribe")) {
+        this.guarantor.guarantee(subscription);
+      }
+    }
+    confirmSubscription(identifier) {
+      logger.log(`Subscription confirmed ${identifier}`);
+      this.findAll(identifier).map((subscription) => this.guarantor.forget(subscription));
+    }
+    sendCommand(subscription, command) {
+      const { identifier } = subscription;
+      return this.consumer.send({
+        command,
+        identifier
+      });
+    }
+  };
+  var Consumer2 = class {
+    constructor(url) {
+      this._url = url;
+      this.subscriptions = new Subscriptions2(this);
+      this.connection = new Connection2(this);
+    }
+    get url() {
+      return createWebSocketURL2(this._url);
+    }
+    send(data) {
+      return this.connection.send(data);
+    }
+    connect() {
+      return this.connection.open();
+    }
+    disconnect() {
+      return this.connection.close({
+        allowReconnect: false
+      });
+    }
+    ensureActiveConnection() {
+      if (!this.connection.isActive()) {
+        return this.connection.open();
+      }
+    }
+  };
+  function createWebSocketURL2(url) {
+    if (typeof url === "function") {
+      url = url();
+    }
+    if (url && !/^wss?:/i.test(url)) {
+      const a = document.createElement("a");
+      a.href = url;
+      a.href = a.href;
+      a.protocol = a.protocol.replace("http", "ws");
+      return a.href;
+    } else {
+      return url;
+    }
+  }
+  function createConsumer3(url = getConfig2("url") || INTERNAL.default_mount_path) {
+    return new Consumer2(url);
+  }
+  function getConfig2(name) {
+    const element = document.head.querySelector(`meta[name='action-cable-${name}']`);
+    if (element) {
+      return element.getAttribute("content");
+    }
+  }
+
+  // app/javascript/channels/consumer.js
+  var consumer_default = createConsumer3();
+
+  // app/javascript/channels/messages_channel.js
+  var MessagesChannel = consumer_default.subscriptions.create("MessagesChannel", {
+    connected() {
+    },
+    disconnected() {
+    },
+    received(data) {
+    }
+  });
+  var messages_channel_default = MessagesChannel;
+
+  // app/javascript/components/messages.jsx
+  var MessagesBoard = () => {
+    const [messages, setMessages] = (0, import_react11.useState)([]);
+    const [message, setMessage] = (0, import_react11.useState)("");
+    (0, import_react11.useEffect)(() => {
+      messages_channel_default.received = (data) => setMessages(data.messages);
+    }, []);
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      await fetch("http://localhost:3000/messages", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRF-TOKEN": document.querySelector("[name=csrf-token]").content
+        },
+        body: JSON.stringify({ content: message })
+      });
+      setMessage("");
+    };
+    return /* @__PURE__ */ import_react11.default.createElement("div", null, /* @__PURE__ */ import_react11.default.createElement("input", {
+      type: "text",
+      value: message,
+      onChange: ({ target: { value } }) => setMessage(value)
+    }), /* @__PURE__ */ import_react11.default.createElement("button", {
+      onClick: handleSubmit
+    }, "Send message"), /* @__PURE__ */ import_react11.default.createElement("ul", null, messages.map((message2) => /* @__PURE__ */ import_react11.default.createElement("li", {
+      key: message2.id
+    }, message2.content))));
+  };
+  var messages_default = MessagesBoard;
+
   // app/javascript/components/index.jsx
   var Index = () => {
-    return /* @__PURE__ */ import_react10.default.createElement("div", null, /* @__PURE__ */ import_react10.default.createElement(app_default, null));
+    return /* @__PURE__ */ import_react12.default.createElement("div", null, /* @__PURE__ */ import_react12.default.createElement(app_default, null));
   };
-  import_react_dom.default.render(/* @__PURE__ */ import_react10.default.createElement(BrowserRouter, null, /* @__PURE__ */ import_react10.default.createElement(Index, null)), document.getElementById("index"));
+  import_react_dom2.default.render(/* @__PURE__ */ import_react12.default.createElement(BrowserRouter, null, /* @__PURE__ */ import_react12.default.createElement(Index, null), /* @__PURE__ */ import_react12.default.createElement(messages_default, null)), document.getElementById("index"));
+
+  // app/javascript/channels/chat_channel.js
+  consumer_default.subscriptions.create("ChatChannel", {
+    connected() {
+      console.log("Hello from the chat");
+    },
+    disconnected() {
+    },
+    received(data) {
+      console.log(data);
+    }
+  });
 })();
 /*
 object-assign

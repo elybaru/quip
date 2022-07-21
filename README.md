@@ -1,5 +1,13 @@
 # README
 
+Did you mean?  javascript_cdata_section):
+    1: <%= javascript_packs_with_chunks_tag 'messages' %>
+
+# Notes
+
+# Nested form
+- options of plant type , choose from existing or add a new one
+- Rails accepts nested attributes 
 
 <!-- <BrowserRouter>
         {/* <Index /> */}
