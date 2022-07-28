@@ -1,4 +1,5 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 
 const Navbar = ({ user }) => {
     console.log(user)
@@ -9,6 +10,11 @@ const Navbar = ({ user }) => {
 
         <div>
                 Hello, {user.username}.
+                <div>
+                <Link to='/home'>Home</Link>
+                <Link to='/conversations/'>Conversations</Link>
+                </div>
+
     
     
             {/* Banner at top can be signup/login or logout, conditionally render

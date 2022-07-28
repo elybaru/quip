@@ -9,6 +9,7 @@ import Header from './header'
 import Navbar from './navbar'
 import MainChatRoom from './mainChatRoom'
 import ConversationRoom from './ConversationRoom'
+import Conversations from './Conversations'
 
 const App = ({cableApp}) => {
     const [user, setUser] = useState(null);
@@ -43,6 +44,22 @@ const App = ({cableApp}) => {
             }
         });
     }
+
+    const handleCurrentRoom =(result) => {
+		return {
+			chatroom: result.data.attributes,
+			users: result.data.attributes.users.data,
+			messages: result.data.attributes.messages,
+		}
+	}
+
+    const getRoomData =(id) => {
+		fetch(`/conversations/${id}`)
+			.then((res) => res.json())
+			.then((result) => {
+				setCurrentRoom(() => handleCurrentRoom(result))
+			})
+	}
 
     if (!user) return (
 
@@ -82,6 +99,8 @@ const App = ({cableApp}) => {
 
             <Routes>
                 <Route path='/home' element={<Home setUser={setUser} />}>
+                </Route>
+                <Route path='/conversations/' element={<Conversations />}>
                 </Route>
                 <Route path='/conversations/:id' element={<ConversationRoom />}>
                 </Route>

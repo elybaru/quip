@@ -4,13 +4,13 @@ class MessagesChannel < ApplicationCable::Channel
   
     #   ActionCable.server.broadcast('messages', { messages: Message.all })
     stop_all_streams
-    conversation = Conversation.find(params[:room])
-    stream_for conversation
+    @conversation = Conversation.find(params[:room])
+    stream_for @conversation
     end
 
-    
+
     def received(data)
-        MessagesChannel.broadcast_to(conversation, { conversation: conversation, users: conversation.users, messages: conversation.messages})
+        MessagesChannel.broadcast_to(@conversation, { conversation: @conversation, users: @conversation.users, messages: @conversation.messages})
     end
   
     def unsubscribed
