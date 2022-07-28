@@ -14,7 +14,6 @@ const ConversationRoomStart = () => {
             }
             
           )
-          debugger
         }
         
           createSocket()

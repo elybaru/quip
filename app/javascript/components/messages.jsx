@@ -25,6 +25,8 @@ const MessagesBoard = () => {
     setMessage('')
   }
 
+  
+
   return (
     <div>
       <input type="text" value={message} onChange={({ target: { value } }) => setMessage(value)} />

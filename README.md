@@ -5,9 +5,28 @@ Did you mean?  javascript_cdata_section):
 
 # Notes
 
-# Nested form
-- options of plant type , choose from existing or add a new one
-- Rails accepts nested attributes 
+# Hitting the MVP
+ROUTES
+- Landing page /homes (already done)
+- List of chat rooms /chatrooms/1
+- User can add a new chatroom
+    - try to create two chatrooms behind routes
+- Memberships: chatroom that you join / leave
+- CRUD for messages
+- Display error for user creation/ login problems 
+    - cannot be blank for username and message
+- User in useContext global state
+- Deploy
+
+
+
+# Features
+- Include username with message
+- Global store with useContext
+- Edit message
+- Delete message
+- Create multiple chat rooms, ability to join and leave
+- Ability to create chat rooms
 
 <!-- <BrowserRouter>
         {/* <Index /> */}
