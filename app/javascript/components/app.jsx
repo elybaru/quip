@@ -8,10 +8,18 @@ import Home from './home'
 import Header from './header'
 import Navbar from './navbar'
 import MainChatRoom from './mainChatRoom'
+import ConversationRoom from './ConversationRoom'
 
-const App = () => {
+const App = ({cableApp}) => {
     const [user, setUser] = useState(null);
     const [isLoggedin, setIsLoggedIn] = useState(null)
+    const [allUsers, setAllUsers] = useState([])
+    const [currentRoom, setCurrentRoom] = useState({
+        conversation: {},
+        users: [],
+        messages: []
+    })
+    const [messages, setMessages] = useState(null)
 
     let location = useLocation()
 
@@ -75,12 +83,14 @@ const App = () => {
             <Routes>
                 <Route path='/home' element={<Home setUser={setUser} />}>
                 </Route>
+                <Route path='/conversations/:id' element={<ConversationRoom />}>
+                </Route>
                 {/* <Route path='/login' element={<Login setUser={setUser} />}>
                 </Route> */}
                 {/* <Route path='/signup' element={<Signup setUser={setUser} />}>
                 </Route> */}
-                <Route path='/chatroom' element={<MainChatRoom user={user} />}>
-                </Route>
+                {/* <Route path='/chatroom' element={<MainChatRoom user={user} />}> */}
+                {/* </Route> */}
             </Routes>
         </div>
     )

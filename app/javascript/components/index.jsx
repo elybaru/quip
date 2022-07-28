@@ -6,11 +6,16 @@ import Login from './login'
 import Signup from './signup'
 import Home from './home'
 import MessagesBoard from './messages'
+import actionCable from "actioncable"
+
+const cableApp = {}
+
+cableApp.cable = actionCable.createConsumer("ws://localhost:3000/cable")
 
 const Index = () => {
     return (
         <div>
-            <App />
+            <App cableApp={cableApp}/>
         </div>
     )
 }
@@ -18,7 +23,7 @@ const Index = () => {
 ReactDOM.render(
     <BrowserRouter>
         <Index />
-        <MessagesBoard />
+        {/* <MessagesBoard /> */}
     </BrowserRouter>,
     document.getElementById('index')
 )

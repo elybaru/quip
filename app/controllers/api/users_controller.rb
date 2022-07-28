@@ -4,6 +4,11 @@ class Api::UsersController < ApplicationController
     skip_before_action :authorize, only: [:create]
     skip_before_action :verify_authenticity_token
 
+    def index
+        users = User.all
+        render json: UserSerializer.new(users).serialized_json
+    end
+
     def create
         user = User.create(user_params)
         if user.valid?

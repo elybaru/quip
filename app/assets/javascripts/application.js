@@ -3000,11 +3000,11 @@
       if (true) {
         (function() {
           "use strict";
-          var React10 = require_react();
+          var React11 = require_react();
           var _assign = require_object_assign();
           var Scheduler = require_scheduler();
           var tracing = require_tracing();
-          var ReactSharedInternals = React10.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React11.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           function warn(format) {
             {
               for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -3036,7 +3036,7 @@
               Function.prototype.apply.call(console[level], console, argsWithFormat);
             }
           }
-          if (!React10) {
+          if (!React11) {
             {
               throw Error("ReactDOM was loaded before React. Make sure you load the React package before loading ReactDOM.");
             }
@@ -4252,7 +4252,7 @@
           var didWarnInvalidChild = false;
           function flattenChildren(children) {
             var content = "";
-            React10.Children.forEach(children, function(child) {
+            React11.Children.forEach(children, function(child) {
               if (child == null) {
                 return;
               }
@@ -4263,7 +4263,7 @@
           function validateProps(element, props) {
             {
               if (typeof props.children === "object" && props.children !== null) {
-                React10.Children.forEach(props.children, function(child) {
+                React11.Children.forEach(props.children, function(child) {
                   if (child == null) {
                     return;
                   }
@@ -11456,7 +11456,7 @@
           }
           var fakeInternalInstance = {};
           var isArray = Array.isArray;
-          var emptyRefsObject = new React10.Component().refs;
+          var emptyRefsObject = new React11.Component().refs;
           var didWarnAboutStateAssignmentForComponent;
           var didWarnAboutUninitializedState;
           var didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate;
@@ -20979,6 +20979,546 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     }
   });
 
+  // node_modules/actioncable/lib/assets/compiled/action_cable.js
+  var require_action_cable = __commonJS({
+    "node_modules/actioncable/lib/assets/compiled/action_cable.js"(exports, module) {
+      (function() {
+        var context = this;
+        (function() {
+          (function() {
+            var slice = [].slice;
+            this.ActionCable = {
+              INTERNAL: {
+                "message_types": {
+                  "welcome": "welcome",
+                  "ping": "ping",
+                  "confirmation": "confirm_subscription",
+                  "rejection": "reject_subscription"
+                },
+                "default_mount_path": "/cable",
+                "protocols": ["actioncable-v1-json", "actioncable-unsupported"]
+              },
+              WebSocket: window.WebSocket,
+              logger: window.console,
+              createConsumer: function(url) {
+                var ref;
+                if (url == null) {
+                  url = (ref = this.getConfig("url")) != null ? ref : this.INTERNAL.default_mount_path;
+                }
+                return new ActionCable.Consumer(this.createWebSocketURL(url));
+              },
+              getConfig: function(name) {
+                var element;
+                element = document.head.querySelector("meta[name='action-cable-" + name + "']");
+                return element != null ? element.getAttribute("content") : void 0;
+              },
+              createWebSocketURL: function(url) {
+                var a;
+                if (url && !/^wss?:/i.test(url)) {
+                  a = document.createElement("a");
+                  a.href = url;
+                  a.href = a.href;
+                  a.protocol = a.protocol.replace("http", "ws");
+                  return a.href;
+                } else {
+                  return url;
+                }
+              },
+              startDebugging: function() {
+                return this.debugging = true;
+              },
+              stopDebugging: function() {
+                return this.debugging = null;
+              },
+              log: function() {
+                var messages, ref;
+                messages = 1 <= arguments.length ? slice.call(arguments, 0) : [];
+                if (this.debugging) {
+                  messages.push(Date.now());
+                  return (ref = this.logger).log.apply(ref, ["[ActionCable]"].concat(slice.call(messages)));
+                }
+              }
+            };
+          }).call(this);
+        }).call(context);
+        var ActionCable = context.ActionCable;
+        (function() {
+          (function() {
+            var bind = function(fn, me) {
+              return function() {
+                return fn.apply(me, arguments);
+              };
+            };
+            ActionCable.ConnectionMonitor = function() {
+              var clamp, now3, secondsSince3;
+              ConnectionMonitor3.pollInterval = {
+                min: 3,
+                max: 30
+              };
+              ConnectionMonitor3.staleThreshold = 6;
+              function ConnectionMonitor3(connection) {
+                this.connection = connection;
+                this.visibilityDidChange = bind(this.visibilityDidChange, this);
+                this.reconnectAttempts = 0;
+              }
+              ConnectionMonitor3.prototype.start = function() {
+                if (!this.isRunning()) {
+                  this.startedAt = now3();
+                  delete this.stoppedAt;
+                  this.startPolling();
+                  document.addEventListener("visibilitychange", this.visibilityDidChange);
+                  return ActionCable.log("ConnectionMonitor started. pollInterval = " + this.getPollInterval() + " ms");
+                }
+              };
+              ConnectionMonitor3.prototype.stop = function() {
+                if (this.isRunning()) {
+                  this.stoppedAt = now3();
+                  this.stopPolling();
+                  document.removeEventListener("visibilitychange", this.visibilityDidChange);
+                  return ActionCable.log("ConnectionMonitor stopped");
+                }
+              };
+              ConnectionMonitor3.prototype.isRunning = function() {
+                return this.startedAt != null && this.stoppedAt == null;
+              };
+              ConnectionMonitor3.prototype.recordPing = function() {
+                return this.pingedAt = now3();
+              };
+              ConnectionMonitor3.prototype.recordConnect = function() {
+                this.reconnectAttempts = 0;
+                this.recordPing();
+                delete this.disconnectedAt;
+                return ActionCable.log("ConnectionMonitor recorded connect");
+              };
+              ConnectionMonitor3.prototype.recordDisconnect = function() {
+                this.disconnectedAt = now3();
+                return ActionCable.log("ConnectionMonitor recorded disconnect");
+              };
+              ConnectionMonitor3.prototype.startPolling = function() {
+                this.stopPolling();
+                return this.poll();
+              };
+              ConnectionMonitor3.prototype.stopPolling = function() {
+                return clearTimeout(this.pollTimeout);
+              };
+              ConnectionMonitor3.prototype.poll = function() {
+                return this.pollTimeout = setTimeout(function(_this) {
+                  return function() {
+                    _this.reconnectIfStale();
+                    return _this.poll();
+                  };
+                }(this), this.getPollInterval());
+              };
+              ConnectionMonitor3.prototype.getPollInterval = function() {
+                var interval, max, min, ref;
+                ref = this.constructor.pollInterval, min = ref.min, max = ref.max;
+                interval = 5 * Math.log(this.reconnectAttempts + 1);
+                return Math.round(clamp(interval, min, max) * 1e3);
+              };
+              ConnectionMonitor3.prototype.reconnectIfStale = function() {
+                if (this.connectionIsStale()) {
+                  ActionCable.log("ConnectionMonitor detected stale connection. reconnectAttempts = " + this.reconnectAttempts + ", pollInterval = " + this.getPollInterval() + " ms, time disconnected = " + secondsSince3(this.disconnectedAt) + " s, stale threshold = " + this.constructor.staleThreshold + " s");
+                  this.reconnectAttempts++;
+                  if (this.disconnectedRecently()) {
+                    return ActionCable.log("ConnectionMonitor skipping reopening recent disconnect");
+                  } else {
+                    ActionCable.log("ConnectionMonitor reopening");
+                    return this.connection.reopen();
+                  }
+                }
+              };
+              ConnectionMonitor3.prototype.connectionIsStale = function() {
+                var ref;
+                return secondsSince3((ref = this.pingedAt) != null ? ref : this.startedAt) > this.constructor.staleThreshold;
+              };
+              ConnectionMonitor3.prototype.disconnectedRecently = function() {
+                return this.disconnectedAt && secondsSince3(this.disconnectedAt) < this.constructor.staleThreshold;
+              };
+              ConnectionMonitor3.prototype.visibilityDidChange = function() {
+                if (document.visibilityState === "visible") {
+                  return setTimeout(function(_this) {
+                    return function() {
+                      if (_this.connectionIsStale() || !_this.connection.isOpen()) {
+                        ActionCable.log("ConnectionMonitor reopening stale connection on visibilitychange. visbilityState = " + document.visibilityState);
+                        return _this.connection.reopen();
+                      }
+                    };
+                  }(this), 200);
+                }
+              };
+              now3 = function() {
+                return new Date().getTime();
+              };
+              secondsSince3 = function(time) {
+                return (now3() - time) / 1e3;
+              };
+              clamp = function(number, min, max) {
+                return Math.max(min, Math.min(max, number));
+              };
+              return ConnectionMonitor3;
+            }();
+          }).call(this);
+          (function() {
+            var i, message_types3, protocols3, ref, supportedProtocols3, unsupportedProtocol, slice = [].slice, bind = function(fn, me) {
+              return function() {
+                return fn.apply(me, arguments);
+              };
+            }, indexOf3 = [].indexOf || function(item) {
+              for (var i2 = 0, l = this.length; i2 < l; i2++) {
+                if (i2 in this && this[i2] === item)
+                  return i2;
+              }
+              return -1;
+            };
+            ref = ActionCable.INTERNAL, message_types3 = ref.message_types, protocols3 = ref.protocols;
+            supportedProtocols3 = 2 <= protocols3.length ? slice.call(protocols3, 0, i = protocols3.length - 1) : (i = 0, []), unsupportedProtocol = protocols3[i++];
+            ActionCable.Connection = function() {
+              Connection3.reopenDelay = 500;
+              function Connection3(consumer2) {
+                this.consumer = consumer2;
+                this.open = bind(this.open, this);
+                this.subscriptions = this.consumer.subscriptions;
+                this.monitor = new ActionCable.ConnectionMonitor(this);
+                this.disconnected = true;
+              }
+              Connection3.prototype.send = function(data) {
+                if (this.isOpen()) {
+                  this.webSocket.send(JSON.stringify(data));
+                  return true;
+                } else {
+                  return false;
+                }
+              };
+              Connection3.prototype.open = function() {
+                if (this.isActive()) {
+                  ActionCable.log("Attempted to open WebSocket, but existing socket is " + this.getState());
+                  return false;
+                } else {
+                  ActionCable.log("Opening WebSocket, current state is " + this.getState() + ", subprotocols: " + protocols3);
+                  if (this.webSocket != null) {
+                    this.uninstallEventHandlers();
+                  }
+                  this.webSocket = new ActionCable.WebSocket(this.consumer.url, protocols3);
+                  this.installEventHandlers();
+                  this.monitor.start();
+                  return true;
+                }
+              };
+              Connection3.prototype.close = function(arg) {
+                var allowReconnect, ref1;
+                allowReconnect = (arg != null ? arg : {
+                  allowReconnect: true
+                }).allowReconnect;
+                if (!allowReconnect) {
+                  this.monitor.stop();
+                }
+                if (this.isActive()) {
+                  return (ref1 = this.webSocket) != null ? ref1.close() : void 0;
+                }
+              };
+              Connection3.prototype.reopen = function() {
+                var error;
+                ActionCable.log("Reopening WebSocket, current state is " + this.getState());
+                if (this.isActive()) {
+                  try {
+                    return this.close();
+                  } catch (error1) {
+                    error = error1;
+                    return ActionCable.log("Failed to reopen WebSocket", error);
+                  } finally {
+                    ActionCable.log("Reopening WebSocket in " + this.constructor.reopenDelay + "ms");
+                    setTimeout(this.open, this.constructor.reopenDelay);
+                  }
+                } else {
+                  return this.open();
+                }
+              };
+              Connection3.prototype.getProtocol = function() {
+                var ref1;
+                return (ref1 = this.webSocket) != null ? ref1.protocol : void 0;
+              };
+              Connection3.prototype.isOpen = function() {
+                return this.isState("open");
+              };
+              Connection3.prototype.isActive = function() {
+                return this.isState("open", "connecting");
+              };
+              Connection3.prototype.isProtocolSupported = function() {
+                var ref1;
+                return ref1 = this.getProtocol(), indexOf3.call(supportedProtocols3, ref1) >= 0;
+              };
+              Connection3.prototype.isState = function() {
+                var ref1, states;
+                states = 1 <= arguments.length ? slice.call(arguments, 0) : [];
+                return ref1 = this.getState(), indexOf3.call(states, ref1) >= 0;
+              };
+              Connection3.prototype.getState = function() {
+                var ref1, state, value;
+                for (state in WebSocket) {
+                  value = WebSocket[state];
+                  if (value === ((ref1 = this.webSocket) != null ? ref1.readyState : void 0)) {
+                    return state.toLowerCase();
+                  }
+                }
+                return null;
+              };
+              Connection3.prototype.installEventHandlers = function() {
+                var eventName, handler;
+                for (eventName in this.events) {
+                  handler = this.events[eventName].bind(this);
+                  this.webSocket["on" + eventName] = handler;
+                }
+              };
+              Connection3.prototype.uninstallEventHandlers = function() {
+                var eventName;
+                for (eventName in this.events) {
+                  this.webSocket["on" + eventName] = function() {
+                  };
+                }
+              };
+              Connection3.prototype.events = {
+                message: function(event) {
+                  var identifier, message, ref1, type;
+                  if (!this.isProtocolSupported()) {
+                    return;
+                  }
+                  ref1 = JSON.parse(event.data), identifier = ref1.identifier, message = ref1.message, type = ref1.type;
+                  switch (type) {
+                    case message_types3.welcome:
+                      this.monitor.recordConnect();
+                      return this.subscriptions.reload();
+                    case message_types3.ping:
+                      return this.monitor.recordPing();
+                    case message_types3.confirmation:
+                      return this.subscriptions.notify(identifier, "connected");
+                    case message_types3.rejection:
+                      return this.subscriptions.reject(identifier);
+                    default:
+                      return this.subscriptions.notify(identifier, "received", message);
+                  }
+                },
+                open: function() {
+                  ActionCable.log("WebSocket onopen event, using '" + this.getProtocol() + "' subprotocol");
+                  this.disconnected = false;
+                  if (!this.isProtocolSupported()) {
+                    ActionCable.log("Protocol is unsupported. Stopping monitor and disconnecting.");
+                    return this.close({
+                      allowReconnect: false
+                    });
+                  }
+                },
+                close: function(event) {
+                  ActionCable.log("WebSocket onclose event");
+                  if (this.disconnected) {
+                    return;
+                  }
+                  this.disconnected = true;
+                  this.monitor.recordDisconnect();
+                  return this.subscriptions.notifyAll("disconnected", {
+                    willAttemptReconnect: this.monitor.isRunning()
+                  });
+                },
+                error: function() {
+                  return ActionCable.log("WebSocket onerror event");
+                }
+              };
+              return Connection3;
+            }();
+          }).call(this);
+          (function() {
+            var slice = [].slice;
+            ActionCable.Subscriptions = function() {
+              function Subscriptions3(consumer2) {
+                this.consumer = consumer2;
+                this.subscriptions = [];
+              }
+              Subscriptions3.prototype.create = function(channelName, mixin) {
+                var channel, params, subscription;
+                channel = channelName;
+                params = typeof channel === "object" ? channel : {
+                  channel
+                };
+                subscription = new ActionCable.Subscription(this.consumer, params, mixin);
+                return this.add(subscription);
+              };
+              Subscriptions3.prototype.add = function(subscription) {
+                this.subscriptions.push(subscription);
+                this.consumer.ensureActiveConnection();
+                this.notify(subscription, "initialized");
+                this.sendCommand(subscription, "subscribe");
+                return subscription;
+              };
+              Subscriptions3.prototype.remove = function(subscription) {
+                this.forget(subscription);
+                if (!this.findAll(subscription.identifier).length) {
+                  this.sendCommand(subscription, "unsubscribe");
+                }
+                return subscription;
+              };
+              Subscriptions3.prototype.reject = function(identifier) {
+                var i, len, ref, results, subscription;
+                ref = this.findAll(identifier);
+                results = [];
+                for (i = 0, len = ref.length; i < len; i++) {
+                  subscription = ref[i];
+                  this.forget(subscription);
+                  this.notify(subscription, "rejected");
+                  results.push(subscription);
+                }
+                return results;
+              };
+              Subscriptions3.prototype.forget = function(subscription) {
+                var s;
+                this.subscriptions = function() {
+                  var i, len, ref, results;
+                  ref = this.subscriptions;
+                  results = [];
+                  for (i = 0, len = ref.length; i < len; i++) {
+                    s = ref[i];
+                    if (s !== subscription) {
+                      results.push(s);
+                    }
+                  }
+                  return results;
+                }.call(this);
+                return subscription;
+              };
+              Subscriptions3.prototype.findAll = function(identifier) {
+                var i, len, ref, results, s;
+                ref = this.subscriptions;
+                results = [];
+                for (i = 0, len = ref.length; i < len; i++) {
+                  s = ref[i];
+                  if (s.identifier === identifier) {
+                    results.push(s);
+                  }
+                }
+                return results;
+              };
+              Subscriptions3.prototype.reload = function() {
+                var i, len, ref, results, subscription;
+                ref = this.subscriptions;
+                results = [];
+                for (i = 0, len = ref.length; i < len; i++) {
+                  subscription = ref[i];
+                  results.push(this.sendCommand(subscription, "subscribe"));
+                }
+                return results;
+              };
+              Subscriptions3.prototype.notifyAll = function() {
+                var args, callbackName, i, len, ref, results, subscription;
+                callbackName = arguments[0], args = 2 <= arguments.length ? slice.call(arguments, 1) : [];
+                ref = this.subscriptions;
+                results = [];
+                for (i = 0, len = ref.length; i < len; i++) {
+                  subscription = ref[i];
+                  results.push(this.notify.apply(this, [subscription, callbackName].concat(slice.call(args))));
+                }
+                return results;
+              };
+              Subscriptions3.prototype.notify = function() {
+                var args, callbackName, i, len, results, subscription, subscriptions;
+                subscription = arguments[0], callbackName = arguments[1], args = 3 <= arguments.length ? slice.call(arguments, 2) : [];
+                if (typeof subscription === "string") {
+                  subscriptions = this.findAll(subscription);
+                } else {
+                  subscriptions = [subscription];
+                }
+                results = [];
+                for (i = 0, len = subscriptions.length; i < len; i++) {
+                  subscription = subscriptions[i];
+                  results.push(typeof subscription[callbackName] === "function" ? subscription[callbackName].apply(subscription, args) : void 0);
+                }
+                return results;
+              };
+              Subscriptions3.prototype.sendCommand = function(subscription, command) {
+                var identifier;
+                identifier = subscription.identifier;
+                return this.consumer.send({
+                  command,
+                  identifier
+                });
+              };
+              return Subscriptions3;
+            }();
+          }).call(this);
+          (function() {
+            ActionCable.Subscription = function() {
+              var extend3;
+              function Subscription3(consumer2, params, mixin) {
+                this.consumer = consumer2;
+                if (params == null) {
+                  params = {};
+                }
+                this.identifier = JSON.stringify(params);
+                extend3(this, mixin);
+              }
+              Subscription3.prototype.perform = function(action, data) {
+                if (data == null) {
+                  data = {};
+                }
+                data.action = action;
+                return this.send(data);
+              };
+              Subscription3.prototype.send = function(data) {
+                return this.consumer.send({
+                  command: "message",
+                  identifier: this.identifier,
+                  data: JSON.stringify(data)
+                });
+              };
+              Subscription3.prototype.unsubscribe = function() {
+                return this.consumer.subscriptions.remove(this);
+              };
+              extend3 = function(object, properties) {
+                var key, value;
+                if (properties != null) {
+                  for (key in properties) {
+                    value = properties[key];
+                    object[key] = value;
+                  }
+                }
+                return object;
+              };
+              return Subscription3;
+            }();
+          }).call(this);
+          (function() {
+            ActionCable.Consumer = function() {
+              function Consumer3(url) {
+                this.url = url;
+                this.subscriptions = new ActionCable.Subscriptions(this);
+                this.connection = new ActionCable.Connection(this);
+              }
+              Consumer3.prototype.send = function(data) {
+                return this.connection.send(data);
+              };
+              Consumer3.prototype.connect = function() {
+                return this.connection.open();
+              };
+              Consumer3.prototype.disconnect = function() {
+                return this.connection.close({
+                  allowReconnect: false
+                });
+              };
+              Consumer3.prototype.ensureActiveConnection = function() {
+                if (!this.connection.isActive()) {
+                  return this.connection.open();
+                }
+              };
+              return Consumer3;
+            }();
+          }).call(this);
+        }).call(this);
+        if (typeof module === "object" && module.exports) {
+          module.exports = ActionCable;
+        } else if (typeof define === "function" && define.amd) {
+          define(ActionCable);
+        }
+      }).call(exports);
+    }
+  });
+
   // node_modules/@hotwired/turbo/dist/turbo.es2017-esm.js
   (function() {
     if (window.Reflect === void 0 || window.customElements === void 0 || window.customElements.polyfillWrapFlushCallback) {
@@ -24236,7 +24776,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   addEventListener("turbo:submit-start", overrideMethodWithFormmethod);
 
   // app/javascript/components/index.jsx
-  var import_react12 = __toESM(require_react());
+  var import_react13 = __toESM(require_react());
   var import_react_dom2 = __toESM(require_react_dom());
 
   // node_modules/react-router-dom/index.js
@@ -25184,8 +25724,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   }
 
   // app/javascript/components/app.jsx
-  var import_react9 = __toESM(require_react());
   var import_react10 = __toESM(require_react());
+  var import_react11 = __toESM(require_react());
 
   // app/javascript/components/signup.jsx
   var import_react3 = __toESM(require_react());
@@ -25312,17 +25852,27 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
 
   // app/javascript/components/mainChatRoom.jsx
   var import_react8 = __toESM(require_react());
-  var mainChatRoom = () => {
-    return /* @__PURE__ */ import_react8.default.createElement("div", null, "I am the main chat room!");
+
+  // app/javascript/components/ConversationRoom.jsx
+  var import_react9 = __toESM(require_react());
+  var ConversationRoom = () => {
+    return /* @__PURE__ */ import_react9.default.createElement("div", null);
   };
-  var mainChatRoom_default = mainChatRoom;
+  var ConversationRoom_default = ConversationRoom;
 
   // app/javascript/components/app.jsx
-  var App = () => {
-    const [user, setUser] = (0, import_react10.useState)(null);
-    const [isLoggedin, setIsLoggedIn] = (0, import_react10.useState)(null);
+  var App = ({ cableApp: cableApp2 }) => {
+    const [user, setUser] = (0, import_react11.useState)(null);
+    const [isLoggedin, setIsLoggedIn] = (0, import_react11.useState)(null);
+    const [allUsers, setAllUsers] = (0, import_react11.useState)([]);
+    const [currentRoom, setCurrentRoom] = (0, import_react11.useState)({
+      conversation: {},
+      users: [],
+      messages: []
+    });
+    const [messages, setMessages] = (0, import_react11.useState)(null);
     let location2 = useLocation();
-    (0, import_react10.useEffect)(() => {
+    (0, import_react11.useEffect)(() => {
       console.log("In useEffect");
       fetch("/api/me").then((r) => {
         if (r.ok) {
@@ -25341,62 +25891,60 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       });
     }
     if (!user)
-      return /* @__PURE__ */ import_react9.default.createElement("div", {
+      return /* @__PURE__ */ import_react10.default.createElement("div", {
         className: "wrapper"
-      }, /* @__PURE__ */ import_react9.default.createElement("div", {
+      }, /* @__PURE__ */ import_react10.default.createElement("div", {
         className: "header"
-      }, "I am the app component.", /* @__PURE__ */ import_react9.default.createElement(header_default, null), /* @__PURE__ */ import_react9.default.createElement("div", {
+      }, "I am the app component.", /* @__PURE__ */ import_react10.default.createElement(header_default, null), /* @__PURE__ */ import_react10.default.createElement("div", {
         className: "item"
-      }, /* @__PURE__ */ import_react9.default.createElement("h1", {
+      }, /* @__PURE__ */ import_react10.default.createElement("h1", {
         className: "logo"
-      }, "Quip")), /* @__PURE__ */ import_react9.default.createElement("div", {
+      }, "Quip")), /* @__PURE__ */ import_react10.default.createElement("div", {
         className: "item"
-      }, /* @__PURE__ */ import_react9.default.createElement("div", {
+      }, /* @__PURE__ */ import_react10.default.createElement("div", {
         className: "navlinks"
-      }, /* @__PURE__ */ import_react9.default.createElement("button", null, /* @__PURE__ */ import_react9.default.createElement(Link, {
+      }, /* @__PURE__ */ import_react10.default.createElement("button", null, /* @__PURE__ */ import_react10.default.createElement(Link, {
         to: "/login"
-      }, "Login"))), /* @__PURE__ */ import_react9.default.createElement("div", {
+      }, "Login"))), /* @__PURE__ */ import_react10.default.createElement("div", {
         className: "navlinks"
-      }, /* @__PURE__ */ import_react9.default.createElement("button", null, /* @__PURE__ */ import_react9.default.createElement(Link, {
+      }, /* @__PURE__ */ import_react10.default.createElement("button", null, /* @__PURE__ */ import_react10.default.createElement(Link, {
         to: "/signup"
-      }, "Signup"))))), /* @__PURE__ */ import_react9.default.createElement(Routes, null, /* @__PURE__ */ import_react9.default.createElement(Route, {
+      }, "Signup"))))), /* @__PURE__ */ import_react10.default.createElement(Routes, null, /* @__PURE__ */ import_react10.default.createElement(Route, {
         path: "/login",
-        element: /* @__PURE__ */ import_react9.default.createElement(login_default, {
+        element: /* @__PURE__ */ import_react10.default.createElement(login_default, {
           setUser
         })
-      }), /* @__PURE__ */ import_react9.default.createElement(Route, {
+      }), /* @__PURE__ */ import_react10.default.createElement(Route, {
         path: "/signup",
-        element: /* @__PURE__ */ import_react9.default.createElement(signup_default, {
+        element: /* @__PURE__ */ import_react10.default.createElement(signup_default, {
           setUser
         })
-      }), /* @__PURE__ */ import_react9.default.createElement(Route, {
+      }), /* @__PURE__ */ import_react10.default.createElement(Route, {
         path: "/",
-        element: /* @__PURE__ */ import_react9.default.createElement(home_default, {
+        element: /* @__PURE__ */ import_react10.default.createElement(home_default, {
           setUser
         })
       })));
-    return /* @__PURE__ */ import_react9.default.createElement("div", {
+    return /* @__PURE__ */ import_react10.default.createElement("div", {
       className: "wrapper"
-    }, /* @__PURE__ */ import_react9.default.createElement("h1", null, "I am in the App component"), /* @__PURE__ */ import_react9.default.createElement("h2", null, "You are logged in "), /* @__PURE__ */ import_react9.default.createElement("div", null, /* @__PURE__ */ import_react9.default.createElement("button", {
+    }, /* @__PURE__ */ import_react10.default.createElement("h1", null, "I am in the App component"), /* @__PURE__ */ import_react10.default.createElement("h2", null, "You are logged in "), /* @__PURE__ */ import_react10.default.createElement("div", null, /* @__PURE__ */ import_react10.default.createElement("button", {
       onClick: handleLogoutClick
-    }, "Logout")), /* @__PURE__ */ import_react9.default.createElement(navbar_default, {
+    }, "Logout")), /* @__PURE__ */ import_react10.default.createElement(navbar_default, {
       user
-    }), /* @__PURE__ */ import_react9.default.createElement(Routes, null, /* @__PURE__ */ import_react9.default.createElement(Route, {
+    }), /* @__PURE__ */ import_react10.default.createElement(Routes, null, /* @__PURE__ */ import_react10.default.createElement(Route, {
       path: "/home",
-      element: /* @__PURE__ */ import_react9.default.createElement(home_default, {
+      element: /* @__PURE__ */ import_react10.default.createElement(home_default, {
         setUser
       })
-    }), /* @__PURE__ */ import_react9.default.createElement(Route, {
-      path: "/chatroom",
-      element: /* @__PURE__ */ import_react9.default.createElement(mainChatRoom_default, {
-        user
-      })
+    }), /* @__PURE__ */ import_react10.default.createElement(Route, {
+      path: "/conversations/:id",
+      element: /* @__PURE__ */ import_react10.default.createElement(ConversationRoom_default, null)
     })));
   };
   var app_default = App;
 
   // app/javascript/components/messages.jsx
-  var import_react11 = __toESM(require_react());
+  var import_react12 = __toESM(require_react());
   var import_react_dom = __toESM(require_react_dom());
 
   // node_modules/@rails/actioncable/app/assets/javascripts/actioncable.esm.js
@@ -25877,44 +26425,17 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     received(data) {
     }
   });
-  var messages_channel_default = MessagesChannel;
-
-  // app/javascript/components/messages.jsx
-  var MessagesBoard = () => {
-    const [messages, setMessages] = (0, import_react11.useState)([]);
-    const [message, setMessage] = (0, import_react11.useState)("");
-    (0, import_react11.useEffect)(() => {
-      messages_channel_default.received = (data) => setMessages(data.messages);
-    }, []);
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-      await fetch("http://localhost:3000/messages", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-CSRF-TOKEN": document.querySelector("[name=csrf-token]").content
-        },
-        body: JSON.stringify({ content: message })
-      });
-      setMessage("");
-    };
-    return /* @__PURE__ */ import_react11.default.createElement("div", null, /* @__PURE__ */ import_react11.default.createElement("input", {
-      type: "text",
-      value: message,
-      onChange: ({ target: { value } }) => setMessage(value)
-    }), /* @__PURE__ */ import_react11.default.createElement("button", {
-      onClick: handleSubmit
-    }, "Send message"), /* @__PURE__ */ import_react11.default.createElement("ul", null, messages.map((message2) => /* @__PURE__ */ import_react11.default.createElement("li", {
-      key: message2.id
-    }, message2.content))));
-  };
-  var messages_default = MessagesBoard;
 
   // app/javascript/components/index.jsx
+  var import_actioncable2 = __toESM(require_action_cable());
+  var cableApp = {};
+  cableApp.cable = import_actioncable2.default.createConsumer("ws://localhost:3000/cable");
   var Index = () => {
-    return /* @__PURE__ */ import_react12.default.createElement("div", null, /* @__PURE__ */ import_react12.default.createElement(app_default, null));
+    return /* @__PURE__ */ import_react13.default.createElement("div", null, /* @__PURE__ */ import_react13.default.createElement(app_default, {
+      cableApp
+    }));
   };
-  import_react_dom2.default.render(/* @__PURE__ */ import_react12.default.createElement(BrowserRouter, null, /* @__PURE__ */ import_react12.default.createElement(Index, null), /* @__PURE__ */ import_react12.default.createElement(messages_default, null)), document.getElementById("index"));
+  import_react_dom2.default.render(/* @__PURE__ */ import_react13.default.createElement(BrowserRouter, null, /* @__PURE__ */ import_react13.default.createElement(Index, null)), document.getElementById("index"));
 
   // app/javascript/channels/chat_channel.js
   consumer_default.subscriptions.create("ChatChannel", {
