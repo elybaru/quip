@@ -20,6 +20,8 @@ const Index = () => {
     )
 }
 
+
+
 ReactDOM.render(
     <BrowserRouter>
         <Index />

@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
   mount ActionCable.server => '/cable'
-  resources :messages
+  
   namespace :api do
     resources :conversations
     resources :memberships
-    
+    resources :messages
     resources :users
     post '/login', to: 'sessions#create'
     post '/signup', to: 'users#create'
@@ -25,8 +25,8 @@ Rails.application.routes.draw do
   
 
   
-
-  
+  # Maybe it should be just this instead:
+  # get '*path', to: 'root#index'
   root 'components#index'
   get '*path', to: 'components#index'
 end

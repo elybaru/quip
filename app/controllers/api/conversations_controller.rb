@@ -1,25 +1,34 @@
 class Api::ConversationsController < ApplicationController
-    before_action :set_conversation
+    # before_action :set_conversation
 
-    # def index
-    #     @conversations = Conversation.all
-    # end
+    def index
+        @conversations = Conversation.all
+        render json: @conversations, status: :ok
+    end
 
     # def show
     #     @messages = @conversation.messages
     # end
 
-    def index
-       current_user = User.find(session[:user_id])
-       conversations = current_user.conversations.uniq
-       render json: {
-           conversations: conversations
-       }
+    # def index
+    #    current_user = User.find(session[:user_id])
+    #    conversations = current_user.conversations.uniq
+    #    render json: {
+    #        conversations: conversations
+    #    }
+    # end
+
+    def create 
+        conversation = Conversation.create!(conversation_params)
+        render json: conversation
     end
 
     def show
         conversation = Conversation.find(params[:id])
-        render json: ConversationSerializer.new(conversation).serialized_json
+        render json: conversation,
+        # , serializer: ConversationSerializer, 
+        include: ['messages', 'messages.user']
+        # ConversationSerializer.new(conversation).serialized_json
     end
     
     

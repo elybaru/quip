@@ -30,14 +30,20 @@ const App = ({cableApp}) => {
         fetch("/api/me").then((r) => {
             if (r.ok) {
                 r.json().then((u) => {
-                    console.log(u)
+                    // console.log(u)
                     setUser(u)
                 });
             }
-        });
+        })
+        fetch("/api/users")
+			.then((r) => r.json())
+			.then((users) => {
+                setAllUsers(users)
+                console.log(users)
+			})
     }, []);
 
-    function handleLogoutClick() {
+    const handleLogoutClick =()  => {
         fetch("/api/logout", { method: "DELETE" }).then((r) => {
             if (r.ok) {
                 setUser(null);
@@ -45,21 +51,39 @@ const App = ({cableApp}) => {
         });
     }
 
+    const updateAppStateRoom = (newRoom) => {
+		setCurrentRoom({
+			...currentRoom,
+			conversation: newRoom,
+			users: newRoom.users,
+			messages: newRoom.messages,
+		})
+		setMessages(newRoom.messages)
+	}
+
     const handleCurrentRoom =(result) => {
 		return {
-			chatroom: result.data.attributes,
-			users: result.data.attributes.users.data,
-			messages: result.data.attributes.messages,
+			conversation: result.name,
+			users: result.users,
+			messages: result.messages,
 		}
 	}
 
     const getRoomData =(id) => {
-		fetch(`/conversations/${id}`)
+		fetch(`/api/conversations/${id}`, {
+            headers : { 
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+               }
+        })
 			.then((res) => res.json())
 			.then((result) => {
-				setCurrentRoom(() => handleCurrentRoom(result))
-			})
-	}
+                console.log("GET ROOM DATA", result)
+				// setCurrentRoom(() => handleCurrentRoom(result))
+            })
+            
+    }
+    // getRoomData(1)
 
     if (!user) return (
 
@@ -98,11 +122,20 @@ const App = ({cableApp}) => {
             <Navbar user={user} />
 
             <Routes>
-                <Route path='/home' element={<Home setUser={setUser} />}>
+                <Route exact path='/home' element={<Home setUser={setUser} />}>
                 </Route>
-                <Route path='/conversations/' element={<Conversations />}>
+                <Route exact path='/conversations' element={<Conversations />}>
                 </Route>
-                <Route path='/conversations/:id' element={<ConversationRoom />}>
+                <Route path='/conversations/:id' element={<ConversationRoom 
+                    users={allUsers}
+                    cableApp={cableApp}
+                    updateApp={updateAppStateRoom}
+                    getRoomData={getRoomData}
+                    roomData={currentRoom}
+                    user={user}
+                    messages={messages}
+                    handleMessageUpdate={setMessages}
+                />}>
                 </Route>
                 {/* <Route path='/login' element={<Login setUser={setUser} />}>
                 </Route> */}
