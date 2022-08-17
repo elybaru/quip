@@ -10,6 +10,7 @@ const MessagesChannel = consumer.subscriptions.create('MessagesChannel', {
   },
 
   received(data) {
+    console.log("I AM IN THE JS FILE FOR RECEIVED METHOD", data)
     // Called when there's incoming data on the websocket for this channel
   },
 })

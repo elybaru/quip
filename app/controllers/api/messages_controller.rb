@@ -8,7 +8,8 @@ class Api::MessagesController < ApplicationController
       message = Message.new(message_params)
       if message.save 
         conversation = message.conversation
-        broadcast conversation
+        # broadcast conversation
+        broadcast message
       end
       render json: message
     end
@@ -32,11 +33,12 @@ class Api::MessagesController < ApplicationController
         params.require(:message).permit(:content, :user_id, :conversation_id)
       end
 
-      def broadcast(conversation)
-        MessagesChannel.broadcast_to(conversation, {
-          conversation: conversation,
-          users: conversation.users,
-          messages: conversation.messages
+      def broadcast(message)
+        MessagesChannel.broadcast_to(message.conversation, {
+          message: message
+          # conversation: conversation,
+          # users: conversation.users,
+          # messages: conversation.messages
         })
       end
 end

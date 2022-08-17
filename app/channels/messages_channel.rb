@@ -5,11 +5,12 @@ class MessagesChannel < ApplicationCable::Channel
     #   ActionCable.server.broadcast('messages', { messages: Message.all })
     stop_all_streams
     @conversation = Conversation.find(params[:room])
-    stream_for @conversation
+    stream_for @conversation.name
     end
 
 
     def received(data)
+        console.log(data, "MESSAGES_CHANNEL.RB")
         MessagesChannel.broadcast_to(@conversation, { conversation: @conversation, users: @conversation.users, messages: @conversation.messages})
     end
   

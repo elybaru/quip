@@ -25862,7 +25862,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
 
   // app/javascript/components/ConversationFeed.jsx
   var import_react9 = __toESM(require_react());
-  var ConversationFeed = ({ user, room, allUsers, message, thisUser }) => {
+  var ConversationFeed = ({ user, room, allUsers, message, thisUser, currentConvo }) => {
     const timestamp = new Date(message.created_at).toLocaleTimeString();
     const whichUser = () => {
       if (message.user_id === parseInt(user.id)) {
@@ -25899,13 +25899,15 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   var import_react11 = __toESM(require_react());
   var ConvoWebSocket = (props) => {
     (0, import_react11.useEffect)(() => {
-      props.getRoomData(window.location.href.match(/\d+$/)[0]);
+      console.log("I AM IN THE USE EFFECT CONVO WEB SOCKET");
+      console.log("PROPS", props);
+      props.getConversation(window.location.href.match(/\d+$/)[0]);
       props.cableApp.room = props.cableApp.cable.subscriptions.create({
         channel: "MessagesChannel",
         room: window.location.href.match(/\d+$/)[0]
       }, {
-        received: (updatedRoom) => {
-          props.updateApp(updatedRoom);
+        received: (message) => {
+          props.tellMe();
         }
       });
     }, []);
@@ -25914,14 +25916,14 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   var ConvoWebSocket_default = ConvoWebSocket;
 
   // app/javascript/components/ConversationRoom.jsx
-  var ConversationRoom = ({ cableApp: cableApp2, updateApp, messages, handleMessageUpdate, roomData, getRoomData, user, users }) => {
+  var ConversationRoom = ({ cableApp: cableApp2, updateApp, handleMessageUpdate, currentConvo, getConversation, user, users }) => {
     const [newMessage, setNewMessage] = (0, import_react12.useState)("");
-    const [getData, setGetData] = (0, import_react12.useState)(null);
+    const [convoMessages, setConvoMessages] = (0, import_react12.useState)([]);
     const [search, setSearch] = (0, import_react12.useState)("");
     const conversationId = window.location.href.match(/\d+$/)[0];
     (0, import_react12.useEffect)(() => {
-      fetch(`/api/conversations/${conversationId}`).then((resp) => resp.json()).then((res) => {
-        console.log(res);
+      fetch(`/api/conversations/${conversationId}`).then((resp) => resp.json()).then((response) => {
+        setConvoMessages(response.messages);
       });
     }, []);
     const submitMessage = (e) => {
@@ -25933,54 +25935,48 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           "Accept": "application/json"
         },
         body: JSON.stringify(message)
-      }).then((resp) => resp.json()).then(() => {
+      }).then((resp) => {
+        console.log("I AM FROM THE RESPONSE IN THE POST REQUEST");
+        resp.json();
+      }).then((response) => {
         setNewMessage("");
       });
     };
     const handleMessageInput = (event) => {
       setNewMessage(event.target.value);
     };
+    const tellMe = () => {
+      console.log("TELL ME IS BEING CALLED");
+    };
     const message = {
       content: newMessage,
       user_id: user.id,
       conversation_id: conversationId
     };
-    const whichUser = (message2) => {
-      const user2 = roomData.users.find((x) => parseInt(x.id) === message2.user_id);
-      return user2;
-    };
-    const displayMessages = (messages2) => {
-      return messages2.map((msg) => {
-        const thisUser = whichUser(msg);
+    const displayMessages = (convoMessages2) => {
+      return convoMessages2.map((msg) => {
         return msg.content !== null ? /* @__PURE__ */ import_react12.default.createElement(ConversationFeed_default, {
           key: msg.id,
-          room: roomData,
+          currentConvo,
           user,
           allUsers: users,
           message: msg
         }) : /* @__PURE__ */ import_react12.default.createElement("div", null);
       });
     };
-    const handleUpdateMessage = (updatedMessageObj) => {
-      const updatedMessages = messages.map((message2) => {
-        if (message2.id === updatedMessageObj.id) {
-          return updatedMessageObj;
-        } else {
-          return message2;
-        }
-      });
-      handleMessageUpdate(updatedMessages);
-    };
     return /* @__PURE__ */ import_react12.default.createElement("div", null, /* @__PURE__ */ import_react12.default.createElement("div", null, /* @__PURE__ */ import_react12.default.createElement("div", {
       className: "messages"
-    }, /* @__PURE__ */ import_react12.default.createElement("div", null, messages !== null && messages.length > 0 ? displayMessages(messages) : /* @__PURE__ */ import_react12.default.createElement("h3", null, "This room has no message yet")), /* @__PURE__ */ import_react12.default.createElement(MessagesWindow_default, {
+    }, /* @__PURE__ */ import_react12.default.createElement("div", null, convoMessages !== null && convoMessages.length > 0 ? displayMessages(convoMessages) : /* @__PURE__ */ import_react12.default.createElement("h3", null, "This room has no message yet")), /* @__PURE__ */ import_react12.default.createElement(MessagesWindow_default, {
       submitMessage,
       newMessage,
       onMessageInput: handleMessageInput
     })), /* @__PURE__ */ import_react12.default.createElement(ConvoWebSocket_default, {
       cableApp: cableApp2,
       updateApp,
-      getRoomData
+      getConversation,
+      setConvoMessages,
+      convoMessages,
+      tellMe
     })));
   };
   var ConversationRoom_default = ConversationRoom;
@@ -26013,12 +26009,11 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     const [user, setUser] = (0, import_react15.useState)(null);
     const [isLoggedin, setIsLoggedIn] = (0, import_react15.useState)(null);
     const [allUsers, setAllUsers] = (0, import_react15.useState)([]);
-    const [currentRoom, setCurrentRoom] = (0, import_react15.useState)({
+    const [currentConvo, setCurrentConvo] = (0, import_react15.useState)({
       conversation: {},
       users: [],
       messages: []
     });
-    const [messages, setMessages] = (0, import_react15.useState)(null);
     let location2 = useLocation();
     (0, import_react15.useEffect)(() => {
       console.log("In useEffect");
@@ -26041,30 +26036,18 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         }
       });
     };
-    const updateAppStateRoom = (newRoom) => {
-      setCurrentRoom({
-        ...currentRoom,
-        conversation: newRoom,
-        users: newRoom.users,
-        messages: newRoom.messages
-      });
-      setMessages(newRoom.messages);
+    const handleCurrentConvo = (result) => {
+      console.log(result);
     };
-    const handleCurrentRoom = (result) => {
-      return {
-        conversation: result.name,
-        users: result.users,
-        messages: result.messages
-      };
-    };
-    const getRoomData = (id) => {
+    const getConversation = (id) => {
       fetch(`/api/conversations/${id}`, {
         headers: {
           "Content-Type": "application/json",
           "Accept": "application/json"
         }
       }).then((res) => res.json()).then((result) => {
-        console.log("GET ROOM DATA", result);
+        console.log("GET CONVERSATION", result);
+        setCurrentConvo(() => handleCurrentConvo(result));
       });
     };
     if (!user)
@@ -26123,12 +26106,9 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       element: /* @__PURE__ */ import_react14.default.createElement(ConversationRoom_default, {
         users: allUsers,
         cableApp: cableApp2,
-        updateApp: updateAppStateRoom,
-        getRoomData,
-        roomData: currentRoom,
-        user,
-        messages,
-        handleMessageUpdate: setMessages
+        getConversation,
+        currentConvo,
+        user
       })
     })));
   };
@@ -26614,6 +26594,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     disconnected() {
     },
     received(data) {
+      console.log("I AM IN THE JS FILE FOR RECEIVED METHOD", data);
     }
   });
 
@@ -26627,18 +26608,6 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     }));
   };
   import_react_dom2.default.render(/* @__PURE__ */ import_react17.default.createElement(BrowserRouter, null, /* @__PURE__ */ import_react17.default.createElement(Index, null)), document.getElementById("index"));
-
-  // app/javascript/channels/chat_channel.js
-  consumer_default.subscriptions.create("ChatChannel", {
-    connected() {
-      console.log("Hello from the chat");
-    },
-    disconnected() {
-    },
-    received(data) {
-      console.log(data);
-    }
-  });
 })();
 /*
 object-assign

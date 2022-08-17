@@ -15,12 +15,12 @@ const App = ({cableApp}) => {
     const [user, setUser] = useState(null);
     const [isLoggedin, setIsLoggedIn] = useState(null)
     const [allUsers, setAllUsers] = useState([])
-    const [currentRoom, setCurrentRoom] = useState({
+    const [currentConvo, setCurrentConvo] = useState({
         conversation: {},
         users: [],
         messages: []
     })
-    const [messages, setMessages] = useState(null)
+    // const [messages, setMessages] = useState(null)
 
     let location = useLocation()
 
@@ -51,25 +51,26 @@ const App = ({cableApp}) => {
         });
     }
 
-    const updateAppStateRoom = (newRoom) => {
-		setCurrentRoom({
-			...currentRoom,
-			conversation: newRoom,
-			users: newRoom.users,
-			messages: newRoom.messages,
-		})
-		setMessages(newRoom.messages)
+    // const updateAppStateRoom = (newRoom) => {
+	// 	setCurrentRoom({
+	// 		...currentRoom,
+	// 		conversation: newRoom,
+	// 		users: newRoom.users,
+	// 		messages: newRoom.messages,
+	// 	})
+	// 	setMessages(newRoom.messages)
+	// }
+
+    const handleCurrentConvo =(result) => {
+        console.log(result)
+		// return {
+		// 	conversation: result.name,
+		// 	users: result.users,
+		// 	messages: result.messages,
+		// }
 	}
 
-    const handleCurrentRoom =(result) => {
-		return {
-			conversation: result.name,
-			users: result.users,
-			messages: result.messages,
-		}
-	}
-
-    const getRoomData =(id) => {
+    const getConversation =(id) => {
 		fetch(`/api/conversations/${id}`, {
             headers : { 
                 'Content-Type': 'application/json',
@@ -78,8 +79,8 @@ const App = ({cableApp}) => {
         })
 			.then((res) => res.json())
 			.then((result) => {
-                console.log("GET ROOM DATA", result)
-				// setCurrentRoom(() => handleCurrentRoom(result))
+                console.log("GET CONVERSATION", result)
+				setCurrentConvo(() => handleCurrentConvo(result))
             })
             
     }
@@ -129,12 +130,12 @@ const App = ({cableApp}) => {
                 <Route path='/conversations/:id' element={<ConversationRoom 
                     users={allUsers}
                     cableApp={cableApp}
-                    updateApp={updateAppStateRoom}
-                    getRoomData={getRoomData}
-                    roomData={currentRoom}
+                    // updateApp={updateAppStateRoom}
+                    getConversation={getConversation}
+                    currentConvo={currentConvo}
                     user={user}
-                    messages={messages}
-                    handleMessageUpdate={setMessages}
+                    // messages={messages}
+                    // handleMessageUpdate={setMessages}
                 />}>
                 </Route>
                 {/* <Route path='/login' element={<Login setUser={setUser} />}>

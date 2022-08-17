@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ConversationFeed = ({user, room, allUsers, message, thisUser}) => {
+const ConversationFeed = ({user, room, allUsers, message, thisUser, currentConvo}) => {
 
     const timestamp = new Date(message.created_at).toLocaleTimeString()
 
