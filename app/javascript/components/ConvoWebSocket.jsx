@@ -5,25 +5,28 @@ const ConvoWebSocket = (props) => {
         console.log("I AM IN THE USE EFFECT CONVO WEB SOCKET")
         console.log("PROPS", props)
         // props.getRoomData(window.location.href.match(/\d+$/)[0])
-		props.getConversation(window.location.href.match(/\d+$/)[0])
+		// props.getConversation(window.location.href.match(/\d+$/)[0])
+        props.getConversation(1)
+
+        // debugger
 		props.cableApp.room = props.cableApp.cable.subscriptions.create(
 			{
 				channel: "MessagesChannel",
-				room: window.location.href.match(/\d+$/)[0],
+				// room: window.location.href.match(/\d+$/)[0],
+                room: 1
 			},
 			{
-				received: (message) => {
-                    //  console.log("IN RECEIVED", message)
-                // debugger
-                // props.updateApp(updatedRoom)
-                    // props.tellMe(message)
-                    props.tellMe()
+				received: (data) => {
+                    console.log("In convosocket", data)
+                    props.tellMe(data)
                 // props.setConvoMessages(({...props.convoMessages, message: message}))
                 // props.setConvoMessages(([...props.convoMessages, message]))
 				},
             }
         )
 	}, [])
+
+
     return (
         <div>
             

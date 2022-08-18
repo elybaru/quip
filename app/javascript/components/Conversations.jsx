@@ -9,7 +9,7 @@ const Conversations = () => {
             if (r.ok) {
                 r.json().then((data) => {
                     setConversations(data)
-                    console.log(data)
+                    console.log("fetched in conversations use effect", data)
                 });
             }
         })

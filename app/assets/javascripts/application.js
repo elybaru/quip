@@ -1604,7 +1604,7 @@
             }
             return dispatcher.useContext(Context, unstable_observedBits);
           }
-          function useState10(initialState) {
+          function useState11(initialState) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState);
           }
@@ -2192,7 +2192,7 @@
           exports.useMemo = useMemo3;
           exports.useReducer = useReducer;
           exports.useRef = useRef3;
-          exports.useState = useState10;
+          exports.useState = useState11;
           exports.version = ReactVersion;
         })();
       }
@@ -3000,11 +3000,11 @@
       if (true) {
         (function() {
           "use strict";
-          var React15 = require_react();
+          var React14 = require_react();
           var _assign = require_object_assign();
           var Scheduler = require_scheduler();
           var tracing = require_tracing();
-          var ReactSharedInternals = React15.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           function warn(format) {
             {
               for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -3036,7 +3036,7 @@
               Function.prototype.apply.call(console[level], console, argsWithFormat);
             }
           }
-          if (!React15) {
+          if (!React14) {
             {
               throw Error("ReactDOM was loaded before React. Make sure you load the React package before loading ReactDOM.");
             }
@@ -4252,7 +4252,7 @@
           var didWarnInvalidChild = false;
           function flattenChildren(children) {
             var content = "";
-            React15.Children.forEach(children, function(child) {
+            React14.Children.forEach(children, function(child) {
               if (child == null) {
                 return;
               }
@@ -4263,7 +4263,7 @@
           function validateProps(element, props) {
             {
               if (typeof props.children === "object" && props.children !== null) {
-                React15.Children.forEach(props.children, function(child) {
+                React14.Children.forEach(props.children, function(child) {
                   if (child == null) {
                     return;
                   }
@@ -11456,7 +11456,7 @@
           }
           var fakeInternalInstance = {};
           var isArray = Array.isArray;
-          var emptyRefsObject = new React15.Component().refs;
+          var emptyRefsObject = new React14.Component().refs;
           var didWarnAboutStateAssignmentForComponent;
           var didWarnAboutUninitializedState;
           var didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate;
@@ -24776,7 +24776,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   addEventListener("turbo:submit-start", overrideMethodWithFormmethod);
 
   // app/javascript/components/index.jsx
-  var import_react17 = __toESM(require_react());
+  var import_react16 = __toESM(require_react());
   var import_react_dom2 = __toESM(require_react_dom());
 
   // node_modules/react-router-dom/index.js
@@ -25724,8 +25724,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   }
 
   // app/javascript/components/app.jsx
+  var import_react13 = __toESM(require_react());
   var import_react14 = __toESM(require_react());
-  var import_react15 = __toESM(require_react());
 
   // app/javascript/components/signup.jsx
   var import_react3 = __toESM(require_react());
@@ -25858,145 +25858,69 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   var import_react8 = __toESM(require_react());
 
   // app/javascript/components/ConversationRoom.jsx
-  var import_react12 = __toESM(require_react());
-
-  // app/javascript/components/ConversationFeed.jsx
-  var import_react9 = __toESM(require_react());
-  var ConversationFeed = ({ user, room, allUsers, message, thisUser, currentConvo }) => {
-    const timestamp = new Date(message.created_at).toLocaleTimeString();
-    const whichUser = () => {
-      if (message.user_id === parseInt(user.id)) {
-        return "current-user-message";
-      } else {
-        return "other-user-message";
-      }
-    };
-    return /* @__PURE__ */ import_react9.default.createElement("div", null, /* @__PURE__ */ import_react9.default.createElement("div", {
-      id: "convo-message",
-      className: whichUser()
-    }, /* @__PURE__ */ import_react9.default.createElement("p", null, message.content), /* @__PURE__ */ import_react9.default.createElement("p", null, timestamp)));
-  };
-  var ConversationFeed_default = ConversationFeed;
+  var import_react10 = __toESM(require_react());
 
   // app/javascript/components/MessagesWindow.jsx
-  var import_react10 = __toESM(require_react());
-  var MessagesWindow = ({ submitMessage, newMessage, onMessageInput }) => {
-    return /* @__PURE__ */ import_react10.default.createElement("div", null, /* @__PURE__ */ import_react10.default.createElement("form", {
-      onSubmit: submitMessage
-    }, /* @__PURE__ */ import_react10.default.createElement("textarea", {
+  var import_react9 = __toESM(require_react());
+  var MessagesWindow = ({ addConvoMessage, onMessageInput, user }) => {
+    const [newMessage, setNewMessage] = (0, import_react9.useState)("");
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      const message = {
+        content: newMessage,
+        user_id: user.id,
+        conversation_id: 1
+      };
+      addConvoMessage(message);
+      setNewMessage("");
+    };
+    const handleChange = (event) => {
+      setNewMessage(event.target.value);
+    };
+    return /* @__PURE__ */ import_react9.default.createElement("div", null, /* @__PURE__ */ import_react9.default.createElement("form", {
+      onSubmit: handleSubmit
+    }, /* @__PURE__ */ import_react9.default.createElement("textarea", {
       type: "text",
       className: "message-input",
       placeholder: "Write a new message... ",
       value: newMessage,
-      onChange: onMessageInput
-    }), /* @__PURE__ */ import_react10.default.createElement("button", {
+      onChange: handleChange
+    }), /* @__PURE__ */ import_react9.default.createElement("button", {
       type: "submit"
     }, "Send")));
   };
   var MessagesWindow_default = MessagesWindow;
 
-  // app/javascript/components/ConvoWebSocket.jsx
-  var import_react11 = __toESM(require_react());
-  var ConvoWebSocket = (props) => {
-    (0, import_react11.useEffect)(() => {
-      console.log("I AM IN THE USE EFFECT CONVO WEB SOCKET");
-      console.log("PROPS", props);
-      props.getConversation(window.location.href.match(/\d+$/)[0]);
-      props.cableApp.room = props.cableApp.cable.subscriptions.create({
-        channel: "MessagesChannel",
-        room: window.location.href.match(/\d+$/)[0]
-      }, {
-        received: (message) => {
-          props.tellMe();
-        }
-      });
-    }, []);
-    return /* @__PURE__ */ import_react11.default.createElement("div", null);
-  };
-  var ConvoWebSocket_default = ConvoWebSocket;
-
   // app/javascript/components/ConversationRoom.jsx
-  var ConversationRoom = ({ cableApp: cableApp2, updateApp, handleMessageUpdate, currentConvo, getConversation, user, users }) => {
-    const [newMessage, setNewMessage] = (0, import_react12.useState)("");
-    const [convoMessages, setConvoMessages] = (0, import_react12.useState)([]);
-    const [search, setSearch] = (0, import_react12.useState)("");
-    const conversationId = window.location.href.match(/\d+$/)[0];
-    (0, import_react12.useEffect)(() => {
-      fetch(`/api/conversations/${conversationId}`).then((resp) => resp.json()).then((response) => {
-        setConvoMessages(response.messages);
-      });
-    }, []);
-    const submitMessage = (e) => {
-      e.preventDefault();
-      fetch("/api/messages", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
-        body: JSON.stringify(message)
-      }).then((resp) => {
-        console.log("I AM FROM THE RESPONSE IN THE POST REQUEST");
-        resp.json();
-      }).then((response) => {
-        setNewMessage("");
-      });
-    };
-    const handleMessageInput = (event) => {
-      setNewMessage(event.target.value);
-    };
-    const tellMe = () => {
-      console.log("TELL ME IS BEING CALLED");
-    };
-    const message = {
-      content: newMessage,
-      user_id: user.id,
-      conversation_id: conversationId
-    };
-    const displayMessages = (convoMessages2) => {
-      return convoMessages2.map((msg) => {
-        return msg.content !== null ? /* @__PURE__ */ import_react12.default.createElement(ConversationFeed_default, {
-          key: msg.id,
-          currentConvo,
-          user,
-          allUsers: users,
-          message: msg
-        }) : /* @__PURE__ */ import_react12.default.createElement("div", null);
-      });
-    };
-    return /* @__PURE__ */ import_react12.default.createElement("div", null, /* @__PURE__ */ import_react12.default.createElement("div", null, /* @__PURE__ */ import_react12.default.createElement("div", {
+  var ConversationRoom = ({ convoMessages, addConvoMessage, user }) => {
+    const displayMessages = convoMessages.map((msg) => /* @__PURE__ */ import_react10.default.createElement("li", {
+      key: msg.id
+    }, msg.content));
+    return /* @__PURE__ */ import_react10.default.createElement("div", null, /* @__PURE__ */ import_react10.default.createElement("div", null, /* @__PURE__ */ import_react10.default.createElement("div", {
       className: "messages"
-    }, /* @__PURE__ */ import_react12.default.createElement("div", null, convoMessages !== null && convoMessages.length > 0 ? displayMessages(convoMessages) : /* @__PURE__ */ import_react12.default.createElement("h3", null, "This room has no message yet")), /* @__PURE__ */ import_react12.default.createElement(MessagesWindow_default, {
-      submitMessage,
-      newMessage,
-      onMessageInput: handleMessageInput
-    })), /* @__PURE__ */ import_react12.default.createElement(ConvoWebSocket_default, {
-      cableApp: cableApp2,
-      updateApp,
-      getConversation,
-      setConvoMessages,
-      convoMessages,
-      tellMe
-    })));
+    }, /* @__PURE__ */ import_react10.default.createElement("div", null, displayMessages), /* @__PURE__ */ import_react10.default.createElement(MessagesWindow_default, {
+      addConvoMessage,
+      user
+    }))));
   };
   var ConversationRoom_default = ConversationRoom;
 
   // app/javascript/components/Conversations.jsx
-  var import_react13 = __toESM(require_react());
+  var import_react11 = __toESM(require_react());
   var Conversations = () => {
-    const [conversations, setConversations] = (0, import_react13.useState)(null);
-    (0, import_react13.useEffect)(() => {
+    const [conversations, setConversations] = (0, import_react11.useState)(null);
+    (0, import_react11.useEffect)(() => {
       fetch("/api/conversations").then((r) => {
         if (r.ok) {
           r.json().then((data) => {
             setConversations(data);
-            console.log(data);
+            console.log("fetched in conversations use effect", data);
           });
         }
       });
     }, []);
-    return /* @__PURE__ */ import_react13.default.createElement("div", null, conversations ? conversations.map((c) => {
-      return /* @__PURE__ */ import_react13.default.createElement(Link, {
+    return /* @__PURE__ */ import_react11.default.createElement("div", null, conversations ? conversations.map((c) => {
+      return /* @__PURE__ */ import_react11.default.createElement(Link, {
         key: c.id,
         to: `/conversations/${c.id}`
       }, c.name);
@@ -26004,30 +25928,52 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   };
   var Conversations_default = Conversations;
 
+  // app/javascript/components/ConvoWebSocket.jsx
+  var import_react12 = __toESM(require_react());
+  var ConvoWebSocket = (props) => {
+    (0, import_react12.useEffect)(() => {
+      console.log("I AM IN THE USE EFFECT CONVO WEB SOCKET");
+      console.log("PROPS", props);
+      props.getConversation(1);
+      props.cableApp.room = props.cableApp.cable.subscriptions.create({
+        channel: "MessagesChannel",
+        room: 1
+      }, {
+        received: (data) => {
+          console.log("In convosocket", data);
+          props.tellMe(data);
+        }
+      });
+    }, []);
+    return /* @__PURE__ */ import_react12.default.createElement("div", null);
+  };
+  var ConvoWebSocket_default = ConvoWebSocket;
+
   // app/javascript/components/app.jsx
   var App = ({ cableApp: cableApp2 }) => {
-    const [user, setUser] = (0, import_react15.useState)(null);
-    const [isLoggedin, setIsLoggedIn] = (0, import_react15.useState)(null);
-    const [allUsers, setAllUsers] = (0, import_react15.useState)([]);
-    const [currentConvo, setCurrentConvo] = (0, import_react15.useState)({
+    const [user, setUser] = (0, import_react14.useState)(null);
+    const [isLoggedin, setIsLoggedIn] = (0, import_react14.useState)(null);
+    const [allUsers, setAllUsers] = (0, import_react14.useState)([]);
+    const [currentConvo, setCurrentConvo] = (0, import_react14.useState)({
       conversation: {},
       users: [],
       messages: []
     });
+    const [convoMessages, setConvoMessages] = (0, import_react14.useState)([]);
+    const [messages, setMessages] = (0, import_react14.useState)(null);
     let location2 = useLocation();
-    (0, import_react15.useEffect)(() => {
+    (0, import_react14.useEffect)(() => {
       console.log("In useEffect");
       fetch("/api/me").then((r) => {
         if (r.ok) {
           r.json().then((u) => {
             setUser(u);
           });
+          console.log(user, "in app useEffect");
         }
       });
-      fetch("/api/users").then((r) => r.json()).then((users) => {
-        setAllUsers(users);
-        console.log(users);
-      });
+      ConvoWebSocket_default.received = (data) => setConvoMessages(data.messages);
+      console.log("I AM IN THE USEEFFECT IN CONVERSATIONROOM", convoMessages);
     }, []);
     const handleLogoutClick = () => {
       fetch("/api/logout", { method: "DELETE" }).then((r) => {
@@ -26036,86 +25982,110 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         }
       });
     };
-    const handleCurrentConvo = (result) => {
-      console.log(result);
+    const tellMe = (data) => {
+      if (data.messages) {
+        console.log("Array");
+        console.log("TELL ME IS BEING CALLED", data.messages);
+        setConvoMessages(data.messages);
+      } else {
+        console.log("Object");
+        console.log("TELL ME IS BEING CALLED", data.message);
+        setConvoMessages((convoMessages2) => [...convoMessages2, data.message]);
+      }
     };
-    const getConversation = (id) => {
-      fetch(`/api/conversations/${id}`, {
+    const addConvoMessage = (msg) => {
+      fetch("/api/messages", {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
           "Accept": "application/json"
-        }
-      }).then((res) => res.json()).then((result) => {
-        console.log("GET CONVERSATION", result);
-        setCurrentConvo(() => handleCurrentConvo(result));
+        },
+        body: JSON.stringify(msg)
       });
     };
+    const handleCurrentConvo = (result) => {
+      console.log("App handle current conv", result);
+      return {
+        conversation: result.name,
+        users: result.users,
+        messages: result.messages
+      };
+    };
+    const getConversation = (id) => {
+    };
     if (!user)
-      return /* @__PURE__ */ import_react14.default.createElement("div", {
+      return /* @__PURE__ */ import_react13.default.createElement("div", {
         className: "wrapper"
-      }, /* @__PURE__ */ import_react14.default.createElement("div", {
+      }, /* @__PURE__ */ import_react13.default.createElement("div", {
         className: "header"
-      }, "I am the app component.", /* @__PURE__ */ import_react14.default.createElement(header_default, null), /* @__PURE__ */ import_react14.default.createElement("div", {
+      }, "I am the app component.", /* @__PURE__ */ import_react13.default.createElement(header_default, null), /* @__PURE__ */ import_react13.default.createElement("div", {
         className: "item"
-      }, /* @__PURE__ */ import_react14.default.createElement("h1", {
+      }, /* @__PURE__ */ import_react13.default.createElement("h1", {
         className: "logo"
-      }, "Quip")), /* @__PURE__ */ import_react14.default.createElement("div", {
+      }, "Quip")), /* @__PURE__ */ import_react13.default.createElement("div", {
         className: "item"
-      }, /* @__PURE__ */ import_react14.default.createElement("div", {
+      }, /* @__PURE__ */ import_react13.default.createElement("div", {
         className: "navlinks"
-      }, /* @__PURE__ */ import_react14.default.createElement("button", null, /* @__PURE__ */ import_react14.default.createElement(Link, {
+      }, /* @__PURE__ */ import_react13.default.createElement("button", null, /* @__PURE__ */ import_react13.default.createElement(Link, {
         to: "/login"
-      }, "Login"))), /* @__PURE__ */ import_react14.default.createElement("div", {
+      }, "Login"))), /* @__PURE__ */ import_react13.default.createElement("div", {
         className: "navlinks"
-      }, /* @__PURE__ */ import_react14.default.createElement("button", null, /* @__PURE__ */ import_react14.default.createElement(Link, {
+      }, /* @__PURE__ */ import_react13.default.createElement("button", null, /* @__PURE__ */ import_react13.default.createElement(Link, {
         to: "/signup"
-      }, "Signup"))))), /* @__PURE__ */ import_react14.default.createElement(Routes, null, /* @__PURE__ */ import_react14.default.createElement(Route, {
+      }, "Signup"))))), /* @__PURE__ */ import_react13.default.createElement(Routes, null, /* @__PURE__ */ import_react13.default.createElement(Route, {
         path: "/login",
-        element: /* @__PURE__ */ import_react14.default.createElement(login_default, {
+        element: /* @__PURE__ */ import_react13.default.createElement(login_default, {
           setUser
         })
-      }), /* @__PURE__ */ import_react14.default.createElement(Route, {
+      }), /* @__PURE__ */ import_react13.default.createElement(Route, {
         path: "/signup",
-        element: /* @__PURE__ */ import_react14.default.createElement(signup_default, {
+        element: /* @__PURE__ */ import_react13.default.createElement(signup_default, {
           setUser
         })
-      }), /* @__PURE__ */ import_react14.default.createElement(Route, {
+      }), /* @__PURE__ */ import_react13.default.createElement(Route, {
         path: "/",
-        element: /* @__PURE__ */ import_react14.default.createElement(home_default, {
+        element: /* @__PURE__ */ import_react13.default.createElement(home_default, {
           setUser
         })
       })));
-    return /* @__PURE__ */ import_react14.default.createElement("div", {
+    return /* @__PURE__ */ import_react13.default.createElement("div", {
       className: "wrapper"
-    }, /* @__PURE__ */ import_react14.default.createElement("h1", null, "I am in the App component"), /* @__PURE__ */ import_react14.default.createElement("h2", null, "You are logged in "), /* @__PURE__ */ import_react14.default.createElement("div", null, /* @__PURE__ */ import_react14.default.createElement("button", {
+    }, /* @__PURE__ */ import_react13.default.createElement("h1", null, "I am in the App component"), /* @__PURE__ */ import_react13.default.createElement("h2", null, "You are logged in "), /* @__PURE__ */ import_react13.default.createElement("div", null, /* @__PURE__ */ import_react13.default.createElement("button", {
       onClick: handleLogoutClick
-    }, "Logout")), /* @__PURE__ */ import_react14.default.createElement(navbar_default, {
+    }, "Logout")), /* @__PURE__ */ import_react13.default.createElement(navbar_default, {
       user
-    }), /* @__PURE__ */ import_react14.default.createElement(Routes, null, /* @__PURE__ */ import_react14.default.createElement(Route, {
+    }), /* @__PURE__ */ import_react13.default.createElement(Routes, null, /* @__PURE__ */ import_react13.default.createElement(Route, {
       exact: true,
       path: "/home",
-      element: /* @__PURE__ */ import_react14.default.createElement(home_default, {
+      element: /* @__PURE__ */ import_react13.default.createElement(home_default, {
         setUser
       })
-    }), /* @__PURE__ */ import_react14.default.createElement(Route, {
+    }), /* @__PURE__ */ import_react13.default.createElement(Route, {
       exact: true,
       path: "/conversations",
-      element: /* @__PURE__ */ import_react14.default.createElement(Conversations_default, null)
-    }), /* @__PURE__ */ import_react14.default.createElement(Route, {
+      element: /* @__PURE__ */ import_react13.default.createElement(Conversations_default, null)
+    }), /* @__PURE__ */ import_react13.default.createElement(Route, {
       path: "/conversations/:id",
-      element: /* @__PURE__ */ import_react14.default.createElement(ConversationRoom_default, {
+      element: /* @__PURE__ */ import_react13.default.createElement(ConversationRoom_default, {
+        convoMessages,
         users: allUsers,
         cableApp: cableApp2,
         getConversation,
-        currentConvo,
-        user
+        user,
+        addConvoMessage
       })
-    })));
+    })), /* @__PURE__ */ import_react13.default.createElement(ConvoWebSocket_default, {
+      cableApp: cableApp2,
+      getConversation,
+      setConvoMessages,
+      convoMessages,
+      tellMe
+    }));
   };
   var app_default = App;
 
   // app/javascript/components/messages.jsx
-  var import_react16 = __toESM(require_react());
+  var import_react15 = __toESM(require_react());
   var import_react_dom = __toESM(require_react_dom());
 
   // node_modules/@rails/actioncable/app/assets/javascripts/actioncable.esm.js
@@ -26603,11 +26573,11 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   var cableApp = {};
   cableApp.cable = import_actioncable2.default.createConsumer("ws://localhost:3000/cable");
   var Index = () => {
-    return /* @__PURE__ */ import_react17.default.createElement("div", null, /* @__PURE__ */ import_react17.default.createElement(app_default, {
+    return /* @__PURE__ */ import_react16.default.createElement("div", null, /* @__PURE__ */ import_react16.default.createElement(app_default, {
       cableApp
     }));
   };
-  import_react_dom2.default.render(/* @__PURE__ */ import_react17.default.createElement(BrowserRouter, null, /* @__PURE__ */ import_react17.default.createElement(Index, null)), document.getElementById("index"));
+  import_react_dom2.default.render(/* @__PURE__ */ import_react16.default.createElement(BrowserRouter, null, /* @__PURE__ */ import_react16.default.createElement(Index, null)), document.getElementById("index"));
 })();
 /*
 object-assign

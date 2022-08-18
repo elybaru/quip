@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+    include ActiveModel::Serializers::JSON
     has_secure_password
     has_many :messages, dependent: :destroy
     has_many :memberships

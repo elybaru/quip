@@ -1,17 +1,36 @@
-import React from 'react'
+import React, {useState} from 'react'
 
-const MessagesWindow = ({submitMessage, newMessage, onMessageInput}) => {
+const MessagesWindow = ({addConvoMessage, onMessageInput, user}) => {
+	const [newMessage, setNewMessage] = useState("")
+
+	const handleSubmit = (e) => {
+		e.preventDefault()
+		const message = {
+			content: newMessage,
+			user_id: user.id,
+			conversation_id: 1,
+		}
+		addConvoMessage(message)
+		setNewMessage("")
+	}
+
+	const handleChange =(event) => {
+		setNewMessage(event.target.value)
+    }
+
     return (
         <div>
-            <form onSubmit={submitMessage}>
+            <form onSubmit={handleSubmit}>
 			<textarea
 				type="text"
 				className="message-input"
 				placeholder="Write a new message... "
 				value={newMessage}
-				onChange={onMessageInput}
+				onChange={handleChange}
 			></textarea>
 			<button type="submit">Send</button>
+
+
 		</form>
             
         </div>

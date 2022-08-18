@@ -2,16 +2,18 @@ class Api::MessagesController < ApplicationController
   skip_before_action :verify_authenticity_token
 
     def index
+      # binding.pry
+      # ActionCable.server.broadcast('messages', { messages: Message.all})
+      # render json: Message.all
     end
 
     def create 
-      message = Message.new(message_params)
-      if message.save 
-        conversation = message.conversation
-        # broadcast conversation
-        broadcast message
+      @message = current_user.messages.build(message_params)
+      # @message = Message.new(message_params)
+  
+      if @message.save
+        ActionCable.server.broadcast('messages', {message: @message.serializable_hash(include: :user) } )
       end
-      render json: message
     end
 
     # def create
@@ -42,3 +44,5 @@ class Api::MessagesController < ApplicationController
         })
       end
 end
+
+

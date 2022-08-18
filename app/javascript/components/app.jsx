@@ -10,6 +10,7 @@ import Navbar from './navbar'
 import MainChatRoom from './mainChatRoom'
 import ConversationRoom from './ConversationRoom'
 import Conversations from './Conversations'
+import ConvoWebSocket from './ConvoWebSocket';
 
 const App = ({cableApp}) => {
     const [user, setUser] = useState(null);
@@ -20,7 +21,8 @@ const App = ({cableApp}) => {
         users: [],
         messages: []
     })
-    // const [messages, setMessages] = useState(null)
+    const [convoMessages, setConvoMessages] = useState([])
+    const [messages, setMessages] = useState(null)
 
     let location = useLocation()
 
@@ -33,15 +35,20 @@ const App = ({cableApp}) => {
                     // console.log(u)
                     setUser(u)
                 });
+                console.log(user, "in app useEffect")
             }
         })
-        fetch("/api/users")
-			.then((r) => r.json())
-			.then((users) => {
-                setAllUsers(users)
-                console.log(users)
-			})
+
+        ConvoWebSocket.received = (data) => setConvoMessages(data.messages)
+        console.log("I AM IN THE USEEFFECT IN CONVERSATIONROOM", convoMessages)
+        // fetch("/api/users")
+		// 	.then((r) => r.json())
+		// 	.then((users) => {
+        //         setAllUsers(users)
+        //         console.log(users)
+		// 	})
     }, []);
+
 
     const handleLogoutClick =()  => {
         fetch("/api/logout", { method: "DELETE" }).then((r) => {
@@ -61,27 +68,55 @@ const App = ({cableApp}) => {
 	// 	setMessages(newRoom.messages)
 	// }
 
+
+    const tellMe = (data) => {
+        // debugger
+        if (data.messages){
+            console.log("Array")
+            console.log("TELL ME IS BEING CALLED", data.messages)
+            setConvoMessages(data.messages)
+        } else {
+            console.log("Object")
+            console.log("TELL ME IS BEING CALLED", data.message)
+            // console.log("TELL ME IS BEING CALLED with user?", data.username)
+            setConvoMessages((convoMessages) => [...convoMessages, data.message])
+        }
+    }
+
+    const addConvoMessage = (msg) => {
+        fetch("/api/messages", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				"Accept": "application/json",
+			},
+			body: JSON.stringify(msg),
+		})
+    }
+    
+
     const handleCurrentConvo =(result) => {
-        console.log(result)
-		// return {
-		// 	conversation: result.name,
-		// 	users: result.users,
-		// 	messages: result.messages,
-		// }
+        console.log("App handle current conv",result)
+		return {
+			conversation: result.name,
+			users: result.users,
+			messages: result.messages,
+		}
 	}
 
     const getConversation =(id) => {
-		fetch(`/api/conversations/${id}`, {
-            headers : { 
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-               }
-        })
-			.then((res) => res.json())
-			.then((result) => {
-                console.log("GET CONVERSATION", result)
-				setCurrentConvo(() => handleCurrentConvo(result))
-            })
+		// fetch(`/api/conversations/${id}`, {
+        //     headers : { 
+        //         'Content-Type': 'application/json',
+        //         'Accept': 'application/json'
+        //        }
+        // })
+		// 	.then((res) => res.json())
+		// 	.then((result) => {
+        //         debugger
+        //         console.log("GET CONVERSATION", result)
+		// 		setCurrentConvo((result) => handleCurrentConvo(result))
+        //     })
             
     }
     // getRoomData(1)
@@ -127,15 +162,13 @@ const App = ({cableApp}) => {
                 </Route>
                 <Route exact path='/conversations' element={<Conversations />}>
                 </Route>
-                <Route path='/conversations/:id' element={<ConversationRoom 
+                <Route path='/conversations/:id' element={<ConversationRoom
+                    convoMessages={convoMessages}
                     users={allUsers}
                     cableApp={cableApp}
-                    // updateApp={updateAppStateRoom}
                     getConversation={getConversation}
-                    currentConvo={currentConvo}
                     user={user}
-                    // messages={messages}
-                    // handleMessageUpdate={setMessages}
+                    addConvoMessage={addConvoMessage}
                 />}>
                 </Route>
                 {/* <Route path='/login' element={<Login setUser={setUser} />}>
@@ -145,6 +178,14 @@ const App = ({cableApp}) => {
                 {/* <Route path='/chatroom' element={<MainChatRoom user={user} />}> */}
                 {/* </Route> */}
             </Routes>
+            <ConvoWebSocket 
+				cableApp={cableApp}
+				// updateApp={updateApp}
+                getConversation={getConversation}
+                setConvoMessages={setConvoMessages}
+                convoMessages={convoMessages}
+                tellMe={tellMe}
+			/> 
         </div>
     )
 }
