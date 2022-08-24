@@ -20,11 +20,22 @@ class Api::MessagesController < ApplicationController
     def create 
       @message = current_user.messages.build(message_params)
       # @message = Message.new(message_params)
+      @conversation = Conversation.find(message_params["conversation_id"])
   
       if @message.save
-        ActionCable.server.broadcast('messages', {message: @message.serializable_hash(include: :user) } )
+        MessagesChannel.broadcast_to(@conversation, {message: @message.serializable_hash(include: :user) } )
       end
     end
+
+    # This one worked, but it broadcasts the message to all channels
+    # def create 
+    #   @message = current_user.messages.build(message_params)
+    #   # @message = Message.new(message_params)
+  
+    #   if @message.save
+    #     ActionCable.server.broadcast('messages', {message: @message.serializable_hash(include: :user) } )
+    #   end
+    # end
 
     # def create
     #     @message = current_user.messages.build(message_params)

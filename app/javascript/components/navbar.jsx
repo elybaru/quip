@@ -2,7 +2,7 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 
 const Navbar = ({ user }) => {
-    console.log(user)
+    // console.log(user)
     return (
         <div>
             I am the Navbar.

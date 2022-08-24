@@ -25845,7 +25845,6 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   // app/javascript/components/navbar.jsx
   var import_react7 = __toESM(require_react());
   var Navbar = ({ user }) => {
-    console.log(user);
     return /* @__PURE__ */ import_react7.default.createElement("div", null, "I am the Navbar.", /* @__PURE__ */ import_react7.default.createElement("div", null, "Hello, ", user.username, ".", /* @__PURE__ */ import_react7.default.createElement("div", null, /* @__PURE__ */ import_react7.default.createElement(Link, {
       to: "/home"
     }, "Home"), /* @__PURE__ */ import_react7.default.createElement("span", null, "    "), /* @__PURE__ */ import_react7.default.createElement(Link, {
@@ -25897,10 +25896,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   var import_react10 = __toESM(require_react());
   var ConvoWebSocket = (props) => {
     (0, import_react10.useEffect)(() => {
-      console.log("I AM IN THE USE EFFECT CONVO WEB SOCKET");
-      console.log("PROPS", props);
       const conversationId = window.location.href.match(/\d+$/)[0];
-      console.log("I am the conversation ID", conversationId);
       props.cableApp.room = props.cableApp.cable.subscriptions.create({
         channel: "MessagesChannel",
         room: conversationId
@@ -26016,7 +26012,6 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           r.json().then((u) => {
             setUser(u);
           });
-          console.log(user, "in app useEffect");
         }
       });
     }, []);
@@ -26025,7 +26020,6 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         if (r.ok) {
           r.json().then((data) => {
             setConversations(data);
-            console.log("fetched in conversations use effect", data);
           });
         }
       });
@@ -26038,11 +26032,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       });
     };
     const tellMe = (data) => {
-      if (data.messages) {
-      } else {
-        console.log("TELL ME IS BEING CALLED", data.message);
-        setConvoMessages((convoMessages2) => [...convoMessages2, data.message]);
-      }
+      console.log("TELL ME IS BEING CALLED", data.message);
+      setConvoMessages((convoMessages2) => [...convoMessages2, data.message]);
     };
     const addConvoMessage = (msg) => {
       fetch("/api/messages", {
@@ -26615,7 +26606,6 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     disconnected() {
     },
     received(data) {
-      console.log("I AM IN THE JS FILE FOR RECEIVED METHOD", data);
     }
   });
 

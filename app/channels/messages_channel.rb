@@ -1,6 +1,7 @@
 class MessagesChannel < ApplicationCable::Channel
     def subscribed
-        stream_from 'messages'
+        #This worked but streamed messages to all convo rooms
+        # stream_from 'messages'
 
         # @messages = Message.all.map do |msg|
         #    u = User.find_by(msg.user_id)
@@ -8,7 +9,8 @@ class MessagesChannel < ApplicationCable::Channel
         #    m.merge!(username: u.username)
         # end
         stop_all_streams
-        # @conversation = Conversation.find(params[:room])
+        @conversation = Conversation.find(params[:room])
+        stream_for @conversation
         # ActionCable.server.broadcast('messages', { messages: @conversation.messages })
         # ActionCable.server.broadcast('messages', { messages: Message.all })
         # 
@@ -18,8 +20,8 @@ class MessagesChannel < ApplicationCable::Channel
 
 
     def received(data)
-        console.log(data, "MESSAGES_CHANNEL.RB")
-        @conversation = Conversation.find(params[:room])
+        # console.log(data, "MESSAGES_CHANNEL.RB")
+        # @conversation = Conversation.find(params[:room])
         # MessagesChannel.broadcast_to(@conversation, { conversation: @conversation, users: @conversation.users, messages: @conversation.messages, message: @message})
         # MessagesChannel.broadcast_to(@conversation, { message: @message})
     end

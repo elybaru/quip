@@ -2,10 +2,10 @@ import React, {useEffect} from 'react'
 
 const ConvoWebSocket = (props) => {
     useEffect(() => {
-        console.log("I AM IN THE USE EFFECT CONVO WEB SOCKET")
-        console.log("PROPS", props)
+        // console.log("I AM IN THE USE EFFECT CONVO WEB SOCKET")
+        // console.log("PROPS", props)
         const conversationId = window.location.href.match(/\d+$/)[0]
-        console.log("I am the conversation ID", conversationId)
+        // console.log("I am the conversation ID", conversationId)
         // props.getRoomData(window.location.href.match(/\d+$/)[0])
 		// props.getConversation(window.location.href.match(/\d+$/)[0])
         // props.getConversation(conversationId)

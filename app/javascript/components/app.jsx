@@ -36,7 +36,7 @@ const App = ({cableApp}) => {
                     // console.log(u)
                     setUser(u)
                 });
-                console.log(user, "in app useEffect")
+                // console.log(user, "in app useEffect")
             }
         })
         
@@ -56,7 +56,7 @@ const App = ({cableApp}) => {
             if (r.ok) {
                 r.json().then((data) => {
                     setConversations(data)
-                    console.log("fetched in conversations use effect", data)
+                    // console.log("fetched in conversations use effect", data)
                 });
             }
         })
@@ -87,16 +87,16 @@ const App = ({cableApp}) => {
         // If you get a new message, coming from broadcast, and I have access to conversations, then 
         //
         // if (!convoMessages.find(message => message == data.message)) {
-        if (data.messages) {
+        // if (data.messages) {
             // console.log("Array")
             // console.log("TELL ME IS BEING CALLED", data.messages)
             // setConvoMessages(data.messages)
-        } else {
+        // } else {
             // console.log("Object")
             console.log("TELL ME IS BEING CALLED", data.message)
             // console.log("TELL ME IS BEING CALLED with user?", data.username)
             setConvoMessages((convoMessages) => [...convoMessages, data.message])
-        }
+        // }
     }
 
     const addConvoMessage = (msg) => {
