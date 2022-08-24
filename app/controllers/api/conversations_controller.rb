@@ -1,13 +1,15 @@
 class Api::ConversationsController < ApplicationController
     # before_action :set_conversation
+    skip_before_action :verify_authenticity_token
 
     def index
         @conversations = Conversation.all
-        render json: @conversations, status: :ok
+        render json: @conversations,include: ['messages', 'messages.user'], status: :ok
     end
 
     # def show
-    #     @messages = @conversation.messages
+    #     @conversation = Conversation.find(params[:id])
+    #     render json: @conversation, status: :ok
     # end
 
     # def index
@@ -20,16 +22,16 @@ class Api::ConversationsController < ApplicationController
 
     def create 
         conversation = Conversation.create!(conversation_params)
-        render json: conversation
+        render json: Conversation.all, status: :ok
     end
 
-    def show
-        conversation = Conversation.find(params[:id])
-        render json: conversation,
-        # , serializer: ConversationSerializer, 
-        include: ['messages', 'messages.user']
-        # ConversationSerializer.new(conversation).serialized_json
-    end
+    # def show
+    #     conversation = Conversation.find(params[:id])
+    #     render json: conversation,
+    #     # , serializer: ConversationSerializer, 
+    #     include: ['messages', 'messages.user']
+    #     # ConversationSerializer.new(conversation).serialized_json
+    # end
     
     
    

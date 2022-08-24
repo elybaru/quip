@@ -11,7 +11,9 @@ const Navbar = ({ user }) => {
         <div>
                 Hello, {user.username}.
                 <div>
+                
                 <Link to='/home'>Home</Link>
+                <span>    </span>
                 <Link to='/conversations'>Conversations</Link>
                 </div>
 

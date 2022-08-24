@@ -2,14 +2,17 @@ import React, {useState} from 'react'
 
 const MessagesWindow = ({addConvoMessage, onMessageInput, user}) => {
 	const [newMessage, setNewMessage] = useState("")
+	const conversationId = window.location.href.match(/\d+$/)[0]
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
+		
 		const message = {
 			content: newMessage,
 			user_id: user.id,
-			conversation_id: 1,
+			conversation_id: parseInt(conversationId),
 		}
+		console.log("I AM SENDING A NEW MESSAGE", message)
 		addConvoMessage(message)
 		setNewMessage("")
 	}

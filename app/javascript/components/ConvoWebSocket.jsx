@@ -4,16 +4,18 @@ const ConvoWebSocket = (props) => {
     useEffect(() => {
         console.log("I AM IN THE USE EFFECT CONVO WEB SOCKET")
         console.log("PROPS", props)
+        const conversationId = window.location.href.match(/\d+$/)[0]
+        console.log("I am the conversation ID", conversationId)
         // props.getRoomData(window.location.href.match(/\d+$/)[0])
 		// props.getConversation(window.location.href.match(/\d+$/)[0])
-        props.getConversation(1)
+        // props.getConversation(conversationId)
 
         // debugger
 		props.cableApp.room = props.cableApp.cable.subscriptions.create(
 			{
 				channel: "MessagesChannel",
 				// room: window.location.href.match(/\d+$/)[0],
-                room: 1
+                room: conversationId
 			},
 			{
 				received: (data) => {
@@ -24,7 +26,7 @@ const ConvoWebSocket = (props) => {
 				},
             }
         )
-	}, [])
+	}, [props.conversationId])
 
 
     return (

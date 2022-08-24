@@ -22,12 +22,13 @@ const App = ({cableApp}) => {
         messages: []
     })
     const [convoMessages, setConvoMessages] = useState([])
+    const [conversations, setConversations] = useState([])
     const [messages, setMessages] = useState(null)
 
     let location = useLocation()
 
     useEffect(() => {
-        console.log("In useEffect")
+        // console.log("In useEffect")
         // auto-login
         fetch("/api/me").then((r) => {
             if (r.ok) {
@@ -38,15 +39,28 @@ const App = ({cableApp}) => {
                 console.log(user, "in app useEffect")
             }
         })
+        
 
-        ConvoWebSocket.received = (data) => setConvoMessages(data.messages)
-        console.log("I AM IN THE USEEFFECT IN CONVERSATIONROOM", convoMessages)
+        // ConvoWebSocket.received = (data) => setConvoMessages(data.messages)
+        // console.log("I AM IN THE USEEFFECT IN CONVERSATIONROOM", convoMessages)
         // fetch("/api/users")
 		// 	.then((r) => r.json())
 		// 	.then((users) => {
         //         setAllUsers(users)
         //         console.log(users)
 		// 	})
+    }, []);
+
+    useEffect(() => {
+        fetch("/api/conversations").then((r) => {
+            if (r.ok) {
+                r.json().then((data) => {
+                    setConversations(data)
+                    console.log("fetched in conversations use effect", data)
+                });
+            }
+        })
+
     }, []);
 
 
@@ -70,13 +84,15 @@ const App = ({cableApp}) => {
 
 
     const tellMe = (data) => {
-        // debugger
-        if (data.messages){
-            console.log("Array")
-            console.log("TELL ME IS BEING CALLED", data.messages)
-            setConvoMessages(data.messages)
+        // If you get a new message, coming from broadcast, and I have access to conversations, then 
+        //
+        // if (!convoMessages.find(message => message == data.message)) {
+        if (data.messages) {
+            // console.log("Array")
+            // console.log("TELL ME IS BEING CALLED", data.messages)
+            // setConvoMessages(data.messages)
         } else {
-            console.log("Object")
+            // console.log("Object")
             console.log("TELL ME IS BEING CALLED", data.message)
             // console.log("TELL ME IS BEING CALLED with user?", data.username)
             setConvoMessages((convoMessages) => [...convoMessages, data.message])
@@ -160,15 +176,18 @@ const App = ({cableApp}) => {
             <Routes>
                 <Route exact path='/home' element={<Home setUser={setUser} />}>
                 </Route>
-                <Route exact path='/conversations' element={<Conversations />}>
+                <Route exact path='/conversations' element={<Conversations conversations={conversations} setConversations={setConversations}/>}>
                 </Route>
                 <Route path='/conversations/:id' element={<ConversationRoom
+                    conversations={conversations}
                     convoMessages={convoMessages}
                     users={allUsers}
                     cableApp={cableApp}
                     getConversation={getConversation}
                     user={user}
                     addConvoMessage={addConvoMessage}
+                    setConvoMessages={setConvoMessages}
+                    tellMe={tellMe}
                 />}>
                 </Route>
                 {/* <Route path='/login' element={<Login setUser={setUser} />}>
@@ -178,14 +197,15 @@ const App = ({cableApp}) => {
                 {/* <Route path='/chatroom' element={<MainChatRoom user={user} />}> */}
                 {/* </Route> */}
             </Routes>
-            <ConvoWebSocket 
+            
+            {/* <ConvoWebSocket 
 				cableApp={cableApp}
 				// updateApp={updateApp}
                 getConversation={getConversation}
                 setConvoMessages={setConvoMessages}
                 convoMessages={convoMessages}
                 tellMe={tellMe}
-			/> 
+			/>  */}
         </div>
     )
 }

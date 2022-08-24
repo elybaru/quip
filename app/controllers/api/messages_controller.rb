@@ -7,6 +7,16 @@ class Api::MessagesController < ApplicationController
       # render json: Message.all
     end
 
+    # def create
+    #   message = Message.new(message_params)
+    #   message.user = current_user
+    #   if message.save
+    #     ActionCable.server.broadcast 'messages',
+    #       message: message.content,
+    #       user: message.user.username
+    #     head :ok
+    #   end
+
     def create 
       @message = current_user.messages.build(message_params)
       # @message = Message.new(message_params)
