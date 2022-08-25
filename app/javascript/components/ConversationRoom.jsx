@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import MessagesWindow from './MessagesWindow'
 import ConvoWebSocket from './ConvoWebSocket'
+import Message from './Message'
 
 const ConversationRoom = ({ addConvoMessage, user, cableApp, getConversation }) => {
 
@@ -44,7 +45,7 @@ const ConversationRoom = ({ addConvoMessage, user, cableApp, getConversation }) 
 	// console.log("I AM THE CONVERSATION ID", typeof conversationId)
 
 		// This works with the stale data issue, used with line 27
-		const displayMessages = convoMessages.length > 0 ? convoMessages.map(msg => <li key={msg.id}>{msg.content}</li>) : null
+		// const displayMessages = convoMessages.length > 0 ? convoMessages.map(msg => <li key={msg.id}>{msg.content}</li>) : null
 
 		// const displayMessages = currentConvo.messages > 0 ? currentConvo.map(msg => <li key={msg.id}>{msg.content}</li>) : null
 
@@ -78,7 +79,8 @@ const ConversationRoom = ({ addConvoMessage, user, cableApp, getConversation }) 
 
 				<div className="messages" >
 					<div>
-						{displayMessages}
+						{/* {displayMessages} */}
+						{convoMessages.length > 0 ? convoMessages.map(msg => <Message key={msg.id} msg={msg} user={user}/>) : null}
 					</div>
 
 					<MessagesWindow

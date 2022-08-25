@@ -53,17 +53,17 @@ const App = ({cableApp}) => {
 		// 	})
     }, []);
 
-    useEffect(() => {
-        fetch("/api/conversations").then((r) => {
-            if (r.ok) {
-                r.json().then((data) => {
-                    setConversations(data)
-                    // console.log("fetched in conversations use effect", data)
-                });
-            }
-        })
+    // useEffect(() => {
+    //     fetch("/api/conversations").then((r) => {
+    //         if (r.ok) {
+    //             r.json().then((data) => {
+    //                 setConversations(data)
+    //                 // console.log("fetched in conversations use effect", data)
+    //             });
+    //         }
+    //     })
 
-    }, []);
+    // }, []);
 
 
     const handleLogoutClick =()  => {
