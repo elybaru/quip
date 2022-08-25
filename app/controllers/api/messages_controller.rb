@@ -17,7 +17,7 @@ class Api::MessagesController < ApplicationController
     #     head :ok
     #   end
 
-    def create 
+    def create
       @message = current_user.messages.build(message_params)
       # @message = Message.new(message_params)
       @conversation = Conversation.find(message_params["conversation_id"])

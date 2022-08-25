@@ -18,11 +18,17 @@ const ConvoWebSocket = (props) => {
                 room: conversationId
 			},
 			{
-				received: (data) => {
-                    console.log("In convosocket", data)
-                    props.tellMe(data)
-                // props.setConvoMessages(({...props.convoMessages, message: message}))
-                // props.setConvoMessages(([...props.convoMessages, message]))
+                // THis works    
+				// received: (data) => {
+                //     console.log("In convosocket", data)
+                //     props.tellMe(data)
+                // // props.setConvoMessages(({...props.convoMessages, message: message}))
+                // // props.setConvoMessages(([...props.convoMessages, message]))
+                // },
+                received: (data) => {
+                    if (parseInt(props.conversationId) === data.message.conversation_id) {
+                        props.tellMe(data)
+                    }
 				},
             }
         )

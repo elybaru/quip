@@ -7,10 +7,10 @@ class Api::ConversationsController < ApplicationController
         render json: @conversations,include: ['messages', 'messages.user'], status: :ok
     end
 
-    # def show
-    #     @conversation = Conversation.find(params[:id])
-    #     render json: @conversation, status: :ok
-    # end
+    def show
+        @conversation = Conversation.find(params[:id])
+        render json: @conversation, status: :ok
+    end
 
     # def index
     #    current_user = User.find(session[:user_id])

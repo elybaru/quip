@@ -21,7 +21,8 @@ const App = ({cableApp}) => {
         users: [],
         messages: []
     })
-    const [convoMessages, setConvoMessages] = useState([])
+    // Going to move convoMessage and tellMe to Conversation Room component
+    // const [convoMessages, setConvoMessages] = useState([])
     const [conversations, setConversations] = useState([])
     const [messages, setMessages] = useState(null)
 
@@ -80,24 +81,26 @@ const App = ({cableApp}) => {
 	// 		messages: newRoom.messages,
 	// 	})
 	// 	setMessages(newRoom.messages)
-	// }
+    // }
+    
+    // console.log("I AM IN APP")
 
-
-    const tellMe = (data) => {
-        // If you get a new message, coming from broadcast, and I have access to conversations, then 
-        //
-        // if (!convoMessages.find(message => message == data.message)) {
-        // if (data.messages) {
-            // console.log("Array")
-            // console.log("TELL ME IS BEING CALLED", data.messages)
-            // setConvoMessages(data.messages)
-        // } else {
-            // console.log("Object")
-            console.log("TELL ME IS BEING CALLED", data.message)
-            // console.log("TELL ME IS BEING CALLED with user?", data.username)
-            setConvoMessages((convoMessages) => [...convoMessages, data.message])
-        // }
-    }
+    // Going to move tellMe to conversationRoom component
+    // const tellMe = (data) => {
+    //     // If you get a new message, coming from broadcast, and I have access to conversations, then 
+    //     //
+    //     // if (!convoMessages.find(message => message == data.message)) {
+    //     // if (data.messages) {
+    //         // console.log("Array")
+    //         // console.log("TELL ME IS BEING CALLED", data.messages)
+    //         // setConvoMessages(data.messages)
+    //     // } else {
+    //         // console.log("Object")
+    //         console.log("TELL ME IS BEING CALLED", data.message)
+    //         // console.log("TELL ME IS BEING CALLED with user?", data.username)
+    //         setConvoMessages((convoMessages) => [...convoMessages, data.message])
+    //     // }
+    // }
 
     const addConvoMessage = (msg) => {
         fetch("/api/messages", {
@@ -180,14 +183,14 @@ const App = ({cableApp}) => {
                 </Route>
                 <Route path='/conversations/:id' element={<ConversationRoom
                     conversations={conversations}
-                    convoMessages={convoMessages}
+                    // convoMessages={convoMessages}
                     users={allUsers}
                     cableApp={cableApp}
                     getConversation={getConversation}
                     user={user}
                     addConvoMessage={addConvoMessage}
-                    setConvoMessages={setConvoMessages}
-                    tellMe={tellMe}
+                    // setConvoMessages={setConvoMessages}
+                    // tellMe={tellMe}
                 />}>
                 </Route>
                 {/* <Route path='/login' element={<Login setUser={setUser} />}>

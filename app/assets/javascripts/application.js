@@ -25902,8 +25902,9 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         room: conversationId
       }, {
         received: (data) => {
-          console.log("In convosocket", data);
-          props.tellMe(data);
+          if (parseInt(props.conversationId) === data.message.conversation_id) {
+            props.tellMe(data);
+          }
         }
       });
     }, [props.conversationId]);
@@ -25912,19 +25913,24 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   var ConvoWebSocket_default = ConvoWebSocket;
 
   // app/javascript/components/ConversationRoom.jsx
-  var ConversationRoom = ({ convoMessages, conversations, addConvoMessage, user, setConvoMessages, tellMe, cableApp: cableApp2, getConversation }) => {
+  var ConversationRoom = ({ conversations, addConvoMessage, user, cableApp: cableApp2, getConversation }) => {
     const [convoId, setConvoId] = (0, import_react11.useState)("");
     const [currentConvo, setCurrentConvo] = (0, import_react11.useState)();
+    const [convoMessages, setConvoMessages] = (0, import_react11.useState)([]);
     const conversationId = window.location.href.match(/\d+$/)[0];
     (0, import_react11.useEffect)(() => {
-      const currentConvo2 = conversations.find((conversation) => conversation.id == conversationId);
-      if (currentConvo2.messages) {
-        setConvoMessages(currentConvo2.messages);
-      }
+      fetch(`/api/conversations/${conversationId}`).then((r) => r.json()).then((data) => {
+        console.log(`In Conversation Room ${conversationId}`, data);
+        setConvoMessages(data.messages);
+      });
     }, []);
     const displayMessages = convoMessages.length > 0 ? convoMessages.map((msg) => /* @__PURE__ */ import_react11.default.createElement("li", {
       key: msg.id
     }, msg.content)) : null;
+    const tellMe = (data) => {
+      console.log("TELL ME IS BEING CALLED", data.message);
+      setConvoMessages((convoMessages2) => [...convoMessages2, data.message]);
+    };
     return /* @__PURE__ */ import_react11.default.createElement("div", null, /* @__PURE__ */ import_react11.default.createElement("div", null, /* @__PURE__ */ import_react11.default.createElement("div", {
       className: "messages"
     }, /* @__PURE__ */ import_react11.default.createElement("div", null, displayMessages), /* @__PURE__ */ import_react11.default.createElement(MessagesWindow_default, {
@@ -26002,7 +26008,6 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       users: [],
       messages: []
     });
-    const [convoMessages, setConvoMessages] = (0, import_react15.useState)([]);
     const [conversations, setConversations] = (0, import_react15.useState)([]);
     const [messages, setMessages] = (0, import_react15.useState)(null);
     let location2 = useLocation();
@@ -26030,10 +26035,6 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           setUser(null);
         }
       });
-    };
-    const tellMe = (data) => {
-      console.log("TELL ME IS BEING CALLED", data.message);
-      setConvoMessages((convoMessages2) => [...convoMessages2, data.message]);
     };
     const addConvoMessage = (msg) => {
       fetch("/api/messages", {
@@ -26113,14 +26114,11 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       path: "/conversations/:id",
       element: /* @__PURE__ */ import_react14.default.createElement(ConversationRoom_default, {
         conversations,
-        convoMessages,
         users: allUsers,
         cableApp: cableApp2,
         getConversation,
         user,
-        addConvoMessage,
-        setConvoMessages,
-        tellMe
+        addConvoMessage
       })
     })));
   };
