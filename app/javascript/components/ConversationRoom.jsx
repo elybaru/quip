@@ -7,6 +7,7 @@ const ConversationRoom = ({ addConvoMessage, user, cableApp, getConversation }) 
 
 	// const [search, setSearch] = useState("")
 	const [convoId, setConvoId] = useState("")
+	const [convoName, setConvoName] = useState("")
 	const [currentConvo, setCurrentConvo] = useState()
 	const [convoMessages, setConvoMessages] = useState([])
  	const conversationId = window.location.href.match(/\d+$/)[0]
@@ -21,6 +22,7 @@ const ConversationRoom = ({ addConvoMessage, user, cableApp, getConversation }) 
 			.then((data) => {
 				console.log(`In Conversation Room ${conversationId}` , data)
 				setConvoMessages(data.messages)
+				setConvoName(data.name)
 			});
 		// 	setConvoId(conversationId)
 		// 	console.log("I AM THE CONVO ID", convoId)
@@ -76,6 +78,9 @@ const ConversationRoom = ({ addConvoMessage, user, cableApp, getConversation }) 
 	return (
 		<div>
 			<div>
+				<div>
+					<h2>{convoName ? convoName : null}</h2>
+				</div>
 
 				<div className="messages" >
 					<div>
