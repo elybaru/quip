@@ -25913,7 +25913,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   var ConvoWebSocket_default = ConvoWebSocket;
 
   // app/javascript/components/ConversationRoom.jsx
-  var ConversationRoom = ({ conversations, addConvoMessage, user, cableApp: cableApp2, getConversation }) => {
+  var ConversationRoom = ({ addConvoMessage, user, cableApp: cableApp2, getConversation }) => {
     const [convoId, setConvoId] = (0, import_react11.useState)("");
     const [currentConvo, setCurrentConvo] = (0, import_react11.useState)();
     const [convoMessages, setConvoMessages] = (0, import_react11.useState)([]);
@@ -25968,8 +25968,19 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   var NewConvoForm_default = NewConvoForm;
 
   // app/javascript/components/Conversations.jsx
-  var Conversations = ({ conversations, setConversations }) => {
+  var Conversations = () => {
+    const [conversations, setConversations2] = (0, import_react13.useState)(null);
     const [newConvoName, setNewConvoName] = (0, import_react13.useState)("");
+    (0, import_react13.useEffect)(() => {
+      fetch("/api/conversations").then((r) => {
+        if (r.ok) {
+          r.json().then((data) => {
+            setConversations2(data);
+            console.log("fetched in conversations use effect", data);
+          });
+        }
+      });
+    }, []);
     const handleNewConvoSubmit = (e) => {
       e.preventDefault();
       console.log(newConvoName);
@@ -25981,7 +25992,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         },
         body: JSON.stringify({ name: newConvoName })
       }).then((resp) => resp.json()).then((data) => {
-        setConversations(data);
+        setConversations2(data);
         setNewConvoName("");
       });
     };
@@ -26008,7 +26019,6 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       users: [],
       messages: []
     });
-    const [conversations, setConversations] = (0, import_react15.useState)([]);
     const [messages, setMessages] = (0, import_react15.useState)(null);
     let location2 = useLocation();
     (0, import_react15.useEffect)(() => {
@@ -26106,14 +26116,10 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     }), /* @__PURE__ */ import_react14.default.createElement(Route, {
       exact: true,
       path: "/conversations",
-      element: /* @__PURE__ */ import_react14.default.createElement(Conversations_default, {
-        conversations,
-        setConversations
-      })
+      element: /* @__PURE__ */ import_react14.default.createElement(Conversations_default, null)
     }), /* @__PURE__ */ import_react14.default.createElement(Route, {
       path: "/conversations/:id",
       element: /* @__PURE__ */ import_react14.default.createElement(ConversationRoom_default, {
-        conversations,
         users: allUsers,
         cableApp: cableApp2,
         getConversation,

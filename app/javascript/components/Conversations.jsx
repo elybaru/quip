@@ -2,21 +2,21 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import NewConvoForm from './NewConvoForm'
 
-const Conversations = ({conversations, setConversations}) => {
-    // const [conversations, setConversations] = useState(null)
+const Conversations = () => {
+    const [conversations, setConversations] = useState(null)
     const [newConvoName, setNewConvoName] = useState("")
 
-    // useEffect(() => {
-    //     fetch("/api/conversations").then((r) => {
-    //         if (r.ok) {
-    //             r.json().then((data) => {
-    //                 setConversations(data)
-    //                 console.log("fetched in conversations use effect", data)
-    //             });
-    //         }
-    //     })
+    useEffect(() => {
+        fetch("/api/conversations").then((r) => {
+            if (r.ok) {
+                r.json().then((data) => {
+                    setConversations(data)
+                    console.log("fetched in conversations use effect", data)
+                });
+            }
+        })
 
-    // }, []);
+    }, []);
 
     const handleNewConvoSubmit = (e) => {
         e.preventDefault()

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import MessagesWindow from './MessagesWindow'
 import ConvoWebSocket from './ConvoWebSocket'
 
-const ConversationRoom = ({ conversations, addConvoMessage, user, cableApp, getConversation }) => {
+const ConversationRoom = ({ addConvoMessage, user, cableApp, getConversation }) => {
 
 	// const [search, setSearch] = useState("")
 	const [convoId, setConvoId] = useState("")

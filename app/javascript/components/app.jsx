@@ -23,7 +23,8 @@ const App = ({cableApp}) => {
     })
     // Going to move convoMessage and tellMe to Conversation Room component
     // const [convoMessages, setConvoMessages] = useState([])
-    const [conversations, setConversations] = useState([])
+    // Moving conversations down to Conversation component so that new conversation rooms can appear when users go back to that page
+    // const [conversations, setConversations] = useState([])
     const [messages, setMessages] = useState(null)
 
     let location = useLocation()
@@ -179,10 +180,10 @@ const App = ({cableApp}) => {
             <Routes>
                 <Route exact path='/home' element={<Home setUser={setUser} />}>
                 </Route>
-                <Route exact path='/conversations' element={<Conversations conversations={conversations} setConversations={setConversations}/>}>
+                <Route exact path='/conversations' element={<Conversations />}>
                 </Route>
                 <Route path='/conversations/:id' element={<ConversationRoom
-                    conversations={conversations}
+                    // conversations={conversations}
                     // convoMessages={convoMessages}
                     users={allUsers}
                     cableApp={cableApp}
