@@ -149,6 +149,12 @@ ROUTES
 - User in useContext global state
 - Deploy
 
+# Quip notes
+
+models
+
+
+
 
 
 # Features

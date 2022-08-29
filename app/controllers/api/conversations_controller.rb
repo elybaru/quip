@@ -9,7 +9,7 @@ class Api::ConversationsController < ApplicationController
 
     def show
         @conversation = Conversation.find(params[:id])
-        render json: @conversation, status: :ok
+        render json: @conversation, include: ['messages', 'messages.user'], status: :ok
     end
 
     # def index
