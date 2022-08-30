@@ -153,6 +153,13 @@ ROUTES
 
 models
 
+Board
+has_many :notes
+
+Notes
+content
+belongs_to :board
+belongs_to :user
 
 
 

@@ -1604,7 +1604,7 @@
             }
             return dispatcher.useContext(Context, unstable_observedBits);
           }
-          function useState12(initialState) {
+          function useState15(initialState) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState);
           }
@@ -1616,7 +1616,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect8(create, deps) {
+          function useEffect10(create, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create, deps);
           }
@@ -2186,13 +2186,13 @@
           exports.useCallback = useCallback3;
           exports.useContext = useContext2;
           exports.useDebugValue = useDebugValue;
-          exports.useEffect = useEffect8;
+          exports.useEffect = useEffect10;
           exports.useImperativeHandle = useImperativeHandle;
           exports.useLayoutEffect = useLayoutEffect3;
           exports.useMemo = useMemo3;
           exports.useReducer = useReducer;
           exports.useRef = useRef3;
-          exports.useState = useState12;
+          exports.useState = useState15;
           exports.version = ReactVersion;
         })();
       }
@@ -3000,11 +3000,11 @@
       if (true) {
         (function() {
           "use strict";
-          var React16 = require_react();
+          var React19 = require_react();
           var _assign = require_object_assign();
           var Scheduler = require_scheduler();
           var tracing = require_tracing();
-          var ReactSharedInternals = React16.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React19.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           function warn(format) {
             {
               for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -3036,7 +3036,7 @@
               Function.prototype.apply.call(console[level], console, argsWithFormat);
             }
           }
-          if (!React16) {
+          if (!React19) {
             {
               throw Error("ReactDOM was loaded before React. Make sure you load the React package before loading ReactDOM.");
             }
@@ -4252,7 +4252,7 @@
           var didWarnInvalidChild = false;
           function flattenChildren(children) {
             var content = "";
-            React16.Children.forEach(children, function(child) {
+            React19.Children.forEach(children, function(child) {
               if (child == null) {
                 return;
               }
@@ -4263,7 +4263,7 @@
           function validateProps(element, props) {
             {
               if (typeof props.children === "object" && props.children !== null) {
-                React16.Children.forEach(props.children, function(child) {
+                React19.Children.forEach(props.children, function(child) {
                   if (child == null) {
                     return;
                   }
@@ -11456,7 +11456,7 @@
           }
           var fakeInternalInstance = {};
           var isArray = Array.isArray;
-          var emptyRefsObject = new React16.Component().refs;
+          var emptyRefsObject = new React19.Component().refs;
           var didWarnAboutStateAssignmentForComponent;
           var didWarnAboutUninitializedState;
           var didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate;
@@ -24776,7 +24776,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   addEventListener("turbo:submit-start", overrideMethodWithFormmethod);
 
   // app/javascript/components/index.jsx
-  var import_react18 = __toESM(require_react());
+  var import_react21 = __toESM(require_react());
   var import_react_dom2 = __toESM(require_react_dom());
 
   // node_modules/react-router-dom/index.js
@@ -25724,8 +25724,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   }
 
   // app/javascript/components/app.jsx
-  var import_react15 = __toESM(require_react());
-  var import_react16 = __toESM(require_react());
+  var import_react18 = __toESM(require_react());
+  var import_react19 = __toESM(require_react());
 
   // app/javascript/components/signup.jsx
   var import_react3 = __toESM(require_react());
@@ -25849,7 +25849,9 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       to: "/home"
     }, "Home"), /* @__PURE__ */ import_react7.default.createElement("span", null, "    "), /* @__PURE__ */ import_react7.default.createElement(Link, {
       to: "/conversations"
-    }, "Conversations"))));
+    }, "Conversations"), /* @__PURE__ */ import_react7.default.createElement("span", null, "    "), /* @__PURE__ */ import_react7.default.createElement(Link, {
+      to: "/board"
+    }, "Quip board"))));
   };
   var navbar_default = Navbar;
 
@@ -26031,19 +26033,161 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   };
   var Conversations_default = Conversations;
 
+  // app/javascript/components/Board.jsx
+  var import_react17 = __toESM(require_react());
+
+  // app/javascript/components/Note.jsx
+  var import_react15 = __toESM(require_react());
+  var Note = ({ individualNote, user, handleUpdateNote }) => {
+    const [editNote, setEditNote] = (0, import_react15.useState)(individualNote.content);
+    const [isAuthor, setIsAuthor] = (0, import_react15.useState)(false);
+    const [toggleEditNoteClicked, setToggleEditNoteClicked] = (0, import_react15.useState)(false);
+    const checkIfAuthor = (noteId, userId) => {
+      if (parseInt(noteId) === parseInt(userId))
+        setIsAuthor(true);
+    };
+    (0, import_react15.useEffect)(() => {
+      checkIfAuthor(individualNote.user.id, user.id);
+    }, []);
+    console.log(isAuthor);
+    const handleEditNoteChange = (event) => {
+      setEditNote(event.target.value);
+    };
+    const handleEditNoteSubmit = (e) => {
+      e.preventDefault();
+      fetch(`api/notes/${individualNote.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ content: editNote, user_id: user.id })
+      }).then((r) => r.json()).then((data) => {
+        console.log(data);
+        handleUpdateNote(data);
+        setToggleEditNoteClicked(false);
+      });
+    };
+    const handleEditNoteClick = (e) => {
+      e.preventDefault();
+      if (toggleEditNoteClicked === true) {
+        setToggleEditNoteClicked(false);
+      } else {
+        setToggleEditNoteClicked(true);
+        console.log(individualNote);
+        console.log(toggleEditNoteClicked);
+        setEditNote(individualNote.content);
+      }
+    };
+    const editNoteForm = () => {
+      return /* @__PURE__ */ import_react15.default.createElement("form", {
+        className: "main-note-form",
+        onSubmit: handleEditNoteSubmit
+      }, /* @__PURE__ */ import_react15.default.createElement("input", {
+        type: "text",
+        value: editNote,
+        onChange: handleEditNoteChange
+      }), /* @__PURE__ */ import_react15.default.createElement("input", {
+        type: "submit",
+        value: "Update Note"
+      }));
+    };
+    return /* @__PURE__ */ import_react15.default.createElement("div", null, individualNote ? /* @__PURE__ */ import_react15.default.createElement("div", null, /* @__PURE__ */ import_react15.default.createElement("div", null, toggleEditNoteClicked ? editNoteForm() : individualNote.content), /* @__PURE__ */ import_react15.default.createElement("div", null, individualNote.user.username), /* @__PURE__ */ import_react15.default.createElement("div", null, isAuthor ? /* @__PURE__ */ import_react15.default.createElement("button", {
+      className: "note-edit-button",
+      onClick: handleEditNoteClick
+    }, "Edit") : null)) : null);
+  };
+  var Note_default = Note;
+
+  // app/javascript/components/NoteForm.jsx
+  var import_react16 = __toESM(require_react());
+  var NoteForm = ({ user, setNotes, notes }) => {
+    const [newNote, setNewNote] = (0, import_react16.useState)("");
+    const handleChange = (event) => {
+      setNewNote(event.target.value);
+    };
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      const noteObj = {
+        content: newNote,
+        user_id: user.id
+      };
+      fetch("/api/notes", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify(noteObj)
+      }).then((resp) => resp.json()).then((data) => {
+        const newNoteObj = {
+          content: data.content,
+          id: data.id,
+          user: {
+            username: data.user.username,
+            id: data.user.id
+          }
+        };
+        setNotes((notes2) => [...notes2, newNoteObj]);
+        console.log(data);
+        setNewNote("");
+      });
+    };
+    return /* @__PURE__ */ import_react16.default.createElement("div", null, /* @__PURE__ */ import_react16.default.createElement("form", {
+      onSubmit: handleSubmit
+    }, /* @__PURE__ */ import_react16.default.createElement("textarea", {
+      type: "text",
+      className: "note-input",
+      placeholder: "Write a new note... ",
+      value: newNote,
+      onChange: handleChange
+    }), /* @__PURE__ */ import_react16.default.createElement("button", {
+      type: "submit"
+    }, "Post")));
+  };
+  var NoteForm_default = NoteForm;
+
+  // app/javascript/components/Board.jsx
+  var Board = ({ user }) => {
+    const [notes, setNotes] = (0, import_react17.useState)([]);
+    (0, import_react17.useEffect)(() => {
+      fetch("/api/boards").then((r) => {
+        if (r.ok) {
+          r.json().then((data) => {
+            setNotes(data);
+            console.log("fetched in board use effect", data);
+          });
+        }
+      });
+    }, []);
+    const handleUpdateNote = (note) => {
+      setNotes(notes.map((n) => n.id == note.id ? note : n));
+    };
+    return /* @__PURE__ */ import_react17.default.createElement("div", null, "I am the board!", /* @__PURE__ */ import_react17.default.createElement("div", null, notes ? notes.map((individualNote) => /* @__PURE__ */ import_react17.default.createElement(Note_default, {
+      key: individualNote.id,
+      individualNote,
+      user,
+      handleUpdateNote
+    })) : null), /* @__PURE__ */ import_react17.default.createElement("div", null, /* @__PURE__ */ import_react17.default.createElement(NoteForm_default, {
+      user,
+      setNotes,
+      notes
+    })));
+  };
+  var Board_default = Board;
+
   // app/javascript/components/app.jsx
   var App = ({ cableApp: cableApp2 }) => {
-    const [user, setUser] = (0, import_react16.useState)(null);
-    const [isLoggedin, setIsLoggedIn] = (0, import_react16.useState)(null);
-    const [allUsers, setAllUsers] = (0, import_react16.useState)([]);
-    const [currentConvo, setCurrentConvo] = (0, import_react16.useState)({
+    const [user, setUser] = (0, import_react19.useState)(null);
+    const [isLoggedin, setIsLoggedIn] = (0, import_react19.useState)(null);
+    const [allUsers, setAllUsers] = (0, import_react19.useState)([]);
+    const [currentConvo, setCurrentConvo] = (0, import_react19.useState)({
       conversation: {},
       users: [],
       messages: []
     });
-    const [messages, setMessages] = (0, import_react16.useState)(null);
+    const [messages, setMessages] = (0, import_react19.useState)(null);
     let location2 = useLocation();
-    (0, import_react16.useEffect)(() => {
+    (0, import_react19.useEffect)(() => {
       fetch("/api/me").then((r) => {
         if (r.ok) {
           r.json().then((u) => {
@@ -26080,71 +26224,77 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     const getConversation = (id) => {
     };
     if (!user)
-      return /* @__PURE__ */ import_react15.default.createElement("div", {
+      return /* @__PURE__ */ import_react18.default.createElement("div", {
         className: "wrapper"
-      }, /* @__PURE__ */ import_react15.default.createElement("div", {
+      }, /* @__PURE__ */ import_react18.default.createElement("div", {
         className: "header"
-      }, "I am the app component.", /* @__PURE__ */ import_react15.default.createElement(header_default, null), /* @__PURE__ */ import_react15.default.createElement("div", {
+      }, "I am the app component.", /* @__PURE__ */ import_react18.default.createElement(header_default, null), /* @__PURE__ */ import_react18.default.createElement("div", {
         className: "item"
-      }, /* @__PURE__ */ import_react15.default.createElement("h1", {
+      }, /* @__PURE__ */ import_react18.default.createElement("h1", {
         className: "logo"
-      }, "Quip")), /* @__PURE__ */ import_react15.default.createElement("div", {
+      }, "Quip")), /* @__PURE__ */ import_react18.default.createElement("div", {
         className: "item"
-      }, /* @__PURE__ */ import_react15.default.createElement("div", {
+      }, /* @__PURE__ */ import_react18.default.createElement("div", {
         className: "navlinks"
-      }, /* @__PURE__ */ import_react15.default.createElement("button", null, /* @__PURE__ */ import_react15.default.createElement(Link, {
+      }, /* @__PURE__ */ import_react18.default.createElement("button", null, /* @__PURE__ */ import_react18.default.createElement(Link, {
         to: "/login"
-      }, "Login"))), /* @__PURE__ */ import_react15.default.createElement("div", {
+      }, "Login"))), /* @__PURE__ */ import_react18.default.createElement("div", {
         className: "navlinks"
-      }, /* @__PURE__ */ import_react15.default.createElement("button", null, /* @__PURE__ */ import_react15.default.createElement(Link, {
+      }, /* @__PURE__ */ import_react18.default.createElement("button", null, /* @__PURE__ */ import_react18.default.createElement(Link, {
         to: "/signup"
-      }, "Signup"))))), /* @__PURE__ */ import_react15.default.createElement(Routes, null, /* @__PURE__ */ import_react15.default.createElement(Route, {
+      }, "Signup"))))), /* @__PURE__ */ import_react18.default.createElement(Routes, null, /* @__PURE__ */ import_react18.default.createElement(Route, {
         path: "/login",
-        element: /* @__PURE__ */ import_react15.default.createElement(login_default, {
+        element: /* @__PURE__ */ import_react18.default.createElement(login_default, {
           setUser
         })
-      }), /* @__PURE__ */ import_react15.default.createElement(Route, {
+      }), /* @__PURE__ */ import_react18.default.createElement(Route, {
         path: "/signup",
-        element: /* @__PURE__ */ import_react15.default.createElement(signup_default, {
+        element: /* @__PURE__ */ import_react18.default.createElement(signup_default, {
           setUser
         })
-      }), /* @__PURE__ */ import_react15.default.createElement(Route, {
+      }), /* @__PURE__ */ import_react18.default.createElement(Route, {
         path: "/",
-        element: /* @__PURE__ */ import_react15.default.createElement(home_default, {
+        element: /* @__PURE__ */ import_react18.default.createElement(home_default, {
           setUser
         })
       })));
-    return /* @__PURE__ */ import_react15.default.createElement("div", {
+    return /* @__PURE__ */ import_react18.default.createElement("div", {
       className: "wrapper"
-    }, /* @__PURE__ */ import_react15.default.createElement("h1", null, "I am in the App component"), /* @__PURE__ */ import_react15.default.createElement("h2", null, "You are logged in "), /* @__PURE__ */ import_react15.default.createElement("div", null, /* @__PURE__ */ import_react15.default.createElement("button", {
+    }, /* @__PURE__ */ import_react18.default.createElement("h1", null, "I am in the App component"), /* @__PURE__ */ import_react18.default.createElement("h2", null, "You are logged in "), /* @__PURE__ */ import_react18.default.createElement("div", null, /* @__PURE__ */ import_react18.default.createElement("button", {
       onClick: handleLogoutClick
-    }, "Logout")), /* @__PURE__ */ import_react15.default.createElement(navbar_default, {
+    }, "Logout")), /* @__PURE__ */ import_react18.default.createElement(navbar_default, {
       user
-    }), /* @__PURE__ */ import_react15.default.createElement(Routes, null, /* @__PURE__ */ import_react15.default.createElement(Route, {
+    }), /* @__PURE__ */ import_react18.default.createElement(Routes, null, /* @__PURE__ */ import_react18.default.createElement(Route, {
       exact: true,
       path: "/home",
-      element: /* @__PURE__ */ import_react15.default.createElement(home_default, {
+      element: /* @__PURE__ */ import_react18.default.createElement(home_default, {
         setUser
       })
-    }), /* @__PURE__ */ import_react15.default.createElement(Route, {
+    }), /* @__PURE__ */ import_react18.default.createElement(Route, {
       exact: true,
       path: "/conversations",
-      element: /* @__PURE__ */ import_react15.default.createElement(Conversations_default, null)
-    }), /* @__PURE__ */ import_react15.default.createElement(Route, {
+      element: /* @__PURE__ */ import_react18.default.createElement(Conversations_default, null)
+    }), /* @__PURE__ */ import_react18.default.createElement(Route, {
       path: "/conversations/:id",
-      element: /* @__PURE__ */ import_react15.default.createElement(ConversationRoom_default, {
+      element: /* @__PURE__ */ import_react18.default.createElement(ConversationRoom_default, {
         users: allUsers,
         cableApp: cableApp2,
         getConversation,
         user,
         addConvoMessage
       })
+    }), /* @__PURE__ */ import_react18.default.createElement(Route, {
+      exact: true,
+      path: "/board",
+      element: /* @__PURE__ */ import_react18.default.createElement(Board_default, {
+        user
+      })
     })));
   };
   var app_default = App;
 
   // app/javascript/components/messages.jsx
-  var import_react17 = __toESM(require_react());
+  var import_react20 = __toESM(require_react());
   var import_react_dom = __toESM(require_react_dom());
 
   // node_modules/@rails/actioncable/app/assets/javascripts/actioncable.esm.js
@@ -26631,11 +26781,11 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   var cableApp = {};
   cableApp.cable = import_actioncable2.default.createConsumer("ws://localhost:3000/cable");
   var Index = () => {
-    return /* @__PURE__ */ import_react18.default.createElement("div", null, /* @__PURE__ */ import_react18.default.createElement(app_default, {
+    return /* @__PURE__ */ import_react21.default.createElement("div", null, /* @__PURE__ */ import_react21.default.createElement(app_default, {
       cableApp
     }));
   };
-  import_react_dom2.default.render(/* @__PURE__ */ import_react18.default.createElement(BrowserRouter, null, /* @__PURE__ */ import_react18.default.createElement(Index, null)), document.getElementById("index"));
+  import_react_dom2.default.render(/* @__PURE__ */ import_react21.default.createElement(BrowserRouter, null, /* @__PURE__ */ import_react21.default.createElement(Index, null)), document.getElementById("index"));
 })();
 /*
 object-assign

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  
   mount ActionCable.server => '/cable'
   
   namespace :api do
@@ -6,6 +7,8 @@ Rails.application.routes.draw do
     resources :memberships
     resources :messages
     resources :users
+    resources :notes
+    resources :boards
     post '/login', to: 'sessions#create'
     post '/signup', to: 'users#create'
     get '/welcome', to: 'sessions#welcome'

@@ -11,6 +11,7 @@ import MainChatRoom from './mainChatRoom'
 import ConversationRoom from './ConversationRoom'
 import Conversations from './Conversations'
 import ConvoWebSocket from './ConvoWebSocket';
+import Board from './Board'
 
 const App = ({cableApp}) => {
     const [user, setUser] = useState(null);
@@ -193,6 +194,8 @@ const App = ({cableApp}) => {
                     // setConvoMessages={setConvoMessages}
                     // tellMe={tellMe}
                 />}>
+                </Route>
+                <Route exact path='/board' element={<Board user={user}/>}>
                 </Route>
                 {/* <Route path='/login' element={<Login setUser={setUser} />}>
                 </Route> */}
