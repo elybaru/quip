@@ -26038,7 +26038,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
 
   // app/javascript/components/Note.jsx
   var import_react15 = __toESM(require_react());
-  var Note = ({ individualNote, user, handleUpdateNote }) => {
+  var Note = ({ individualNote, user, handleUpdateNote, handleDeleteNote }) => {
     const [editNote, setEditNote] = (0, import_react15.useState)(individualNote.content);
     const [isAuthor, setIsAuthor] = (0, import_react15.useState)(false);
     const [toggleEditNoteClicked, setToggleEditNoteClicked] = (0, import_react15.useState)(false);
@@ -26067,14 +26067,18 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         setToggleEditNoteClicked(false);
       });
     };
+    const handleDeleteNoteClick = (e) => {
+      e.preventDefault();
+      fetch(`api/notes/${individualNote.id}`, {
+        method: "DELETE"
+      }).then(handleDeleteNote(individualNote));
+    };
     const handleEditNoteClick = (e) => {
       e.preventDefault();
       if (toggleEditNoteClicked === true) {
         setToggleEditNoteClicked(false);
       } else {
         setToggleEditNoteClicked(true);
-        console.log(individualNote);
-        console.log(toggleEditNoteClicked);
         setEditNote(individualNote.content);
       }
     };
@@ -26089,7 +26093,10 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       }), /* @__PURE__ */ import_react15.default.createElement("input", {
         type: "submit",
         value: "Update Note"
-      }));
+      }), /* @__PURE__ */ import_react15.default.createElement("button", {
+        className: "delete-note-click",
+        onClick: handleDeleteNoteClick
+      }, "Delete Note"));
     };
     return /* @__PURE__ */ import_react15.default.createElement("div", null, individualNote ? /* @__PURE__ */ import_react15.default.createElement("div", null, /* @__PURE__ */ import_react15.default.createElement("div", null, toggleEditNoteClicked ? editNoteForm() : individualNote.content), /* @__PURE__ */ import_react15.default.createElement("div", null, individualNote.user.username), /* @__PURE__ */ import_react15.default.createElement("div", null, isAuthor ? /* @__PURE__ */ import_react15.default.createElement("button", {
       className: "note-edit-button",
@@ -26162,11 +26169,17 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     const handleUpdateNote = (note) => {
       setNotes(notes.map((n) => n.id == note.id ? note : n));
     };
+    const handleDeleteNote = (note) => {
+      setNotes(notes.filter((n) => {
+        return n.id !== note.id;
+      }));
+    };
     return /* @__PURE__ */ import_react17.default.createElement("div", null, "I am the board!", /* @__PURE__ */ import_react17.default.createElement("div", null, notes ? notes.map((individualNote) => /* @__PURE__ */ import_react17.default.createElement(Note_default, {
       key: individualNote.id,
       individualNote,
       user,
-      handleUpdateNote
+      handleUpdateNote,
+      handleDeleteNote
     })) : null), /* @__PURE__ */ import_react17.default.createElement("div", null, /* @__PURE__ */ import_react17.default.createElement(NoteForm_default, {
       user,
       setNotes,

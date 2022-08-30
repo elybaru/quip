@@ -21,13 +21,17 @@ const Board = ({user}) => {
         setNotes(notes.map(n => n.id == note.id ? note : n))
     }
 
+    const handleDeleteNote = (note) => {
+        setNotes(notes.filter(n => {return n.id !== note.id}))
+    }
+
     return (
         <div>
 
             I am the board!
 
         <div>
-            { notes ? notes.map(individualNote => <Note key={individualNote.id} individualNote={individualNote} user={user} handleUpdateNote={handleUpdateNote}/>) :  null}
+            { notes ? notes.map(individualNote => <Note key={individualNote.id} individualNote={individualNote} user={user} handleUpdateNote={handleUpdateNote} handleDeleteNote={handleDeleteNote}/>) :  null}
         </div>
 
         <div>

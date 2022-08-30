@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 
-const Note = ({individualNote, user, handleUpdateNote}) => {
+const Note = ({individualNote, user, handleUpdateNote, handleDeleteNote}) => {
     const [editNote, setEditNote] = useState(individualNote.content)
     const [isAuthor, setIsAuthor] = useState(false)
     const [toggleEditNoteClicked, setToggleEditNoteClicked] = useState(false)
@@ -19,11 +19,6 @@ const Note = ({individualNote, user, handleUpdateNote}) => {
 
 
     console.log(isAuthor)
-
-    // PATCH - Edit Note
-    // compare if current user, if so display option to edit and delete
-    // if edit, load into text box, patch on submit to notes controller update method
-    // on return update state of notes
 
     const handleEditNoteChange = (event) => {
         setEditNote(event.target.value)
@@ -47,6 +42,15 @@ const Note = ({individualNote, user, handleUpdateNote}) => {
             })
     }
 
+    const handleDeleteNoteClick = (e) => {
+        e.preventDefault()
+        fetch(`api/notes/${individualNote.id}`, {
+            method: 'DELETE'
+        })
+            .then(handleDeleteNote(individualNote))
+        
+    }
+
     const handleEditNoteClick = (e) => {
         e.preventDefault()
         if (toggleEditNoteClicked === true) {
@@ -55,8 +59,8 @@ const Note = ({individualNote, user, handleUpdateNote}) => {
         }
         else {
             setToggleEditNoteClicked(true)
-            console.log(individualNote)
-            console.log(toggleEditNoteClicked)
+            // console.log(individualNote)
+            // console.log(toggleEditNoteClicked)
             setEditNote(individualNote.content)
         }
     }
@@ -68,7 +72,7 @@ const Note = ({individualNote, user, handleUpdateNote}) => {
             <form className="main-note-form" onSubmit={handleEditNoteSubmit}>
                 <input type="text" value={editNote} onChange={handleEditNoteChange} />
                 <input type='submit' value="Update Note" />
-                {/* <button className="delete-note-click" onClick={handleDeleteNoteClick}>Delete Note</button> */}
+                <button className="delete-note-click" onClick={handleDeleteNoteClick}>Delete Note</button>
             </form >
 
         )

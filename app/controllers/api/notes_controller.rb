@@ -13,10 +13,10 @@ class Api::NotesController < ApplicationController
         render json: note, status: :created
     end
     
-    # def destroy
-    #     note = current_user.notes.find(params[:id])
-    #     note.destroy
-    # end
+    def destroy
+        note = Note.find(params[:id])
+        note.destroy
+    end
 
     private
 
