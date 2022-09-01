@@ -1316,7 +1316,7 @@
             }
             return children;
           }
-          function createContext2(defaultValue, calculateChangedBits) {
+          function createContext3(defaultValue, calculateChangedBits) {
             if (calculateChangedBits === void 0) {
               calculateChangedBits = null;
             } else {
@@ -1604,7 +1604,7 @@
             }
             return dispatcher.useContext(Context, unstable_observedBits);
           }
-          function useState15(initialState) {
+          function useState16(initialState) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState);
           }
@@ -1628,7 +1628,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useCallback(callback, deps);
           }
-          function useMemo3(create, deps) {
+          function useMemo4(create, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useMemo(create, deps);
           }
@@ -2175,7 +2175,7 @@
           exports.PureComponent = PureComponent;
           exports.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = ReactSharedInternals;
           exports.cloneElement = cloneElement$1;
-          exports.createContext = createContext2;
+          exports.createContext = createContext3;
           exports.createElement = createElement$1;
           exports.createFactory = createFactory;
           exports.createRef = createRef;
@@ -2189,10 +2189,10 @@
           exports.useEffect = useEffect10;
           exports.useImperativeHandle = useImperativeHandle;
           exports.useLayoutEffect = useLayoutEffect3;
-          exports.useMemo = useMemo3;
+          exports.useMemo = useMemo4;
           exports.useReducer = useReducer;
           exports.useRef = useRef3;
-          exports.useState = useState15;
+          exports.useState = useState16;
           exports.version = ReactVersion;
         })();
       }
@@ -24776,7 +24776,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   addEventListener("turbo:submit-start", overrideMethodWithFormmethod);
 
   // app/javascript/components/index.jsx
-  var import_react21 = __toESM(require_react());
+  var import_react22 = __toESM(require_react());
   var import_react_dom2 = __toESM(require_react_dom());
 
   // node_modules/react-router-dom/index.js
@@ -25724,8 +25724,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   }
 
   // app/javascript/components/app.jsx
-  var import_react18 = __toESM(require_react());
   var import_react19 = __toESM(require_react());
+  var import_react20 = __toESM(require_react());
 
   // app/javascript/components/signup.jsx
   var import_react3 = __toESM(require_react());
@@ -26049,7 +26049,6 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     (0, import_react15.useEffect)(() => {
       checkIfAuthor(individualNote.user.id, user.id);
     }, []);
-    console.log(isAuthor);
     const handleEditNoteChange = (event) => {
       setEditNote(event.target.value);
     };
@@ -26188,19 +26187,23 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   };
   var Board_default = Board;
 
+  // app/javascript/components/UserContext.js
+  var import_react18 = __toESM(require_react());
+  var UserContext = (0, import_react18.createContext)(null);
+
   // app/javascript/components/app.jsx
   var App = ({ cableApp: cableApp2 }) => {
-    const [user, setUser] = (0, import_react19.useState)(null);
-    const [isLoggedin, setIsLoggedIn] = (0, import_react19.useState)(null);
-    const [allUsers, setAllUsers] = (0, import_react19.useState)([]);
-    const [currentConvo, setCurrentConvo] = (0, import_react19.useState)({
+    const [user, setUser] = (0, import_react20.useState)(null);
+    const [isLoggedin, setIsLoggedIn] = (0, import_react20.useState)(null);
+    const [allUsers, setAllUsers] = (0, import_react20.useState)([]);
+    const [currentConvo, setCurrentConvo] = (0, import_react20.useState)({
       conversation: {},
       users: [],
       messages: []
     });
-    const [messages, setMessages] = (0, import_react19.useState)(null);
+    const [messages, setMessages] = (0, import_react20.useState)(null);
     let location2 = useLocation();
-    (0, import_react19.useEffect)(() => {
+    (0, import_react20.useEffect)(() => {
       fetch("/api/me").then((r) => {
         if (r.ok) {
           r.json().then((u) => {
@@ -26237,69 +26240,69 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     const getConversation = (id) => {
     };
     if (!user)
-      return /* @__PURE__ */ import_react18.default.createElement("div", {
+      return /* @__PURE__ */ import_react19.default.createElement("div", {
         className: "wrapper"
-      }, /* @__PURE__ */ import_react18.default.createElement("div", {
+      }, /* @__PURE__ */ import_react19.default.createElement("div", {
         className: "header"
-      }, "I am the app component.", /* @__PURE__ */ import_react18.default.createElement(header_default, null), /* @__PURE__ */ import_react18.default.createElement("div", {
+      }, "I am the app component.", /* @__PURE__ */ import_react19.default.createElement(header_default, null), /* @__PURE__ */ import_react19.default.createElement("div", {
         className: "item"
-      }, /* @__PURE__ */ import_react18.default.createElement("h1", {
+      }, /* @__PURE__ */ import_react19.default.createElement("h1", {
         className: "logo"
-      }, "Quip")), /* @__PURE__ */ import_react18.default.createElement("div", {
+      }, "Quip")), /* @__PURE__ */ import_react19.default.createElement("div", {
         className: "item"
-      }, /* @__PURE__ */ import_react18.default.createElement("div", {
+      }, /* @__PURE__ */ import_react19.default.createElement("div", {
         className: "navlinks"
-      }, /* @__PURE__ */ import_react18.default.createElement("button", null, /* @__PURE__ */ import_react18.default.createElement(Link, {
+      }, /* @__PURE__ */ import_react19.default.createElement("button", null, /* @__PURE__ */ import_react19.default.createElement(Link, {
         to: "/login"
-      }, "Login"))), /* @__PURE__ */ import_react18.default.createElement("div", {
+      }, "Login"))), /* @__PURE__ */ import_react19.default.createElement("div", {
         className: "navlinks"
-      }, /* @__PURE__ */ import_react18.default.createElement("button", null, /* @__PURE__ */ import_react18.default.createElement(Link, {
+      }, /* @__PURE__ */ import_react19.default.createElement("button", null, /* @__PURE__ */ import_react19.default.createElement(Link, {
         to: "/signup"
-      }, "Signup"))))), /* @__PURE__ */ import_react18.default.createElement(Routes, null, /* @__PURE__ */ import_react18.default.createElement(Route, {
+      }, "Signup"))))), /* @__PURE__ */ import_react19.default.createElement(Routes, null, /* @__PURE__ */ import_react19.default.createElement(Route, {
         path: "/login",
-        element: /* @__PURE__ */ import_react18.default.createElement(login_default, {
+        element: /* @__PURE__ */ import_react19.default.createElement(login_default, {
           setUser
         })
-      }), /* @__PURE__ */ import_react18.default.createElement(Route, {
+      }), /* @__PURE__ */ import_react19.default.createElement(Route, {
         path: "/signup",
-        element: /* @__PURE__ */ import_react18.default.createElement(signup_default, {
+        element: /* @__PURE__ */ import_react19.default.createElement(signup_default, {
           setUser
         })
-      }), /* @__PURE__ */ import_react18.default.createElement(Route, {
+      }), /* @__PURE__ */ import_react19.default.createElement(Route, {
         path: "/",
-        element: /* @__PURE__ */ import_react18.default.createElement(home_default, {
+        element: /* @__PURE__ */ import_react19.default.createElement(home_default, {
           setUser
         })
       })));
-    return /* @__PURE__ */ import_react18.default.createElement("div", {
+    return /* @__PURE__ */ import_react19.default.createElement("div", {
       className: "wrapper"
-    }, /* @__PURE__ */ import_react18.default.createElement("h1", null, "I am in the App component"), /* @__PURE__ */ import_react18.default.createElement("h2", null, "You are logged in "), /* @__PURE__ */ import_react18.default.createElement("div", null, /* @__PURE__ */ import_react18.default.createElement("button", {
+    }, /* @__PURE__ */ import_react19.default.createElement("h1", null, "I am in the App component"), /* @__PURE__ */ import_react19.default.createElement("h2", null, "You are logged in "), /* @__PURE__ */ import_react19.default.createElement("div", null, /* @__PURE__ */ import_react19.default.createElement("button", {
       onClick: handleLogoutClick
-    }, "Logout")), /* @__PURE__ */ import_react18.default.createElement(navbar_default, {
+    }, "Logout")), /* @__PURE__ */ import_react19.default.createElement(navbar_default, {
       user
-    }), /* @__PURE__ */ import_react18.default.createElement(Routes, null, /* @__PURE__ */ import_react18.default.createElement(Route, {
+    }), /* @__PURE__ */ import_react19.default.createElement(Routes, null, /* @__PURE__ */ import_react19.default.createElement(Route, {
       exact: true,
       path: "/home",
-      element: /* @__PURE__ */ import_react18.default.createElement(home_default, {
+      element: /* @__PURE__ */ import_react19.default.createElement(home_default, {
         setUser
       })
-    }), /* @__PURE__ */ import_react18.default.createElement(Route, {
+    }), /* @__PURE__ */ import_react19.default.createElement(Route, {
       exact: true,
       path: "/conversations",
-      element: /* @__PURE__ */ import_react18.default.createElement(Conversations_default, null)
-    }), /* @__PURE__ */ import_react18.default.createElement(Route, {
+      element: /* @__PURE__ */ import_react19.default.createElement(Conversations_default, null)
+    }), /* @__PURE__ */ import_react19.default.createElement(Route, {
       path: "/conversations/:id",
-      element: /* @__PURE__ */ import_react18.default.createElement(ConversationRoom_default, {
+      element: /* @__PURE__ */ import_react19.default.createElement(ConversationRoom_default, {
         users: allUsers,
         cableApp: cableApp2,
         getConversation,
         user,
         addConvoMessage
       })
-    }), /* @__PURE__ */ import_react18.default.createElement(Route, {
+    }), /* @__PURE__ */ import_react19.default.createElement(Route, {
       exact: true,
       path: "/board",
-      element: /* @__PURE__ */ import_react18.default.createElement(Board_default, {
+      element: /* @__PURE__ */ import_react19.default.createElement(Board_default, {
         user
       })
     })));
@@ -26307,7 +26310,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   var app_default = App;
 
   // app/javascript/components/messages.jsx
-  var import_react20 = __toESM(require_react());
+  var import_react21 = __toESM(require_react());
   var import_react_dom = __toESM(require_react_dom());
 
   // node_modules/@rails/actioncable/app/assets/javascripts/actioncable.esm.js
@@ -26794,11 +26797,11 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   var cableApp = {};
   cableApp.cable = import_actioncable2.default.createConsumer("ws://localhost:3000/cable");
   var Index = () => {
-    return /* @__PURE__ */ import_react21.default.createElement("div", null, /* @__PURE__ */ import_react21.default.createElement(app_default, {
+    return /* @__PURE__ */ import_react22.default.createElement("div", null, /* @__PURE__ */ import_react22.default.createElement(app_default, {
       cableApp
     }));
   };
-  import_react_dom2.default.render(/* @__PURE__ */ import_react21.default.createElement(BrowserRouter, null, /* @__PURE__ */ import_react21.default.createElement(Index, null)), document.getElementById("index"));
+  import_react_dom2.default.render(/* @__PURE__ */ import_react22.default.createElement(BrowserRouter, null, /* @__PURE__ */ import_react22.default.createElement(Index, null)), document.getElementById("index"));
 })();
 /*
 object-assign

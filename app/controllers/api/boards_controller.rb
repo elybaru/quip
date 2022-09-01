@@ -1,7 +1,7 @@
 class Api::BoardsController < ApplicationController
 
     def index
-        @notes = Note.all
+        @notes = Note.order(:id)
         render json: @notes
     end
 end

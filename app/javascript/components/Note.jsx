@@ -18,7 +18,7 @@ const Note = ({individualNote, user, handleUpdateNote, handleDeleteNote}) => {
     // console.log("I AM THE INDIVIDUAL NOTE", individualNote)
 
 
-    console.log(isAuthor)
+    // console.log(isAuthor)
 
     const handleEditNoteChange = (event) => {
         setEditNote(event.target.value)

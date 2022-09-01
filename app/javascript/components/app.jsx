@@ -12,8 +12,10 @@ import ConversationRoom from './ConversationRoom'
 import Conversations from './Conversations'
 import ConvoWebSocket from './ConvoWebSocket';
 import Board from './Board'
+import { UserContext } from './UserContext';
 
 const App = ({cableApp}) => {
+    // LOCAL STATE FOR USER, soon commenting out to try useContext
     const [user, setUser] = useState(null);
     const [isLoggedin, setIsLoggedIn] = useState(null)
     const [allUsers, setAllUsers] = useState([])
@@ -27,6 +29,12 @@ const App = ({cableApp}) => {
     // Moving conversations down to Conversation component so that new conversation rooms can appear when users go back to that page
     // const [conversations, setConversations] = useState([])
     const [messages, setMessages] = useState(null)
+
+
+    // USECONTEXT STATE
+    // const {user, setUser} = useContext(UserContext)
+   
+    
 
     let location = useLocation()
 

@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
 import {useNavigate} from 'react-router-dom'
+// import { UserContext } from './UserContext';
 
 const Login = ({ setUser }) => {
+    // const {user, setUser} = useContext(UserContext)
+
     const defaultFormData = {
         username: '',
         password: ''
