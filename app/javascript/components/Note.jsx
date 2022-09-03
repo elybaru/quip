@@ -83,14 +83,17 @@ const Note = ({individualNote, user, handleUpdateNote, handleDeleteNote}) => {
     // destroy action in notes controller
     // update state, filter through array and remove note
     return (
-        <div>
+        <div className="note">
             {individualNote ? 
                  <div>
-                     <div>{toggleEditNoteClicked ? editNoteForm() : individualNote.content}</div>
+
+                     <div className="note-content">{toggleEditNoteClicked ? editNoteForm() : individualNote.content}</div>
+                     <div className="note-footer">
                      <div>{individualNote.user.username}</div>
                      <div>
-                     {isAuthor ? <button className="note-edit-button" onClick={handleEditNoteClick}>Edit</button> : null}
+                     {isAuthor ? <button className="button-secondary" onClick={handleEditNoteClick}>Edit</button> : null}
                     </div>
+                        </div>
                  </div>
                  
                  : null}

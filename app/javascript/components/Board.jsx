@@ -27,8 +27,7 @@ const Board = ({user}) => {
 
     return (
         <div>
-
-            I am the board!
+            <h2> Quip Board </h2>
 
         <div>
             { notes ? notes.map(individualNote => <Note key={individualNote.id} individualNote={individualNote} user={user} handleUpdateNote={handleUpdateNote} handleDeleteNote={handleDeleteNote}/>) :  null}

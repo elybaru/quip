@@ -25804,7 +25804,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       });
     };
     return /* @__PURE__ */ import_react4.default.createElement("div", {
-      className: "content-wrapper"
+      className: "login-wrapper"
     }, /* @__PURE__ */ import_react4.default.createElement("form", {
       onSubmit: handleSubmit
     }, /* @__PURE__ */ import_react4.default.createElement("div", null, /* @__PURE__ */ import_react4.default.createElement("h2", null, "Login")), /* @__PURE__ */ import_react4.default.createElement("label", null, "Username", /* @__PURE__ */ import_react4.default.createElement("input", {
@@ -25838,14 +25838,22 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   // app/javascript/components/header.jsx
   var import_react6 = __toESM(require_react());
   var Header = () => {
-    return /* @__PURE__ */ import_react6.default.createElement("div", null, "I am the header component.");
+    return /* @__PURE__ */ import_react6.default.createElement("div", {
+      className: "header"
+    }, /* @__PURE__ */ import_react6.default.createElement("div", {
+      className: "logo"
+    }, "Quip"), /* @__PURE__ */ import_react6.default.createElement("div", null, /* @__PURE__ */ import_react6.default.createElement("h2", {
+      className: "tagline"
+    }, "A conversation app")));
   };
   var header_default = Header;
 
   // app/javascript/components/navbar.jsx
   var import_react7 = __toESM(require_react());
   var Navbar = ({ user }) => {
-    return /* @__PURE__ */ import_react7.default.createElement("div", null, "I am the Navbar.", /* @__PURE__ */ import_react7.default.createElement("div", null, "Hello, ", user.username, ".", /* @__PURE__ */ import_react7.default.createElement("div", null, /* @__PURE__ */ import_react7.default.createElement(Link, {
+    return /* @__PURE__ */ import_react7.default.createElement("div", null, /* @__PURE__ */ import_react7.default.createElement("div", null, /* @__PURE__ */ import_react7.default.createElement("div", {
+      className: "main-navlinks"
+    }, /* @__PURE__ */ import_react7.default.createElement(Link, {
       to: "/home"
     }, "Home"), /* @__PURE__ */ import_react7.default.createElement("span", null, "    "), /* @__PURE__ */ import_react7.default.createElement(Link, {
       to: "/conversations"
@@ -25929,7 +25937,13 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     return /* @__PURE__ */ import_react11.default.createElement("div", {
       id: "conv-message",
       className: whichUser()
-    }, msg.content, /* @__PURE__ */ import_react11.default.createElement("div", null, timestamp), /* @__PURE__ */ import_react11.default.createElement("div", null, msg.user.username));
+    }, /* @__PURE__ */ import_react11.default.createElement("div", {
+      className: "message-content"
+    }, msg.content), /* @__PURE__ */ import_react11.default.createElement("div", {
+      className: "timestamp"
+    }, timestamp), /* @__PURE__ */ import_react11.default.createElement("div", {
+      className: "message-username"
+    }, msg.user.username));
   };
   var Message_default = Message;
 
@@ -26097,10 +26111,16 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         onClick: handleDeleteNoteClick
       }, "Delete Note"));
     };
-    return /* @__PURE__ */ import_react15.default.createElement("div", null, individualNote ? /* @__PURE__ */ import_react15.default.createElement("div", null, /* @__PURE__ */ import_react15.default.createElement("div", null, toggleEditNoteClicked ? editNoteForm() : individualNote.content), /* @__PURE__ */ import_react15.default.createElement("div", null, individualNote.user.username), /* @__PURE__ */ import_react15.default.createElement("div", null, isAuthor ? /* @__PURE__ */ import_react15.default.createElement("button", {
-      className: "note-edit-button",
+    return /* @__PURE__ */ import_react15.default.createElement("div", {
+      className: "note"
+    }, individualNote ? /* @__PURE__ */ import_react15.default.createElement("div", null, /* @__PURE__ */ import_react15.default.createElement("div", {
+      className: "note-content"
+    }, toggleEditNoteClicked ? editNoteForm() : individualNote.content), /* @__PURE__ */ import_react15.default.createElement("div", {
+      className: "note-footer"
+    }, /* @__PURE__ */ import_react15.default.createElement("div", null, individualNote.user.username), /* @__PURE__ */ import_react15.default.createElement("div", null, isAuthor ? /* @__PURE__ */ import_react15.default.createElement("button", {
+      className: "button-secondary",
       onClick: handleEditNoteClick
-    }, "Edit") : null)) : null);
+    }, "Edit") : null))) : null);
   };
   var Note_default = Note;
 
@@ -26173,7 +26193,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         return n.id !== note.id;
       }));
     };
-    return /* @__PURE__ */ import_react17.default.createElement("div", null, "I am the board!", /* @__PURE__ */ import_react17.default.createElement("div", null, notes ? notes.map((individualNote) => /* @__PURE__ */ import_react17.default.createElement(Note_default, {
+    return /* @__PURE__ */ import_react17.default.createElement("div", null, /* @__PURE__ */ import_react17.default.createElement("h2", null, " Quip Board "), /* @__PURE__ */ import_react17.default.createElement("div", null, notes ? notes.map((individualNote) => /* @__PURE__ */ import_react17.default.createElement(Note_default, {
       key: individualNote.id,
       individualNote,
       user,
@@ -26242,13 +26262,9 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     if (!user)
       return /* @__PURE__ */ import_react19.default.createElement("div", {
         className: "wrapper"
-      }, /* @__PURE__ */ import_react19.default.createElement("div", {
-        className: "header"
-      }, "I am the app component.", /* @__PURE__ */ import_react19.default.createElement(header_default, null), /* @__PURE__ */ import_react19.default.createElement("div", {
+      }, /* @__PURE__ */ import_react19.default.createElement(header_default, null), /* @__PURE__ */ import_react19.default.createElement("div", {
         className: "item"
-      }, /* @__PURE__ */ import_react19.default.createElement("h1", {
-        className: "logo"
-      }, "Quip")), /* @__PURE__ */ import_react19.default.createElement("div", {
+      }, /* @__PURE__ */ import_react19.default.createElement("div", {
         className: "item"
       }, /* @__PURE__ */ import_react19.default.createElement("div", {
         className: "navlinks"
@@ -26268,19 +26284,19 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         element: /* @__PURE__ */ import_react19.default.createElement(signup_default, {
           setUser
         })
-      }), /* @__PURE__ */ import_react19.default.createElement(Route, {
-        path: "/",
-        element: /* @__PURE__ */ import_react19.default.createElement(home_default, {
-          setUser
-        })
       })));
     return /* @__PURE__ */ import_react19.default.createElement("div", {
       className: "wrapper"
-    }, /* @__PURE__ */ import_react19.default.createElement("h1", null, "I am in the App component"), /* @__PURE__ */ import_react19.default.createElement("h2", null, "You are logged in "), /* @__PURE__ */ import_react19.default.createElement("div", null, /* @__PURE__ */ import_react19.default.createElement("button", {
-      onClick: handleLogoutClick
-    }, "Logout")), /* @__PURE__ */ import_react19.default.createElement(navbar_default, {
+    }, /* @__PURE__ */ import_react19.default.createElement(header_default, null), /* @__PURE__ */ import_react19.default.createElement(navbar_default, {
       user
-    }), /* @__PURE__ */ import_react19.default.createElement(Routes, null, /* @__PURE__ */ import_react19.default.createElement(Route, {
+    }), /* @__PURE__ */ import_react19.default.createElement("div", {
+      className: "content-header"
+    }, /* @__PURE__ */ import_react19.default.createElement("div", null, "Hello, ", user.username), /* @__PURE__ */ import_react19.default.createElement("div", null, /* @__PURE__ */ import_react19.default.createElement("button", {
+      className: "button-secondary",
+      onClick: handleLogoutClick
+    }, "Logout"))), /* @__PURE__ */ import_react19.default.createElement("div", {
+      className: "content"
+    }, /* @__PURE__ */ import_react19.default.createElement(Routes, null, /* @__PURE__ */ import_react19.default.createElement(Route, {
       exact: true,
       path: "/home",
       element: /* @__PURE__ */ import_react19.default.createElement(home_default, {
@@ -26305,7 +26321,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       element: /* @__PURE__ */ import_react19.default.createElement(Board_default, {
         user
       })
-    })));
+    }))));
   };
   var app_default = App;
 

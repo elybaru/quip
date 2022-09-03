@@ -14,7 +14,7 @@ import ConvoWebSocket from './ConvoWebSocket';
 import Board from './Board'
 import { UserContext } from './UserContext';
 
-const App = ({cableApp}) => {
+const App = ({ cableApp }) => {
     // LOCAL STATE FOR USER, soon commenting out to try useContext
     const [user, setUser] = useState(null);
     const [isLoggedin, setIsLoggedIn] = useState(null)
@@ -33,8 +33,8 @@ const App = ({cableApp}) => {
 
     // USECONTEXT STATE
     // const {user, setUser} = useContext(UserContext)
-   
-    
+
+
 
     let location = useLocation()
 
@@ -50,16 +50,16 @@ const App = ({cableApp}) => {
                 // console.log(user, "in app useEffect")
             }
         })
-        
+
 
         // ConvoWebSocket.received = (data) => setConvoMessages(data.messages)
         // console.log("I AM IN THE USEEFFECT IN CONVERSATIONROOM", convoMessages)
         // fetch("/api/users")
-		// 	.then((r) => r.json())
-		// 	.then((users) => {
+        // 	.then((r) => r.json())
+        // 	.then((users) => {
         //         setAllUsers(users)
         //         console.log(users)
-		// 	})
+        // 	})
     }, []);
 
     // useEffect(() => {
@@ -75,7 +75,7 @@ const App = ({cableApp}) => {
     // }, []);
 
 
-    const handleLogoutClick =()  => {
+    const handleLogoutClick = () => {
         fetch("/api/logout", { method: "DELETE" }).then((r) => {
             if (r.ok) {
                 setUser(null);
@@ -84,15 +84,15 @@ const App = ({cableApp}) => {
     }
 
     // const updateAppStateRoom = (newRoom) => {
-	// 	setCurrentRoom({
-	// 		...currentRoom,
-	// 		conversation: newRoom,
-	// 		users: newRoom.users,
-	// 		messages: newRoom.messages,
-	// 	})
-	// 	setMessages(newRoom.messages)
+    // 	setCurrentRoom({
+    // 		...currentRoom,
+    // 		conversation: newRoom,
+    // 		users: newRoom.users,
+    // 		messages: newRoom.messages,
+    // 	})
+    // 	setMessages(newRoom.messages)
     // }
-    
+
     // console.log("I AM IN APP")
 
     // Going to move tellMe to conversationRoom component
@@ -114,51 +114,49 @@ const App = ({cableApp}) => {
 
     const addConvoMessage = (msg) => {
         fetch("/api/messages", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-				"Accept": "application/json",
-			},
-			body: JSON.stringify(msg),
-		})
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            },
+            body: JSON.stringify(msg),
+        })
     }
-    
 
-    const handleCurrentConvo =(result) => {
-        console.log("App handle current conv",result)
-		return {
-			conversation: result.name,
-			users: result.users,
-			messages: result.messages,
-		}
-	}
 
-    const getConversation =(id) => {
-		// fetch(`/api/conversations/${id}`, {
+    const handleCurrentConvo = (result) => {
+        console.log("App handle current conv", result)
+        return {
+            conversation: result.name,
+            users: result.users,
+            messages: result.messages,
+        }
+    }
+
+    const getConversation = (id) => {
+        // fetch(`/api/conversations/${id}`, {
         //     headers : { 
         //         'Content-Type': 'application/json',
         //         'Accept': 'application/json'
         //        }
         // })
-		// 	.then((res) => res.json())
-		// 	.then((result) => {
+        // 	.then((res) => res.json())
+        // 	.then((result) => {
         //         debugger
         //         console.log("GET CONVERSATION", result)
-		// 		setCurrentConvo((result) => handleCurrentConvo(result))
+        // 		setCurrentConvo((result) => handleCurrentConvo(result))
         //     })
-            
+
     }
     // getRoomData(1)
 
     if (!user) return (
 
         <div className="wrapper">
-            <div className="header">
-                I am the app component.
+
             <Header />
-                <div className="item">
-                    <h1 className="logo">Quip</h1>
-                </div>
+            <div className="item">
+
                 <div className="item">
                     {/* {location.pathname === '/signup' ? <div className='navlinks'><button><Link to='/login'>Login</Link></button></div> : <div className='navlinks'><button><Link to='/signup'>Signup</Link></button></div>} */}
                     <div className='navlinks'><button><Link to='/login'>Login</Link></button></div>
@@ -171,48 +169,54 @@ const App = ({cableApp}) => {
                 </Route>
                 <Route path='/signup' element={<Signup setUser={setUser} />}>
                 </Route>
-                <Route path='/' element={<Home setUser={setUser} />}>
-                </Route>
+                {/* <Route path='/' element={<Home setUser={setUser} />}>
+                </Route> */}
                 {/* {/* <Route path="*" element={<Navigate to="/" />} /> */}
             </Routes>
         </div>);
 
     return (
         <div className="wrapper">
-            <h1>I am in the App component</h1>
-            <h2>You are logged in </h2>
-            <div>
-                <button onClick={handleLogoutClick}>Logout</button>
-            </div>
+            <Header />
             <Navbar user={user} />
+            <div className="content-header">
+                <div>
+                    Hello, {user.username}
+                </div>
+                <div>
+                    <button className="button-secondary" onClick={handleLogoutClick}>Logout</button>
+                </div>
+            </div>
 
-            <Routes>
-                <Route exact path='/home' element={<Home setUser={setUser} />}>
-                </Route>
-                <Route exact path='/conversations' element={<Conversations />}>
-                </Route>
-                <Route path='/conversations/:id' element={<ConversationRoom
-                    // conversations={conversations}
-                    // convoMessages={convoMessages}
-                    users={allUsers}
-                    cableApp={cableApp}
-                    getConversation={getConversation}
-                    user={user}
-                    addConvoMessage={addConvoMessage}
+            <div className="content">
+                <Routes>
+                    <Route exact path='/home' element={<Home setUser={setUser} />}>
+                    </Route>
+                    <Route exact path='/conversations' element={<Conversations />}>
+                    </Route>
+                    <Route path='/conversations/:id' element={<ConversationRoom
+                        // conversations={conversations}
+                        // convoMessages={convoMessages}
+                        users={allUsers}
+                        cableApp={cableApp}
+                        getConversation={getConversation}
+                        user={user}
+                        addConvoMessage={addConvoMessage}
                     // setConvoMessages={setConvoMessages}
                     // tellMe={tellMe}
-                />}>
-                </Route>
-                <Route exact path='/board' element={<Board user={user}/>}>
-                </Route>
-                {/* <Route path='/login' element={<Login setUser={setUser} />}>
+                    />}>
+                    </Route>
+                    <Route exact path='/board' element={<Board user={user} />}>
+                    </Route>
+                    {/* <Route path='/login' element={<Login setUser={setUser} />}>
                 </Route> */}
-                {/* <Route path='/signup' element={<Signup setUser={setUser} />}>
+                    {/* <Route path='/signup' element={<Signup setUser={setUser} />}>
                 </Route> */}
-                {/* <Route path='/chatroom' element={<MainChatRoom user={user} />}> */}
-                {/* </Route> */}
-            </Routes>
-            
+                    {/* <Route path='/chatroom' element={<MainChatRoom user={user} />}> */}
+                    {/* </Route> */}
+                </Routes>
+            </div>
+
             {/* <ConvoWebSocket 
 				cableApp={cableApp}
 				// updateApp={updateApp}

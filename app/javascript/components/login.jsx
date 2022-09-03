@@ -40,7 +40,7 @@ const Login = ({ setUser }) => {
 
     }
     return (
-        <div className="content-wrapper">
+        <div className="login-wrapper">
             <form onSubmit={handleSubmit}>
                 <div>
                     <h2>Login</h2>

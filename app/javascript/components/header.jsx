@@ -2,9 +2,13 @@ import React from 'react'
 
 const Header = () => {
     return (
-        <div>
-            I am the header component.
-            
+        <div className="header">
+            <div className="logo">
+                Quip
+            </div>
+            <div>
+                <h2 className="tagline">A conversation app</h2>
+            </div>
         </div>
     )
 }

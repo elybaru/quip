@@ -5,18 +5,17 @@ const Navbar = ({ user }) => {
     // console.log(user)
     return (
         <div>
-            I am the Navbar.
-
-
+         
         <div>
-                Hello, {user.username}.
-                <div>
+                
+                <div className="main-navlinks">
                 
                 <Link to='/home'>Home</Link>
                 <span>    </span>
                 <Link to='/conversations'>Conversations</Link>
                 <span>    </span>
                 <Link to='/board'>Quip board</Link>
+               
                 </div>
 
     

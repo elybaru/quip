@@ -15,11 +15,13 @@ const Message = ({msg, user}) => {
 
     return (
         <div id="conv-message" className={whichUser()}>
+            <div className="message-content">
             {msg.content}
-            <div>
+            </div>
+            <div className="timestamp">
                 {timestamp}
             </div>
-            <div>
+            <div className="message-username">
                 {msg.user.username}
             </div>
         </div>
