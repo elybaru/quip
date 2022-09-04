@@ -52,7 +52,7 @@ const NoteForm = ({user, setNotes, notes}) => {
 				value={newNote}
 				onChange={handleChange}
 			></textarea>
-			<button type="submit">Post</button>
+			<button className="submit-note-button" type="submit">Post</button>
        
 
 

@@ -314,6 +314,7 @@ br {
 
 .submit-convo-button {
     margin: 0px;
+    padding: 10px;
 }
 
 .message-input {
@@ -338,6 +339,7 @@ br {
 
 .message-submit-button {
    text-align: left;
+   padding: 10px;
 }
 
 .new-note-form {
@@ -349,4 +351,14 @@ br {
 
 .new-note-div {
     width: 100%;
+}
+
+.submit-note-button {
+    padding: 10px;
+}
+
+.conversations-title {
+    text-align: center;
+    font-weight: 700;
+    font-family: 'Lato', sans-serif;
 }

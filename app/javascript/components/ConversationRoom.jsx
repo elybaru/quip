@@ -10,17 +10,17 @@ const ConversationRoom = ({ addConvoMessage, user, cableApp, getConversation }) 
 	const [convoName, setConvoName] = useState("")
 	const [currentConvo, setCurrentConvo] = useState()
 	const [convoMessages, setConvoMessages] = useState([])
- 	const conversationId = window.location.href.match(/\d+$/)[0]
+	const conversationId = window.location.href.match(/\d+$/)[0]
 
 	useEffect(() => {
 		// console.log("In useEffect")
 		// auto-login
 		// console.log("I am the conversation ID", conversationId)
-		
+
 		fetch(`/api/conversations/${conversationId}`)
 			.then((r) => r.json())
 			.then((data) => {
-				console.log(`In Conversation Room ${conversationId}` , data)
+				console.log(`In Conversation Room ${conversationId}`, data)
 				setConvoMessages(data.messages)
 				setConvoName(data.name)
 			});
@@ -33,8 +33,8 @@ const ConversationRoom = ({ addConvoMessage, user, cableApp, getConversation }) 
 		// 	setConvoMessages(currentConvo.messages)
 		// }
 		// console.log("IN CONVERSATION ROOM", currentConvo)
-		
-		
+
+
 		// const convo = conversations.find(conversation => conversation.id == conversationId)
 		// if (convo.messages) {
 		// 	setCurrentConvo(convo.messages)
@@ -46,32 +46,40 @@ const ConversationRoom = ({ addConvoMessage, user, cableApp, getConversation }) 
 
 	// console.log("I AM THE CONVERSATION ID", typeof conversationId)
 
-		// This works with the stale data issue, used with line 27
-		// const displayMessages = convoMessages.length > 0 ? convoMessages.map(msg => <li key={msg.id}>{msg.content}</li>) : null
+	// This works with the stale data issue, used with line 27
+	// const displayMessages = convoMessages.length > 0 ? convoMessages.map(msg => <li key={msg.id}>{msg.content}</li>) : null
 
-		// const displayMessages = currentConvo.messages > 0 ? currentConvo.map(msg => <li key={msg.id}>{msg.content}</li>) : null
-
-		
+	// const displayMessages = currentConvo.messages > 0 ? currentConvo.map(msg => <li key={msg.id}>{msg.content}</li>) : null
 
 
-		const tellMe = (data) => {
-			// If you get a new message, coming from broadcast, and I have access to conversations, then 
-			//
-			// if (!convoMessages.find(message => message == data.message)) {
-			// if (data.messages) {
-				// console.log("Array")
-				// console.log("TELL ME IS BEING CALLED", data.messages)
-				// setConvoMessages(data.messages)
-			// } else {
-				// console.log("Object")
-				console.log("TELL ME IS BEING CALLED", data.message)
-				// console.log("TELL ME IS BEING CALLED with user?", data.username)
-				setConvoMessages((convoMessages) => [...convoMessages, data.message])
-			// }
-		}
 
 
-	
+	const tellMe = (data) => {
+		// If you get a new message, coming from broadcast, and I have access to conversations, then 
+		//
+		// if (!convoMessages.find(message => message == data.message)) {
+		// if (data.messages) {
+		// console.log("Array")
+		// console.log("TELL ME IS BEING CALLED", data.messages)
+		// setConvoMessages(data.messages)
+		// } else {
+		// console.log("Object")
+		console.log("TELL ME IS BEING CALLED", data.message)
+		// console.log("TELL ME IS BEING CALLED with user?", data.username)
+		setConvoMessages((convoMessages) => [...convoMessages, data.message])
+		// }
+	}
+
+
+	const noMessages = () => {
+		return (
+			<div>
+				<br />
+				<p>There are no messages in the conversation yet! Use the form below to send the first message.</p>
+				<br />
+			</div>
+		)
+	}
 
 
 
@@ -85,7 +93,7 @@ const ConversationRoom = ({ addConvoMessage, user, cableApp, getConversation }) 
 				<div className="messages" >
 					<div>
 						{/* {displayMessages} */}
-						{convoMessages.length > 0 ? convoMessages.map(msg => <Message key={msg.id} msg={msg} user={user}/>) : null}
+						{convoMessages.length > 0 ? convoMessages.map(msg => <Message key={msg.id} msg={msg} user={user} />) : noMessages()}
 					</div>
 
 					<MessagesWindow
@@ -93,16 +101,16 @@ const ConversationRoom = ({ addConvoMessage, user, cableApp, getConversation }) 
 						user={user}
 					/>
 				</div>
-				<ConvoWebSocket 
-				conversationId={conversationId}
-				cableApp={cableApp}
-				// updateApp={updateApp}
-				getConversation={getConversation}
-				conversationId={conversationId}
-                setConvoMessages={setConvoMessages}
-                convoMessages={convoMessages}
-                tellMe={tellMe}
-			/> 
+				<ConvoWebSocket
+					conversationId={conversationId}
+					cableApp={cableApp}
+					// updateApp={updateApp}
+					getConversation={getConversation}
+					conversationId={conversationId}
+					setConvoMessages={setConvoMessages}
+					convoMessages={convoMessages}
+					tellMe={tellMe}
+				/>
 			</div>
 
 		</div>

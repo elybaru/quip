@@ -25971,6 +25971,9 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       console.log("TELL ME IS BEING CALLED", data.message);
       setConvoMessages((convoMessages2) => [...convoMessages2, data.message]);
     };
+    const noMessages = () => {
+      return /* @__PURE__ */ import_react12.default.createElement("div", null, /* @__PURE__ */ import_react12.default.createElement("br", null), /* @__PURE__ */ import_react12.default.createElement("p", null, "There are no messages in the conversation yet! Use the form below to send the first message."), /* @__PURE__ */ import_react12.default.createElement("br", null));
+    };
     return /* @__PURE__ */ import_react12.default.createElement("div", null, /* @__PURE__ */ import_react12.default.createElement("div", null, /* @__PURE__ */ import_react12.default.createElement("div", null, /* @__PURE__ */ import_react12.default.createElement("h2", {
       className: "convo-name"
     }, convoName ? convoName : null)), /* @__PURE__ */ import_react12.default.createElement("div", {
@@ -25979,7 +25982,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       key: msg.id,
       msg,
       user
-    })) : null), /* @__PURE__ */ import_react12.default.createElement(MessagesWindow_default, {
+    })) : noMessages()), /* @__PURE__ */ import_react12.default.createElement(MessagesWindow_default, {
       addConvoMessage,
       user
     })), /* @__PURE__ */ import_react12.default.createElement(ConvoWebSocket_default, {
@@ -26046,7 +26049,9 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         setNewConvoName("");
       });
     };
-    return /* @__PURE__ */ import_react14.default.createElement("div", null, /* @__PURE__ */ import_react14.default.createElement("div", null, conversations ? conversations.map((c) => {
+    return /* @__PURE__ */ import_react14.default.createElement("div", null, /* @__PURE__ */ import_react14.default.createElement("div", null, /* @__PURE__ */ import_react14.default.createElement("div", null, /* @__PURE__ */ import_react14.default.createElement("h2", {
+      className: "conversations-title"
+    }, "Conversations"), /* @__PURE__ */ import_react14.default.createElement("br", null)), conversations ? conversations.map((c) => {
       return /* @__PURE__ */ import_react14.default.createElement(Link, {
         key: c.id,
         to: `/conversations/${c.id}`
@@ -26182,6 +26187,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       value: newNote,
       onChange: handleChange
     }), /* @__PURE__ */ import_react16.default.createElement("button", {
+      className: "submit-note-button",
       type: "submit"
     }, "Post")));
   };

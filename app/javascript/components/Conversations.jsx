@@ -40,6 +40,11 @@ const Conversations = () => {
     return (
         <div>
             <div>
+                <div>
+                    <h2 className="conversations-title">Conversations</h2>
+                    <br />
+                </div>
+             
 
                 {conversations ? conversations.map(c => {
                     return <Link key={c.id} to={`/conversations/${c.id}`}>{c.name}</Link>
