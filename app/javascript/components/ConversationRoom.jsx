@@ -79,7 +79,7 @@ const ConversationRoom = ({ addConvoMessage, user, cableApp, getConversation }) 
 		<div>
 			<div>
 				<div>
-					<h2>{convoName ? convoName : null}</h2>
+					<h2 className="convo-name">{convoName ? convoName : null}</h2>
 				</div>
 
 				<div className="messages" >

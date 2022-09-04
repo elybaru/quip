@@ -21,31 +21,37 @@ const Conversations = () => {
     const handleNewConvoSubmit = (e) => {
         e.preventDefault()
         console.log(newConvoName)
-        
+
         fetch('/api/conversations', {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-				"Accept": "application/json",
-			},
-			body: JSON.stringify({name: newConvoName}),
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            },
+            body: JSON.stringify({ name: newConvoName }),
         })
-        .then(resp => resp.json())
-        .then(data => {
-            setConversations(data)
-            setNewConvoName("")
-        })
+            .then(resp => resp.json())
+            .then(data => {
+                setConversations(data)
+                setNewConvoName("")
+            })
     }
 
     return (
         <div>
+            <div>
 
-            {conversations ? conversations.map(c => {
-                return <Link key={c.id} to={`/conversations/${c.id}`}>{c.name}</Link>
-            }) : null}
+                {conversations ? conversations.map(c => {
+                    return <Link key={c.id} to={`/conversations/${c.id}`}>{c.name}</Link>
+                }) : null}
+            </div>
+            <br />
+            <br />
+            <div>
 
-            <NewConvoForm handleNewConvoSubmit={handleNewConvoSubmit} setNewConvoName={setNewConvoName} newConvoName={newConvoName} />
+                <NewConvoForm handleNewConvoSubmit={handleNewConvoSubmit} setNewConvoName={setNewConvoName} newConvoName={newConvoName} />
 
+            </div>
         </div>
     )
 }

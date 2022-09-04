@@ -281,3 +281,73 @@ a:hover {
 }
 .note-content {
 }
+.quipboard-title {
+  text-align: center;
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+}
+.note-input {
+  font-size: 12px;
+  margin: 16px;
+  padding: 16px;
+  width: 80%;
+}
+.welcome-message {
+  margin: 32px auto;
+  margin-top: 0;
+  text-align: center;
+  background-color: #f0f0f0;
+  padding: 16px;
+  width: 100;
+}
+br {
+  padding: 16px;
+}
+.new-convo-form {
+  margin: 32px auto;
+  margin-top: 0;
+  text-align: left;
+  background-color: #f0f0f0;
+  padding: 16px;
+  width: 60%;
+  border: solid;
+}
+.convo-name {
+  text-align: center;
+  font-weight: 700;
+}
+.new-convo-input {
+  width: 60%;
+  padding: 8px;
+}
+.submit-convo-button {
+  margin: 0px;
+}
+.message-input {
+  font-size: 12px;
+  margin: 16px;
+  padding: 16px;
+  width: 80%;
+}
+.new-message-form {
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+  size: 100%;
+}
+.new-message-div {
+  width: 100%;
+  size: 100%;
+}
+.message-submit-button {
+  text-align: left;
+}
+.new-note-form {
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+  size: 100%;
+}
+.new-note-div {
+  width: 100%;
+}

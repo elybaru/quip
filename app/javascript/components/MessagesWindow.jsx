@@ -22,8 +22,8 @@ const MessagesWindow = ({addConvoMessage, onMessageInput, user}) => {
     }
 
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
+        <div className="new-message-div">
+            <form  className="new-message-form" onSubmit={handleSubmit}>
 			<textarea
 				type="text"
 				className="message-input"
@@ -31,7 +31,7 @@ const MessagesWindow = ({addConvoMessage, onMessageInput, user}) => {
 				value={newMessage}
 				onChange={handleChange}
 			></textarea>
-			<button type="submit">Send</button>
+			<button className="message-submit-button" type="submit">Send</button>
 
 
 		</form>

@@ -27,13 +27,13 @@ const Board = ({user}) => {
 
     return (
         <div>
-            <h2> Quip Board </h2>
+            <h2 className="quipboard-title">Quip Board</h2>
 
         <div>
             { notes ? notes.map(individualNote => <Note key={individualNote.id} individualNote={individualNote} user={user} handleUpdateNote={handleUpdateNote} handleDeleteNote={handleDeleteNote}/>) :  null}
         </div>
 
-        <div>
+        <div className="new-note-div">
             <NoteForm user={user} setNotes={setNotes} notes={notes}/>
         </div>
             

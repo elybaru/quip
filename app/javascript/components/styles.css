@@ -247,3 +247,106 @@ background-color: #405eb9;
    
 
 }
+
+.quipboard-title {
+    text-align: center;
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+}
+
+.note-input {
+    font-size: 12px;
+    margin: 16px;
+    padding: 16px;
+    width: 80%;
+
+}
+
+/* .individual-comment-wrapper {
+    margin: 8px 0px;
+    border-bottom: 1px solid #cfcfcf;
+    padding: 8px 0px;
+    font-size: 12px;
+
+}
+
+.individual-comment-content {
+    font-size: 16px;
+    margin: 8px 0px;
+    padding: 8px 0px;
+
+} */
+
+.welcome-message {
+    margin: 32px auto;
+    margin-top: 0;
+    text-align: center;
+    background-color: #f0f0f0;
+    padding: 16px;
+    width: 100;
+    
+}
+
+br {
+    padding: 16px;
+}
+
+.new-convo-form {
+    margin: 32px auto;
+    margin-top: 0;
+    text-align: left;
+    background-color: #f0f0f0;
+    padding: 16px;
+    width: 60%;
+    border: solid;
+}
+
+.convo-name {
+    text-align: center;
+    font-weight: 700;
+}
+
+.new-convo-input {
+    /* size: 100%; */
+    width: 60%;
+    padding: 8px;
+}
+
+.submit-convo-button {
+    margin: 0px;
+}
+
+.message-input {
+    font-size: 12px;
+    margin: 16px;
+    padding: 16px;
+    width: 80%;
+}
+
+
+.new-message-form {
+    display: inline-flex;
+    align-items: center;
+    width: 100%;
+    size: 100%;
+}
+
+.new-message-div {
+    width: 100%;
+    size: 100%;
+}
+
+.message-submit-button {
+   text-align: left;
+}
+
+.new-note-form {
+    display: inline-flex;
+    align-items: center;
+    width: 100%;
+    size: 100%;
+}
+
+.new-note-div {
+    width: 100%;
+}

@@ -42,17 +42,18 @@ const NoteForm = ({user, setNotes, notes}) => {
 	}
 
     return (
-        <div>
+        <div className="new-note-div">
 
-            <form onSubmit={handleSubmit}>
+            <form className="new-note-form" onSubmit={handleSubmit}>
 			<textarea
 				type="text"
 				className="note-input"
-				placeholder="Write a new note... "
+                placeholder="Write a new note... "
 				value={newNote}
 				onChange={handleChange}
 			></textarea>
 			<button type="submit">Post</button>
+       
 
 
 		</form>
