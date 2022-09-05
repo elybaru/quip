@@ -23,7 +23,7 @@ const Home = () => {
             </p>
             <br />
             <p>
-                This is a public-facing website, so please be respectful to others at all times.
+                This is a public-facing website, so please be respectful at all times.
             </p>
             <br />
             <p>
