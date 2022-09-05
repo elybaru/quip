@@ -128,11 +128,22 @@ input[type=submit]:hover
 .button-secondary {
     color: #55a491;
     background-color: rgba(0,0,0,0);
+    font-size: 12px;
+    border: 0px;
+}
+
+.button-secondary:focus {
+    color: #55a491;
+    background-color: rgba(0,0,0,0);
+    font-size: 12px;
+    border: 0px;
 }
 
 .button-secondary:hover {
-    color: white;
+    color: #417e70;
     background-color: rgba(0,0,0,0);
+    font-size: 12px;
+    border: 0px;
 }
 
 .navlinks a, a {
@@ -234,13 +245,18 @@ background-color: #405eb9;
 
 }
 
+.edit-delete-buttons-container {
+    display: flex;
+}
+
 .note-footer {
     text-align: right;
     font-size: 12px;
     padding-top: 4px;
     margin-top: 8px;
-    
-
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 }
 
 .note-content {
@@ -260,6 +276,17 @@ background-color: #405eb9;
     padding: 16px;
     width: 80%;
 
+}
+
+.note-edit-input {
+    font-size: 12px;
+    padding: 16px;
+    width: 80%;
+}
+
+
+.main-note-form {
+    display: flex;
 }
 
 /* .individual-comment-wrapper {

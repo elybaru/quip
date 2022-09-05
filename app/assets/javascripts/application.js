@@ -26116,28 +26116,30 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       return /* @__PURE__ */ import_react15.default.createElement("form", {
         className: "main-note-form",
         onSubmit: handleEditNoteSubmit
-      }, /* @__PURE__ */ import_react15.default.createElement("input", {
+      }, /* @__PURE__ */ import_react15.default.createElement("textarea", {
+        className: "note-edit-input",
         type: "text",
         value: editNote,
         onChange: handleEditNoteChange
-      }), /* @__PURE__ */ import_react15.default.createElement("input", {
+      }), /* @__PURE__ */ import_react15.default.createElement("div", {
+        className: "edit-delete-buttons-container"
+      }, /* @__PURE__ */ import_react15.default.createElement("div", null, /* @__PURE__ */ import_react15.default.createElement("input", {
         type: "submit",
         value: "Update Note"
-      }), /* @__PURE__ */ import_react15.default.createElement("button", {
-        className: "delete-note-click",
+      })), /* @__PURE__ */ import_react15.default.createElement("div", null, /* @__PURE__ */ import_react15.default.createElement("button", {
         onClick: handleDeleteNoteClick
-      }, "Delete Note"));
+      }, "Delete Note"))));
     };
     return /* @__PURE__ */ import_react15.default.createElement("div", {
       className: "note"
     }, individualNote ? /* @__PURE__ */ import_react15.default.createElement("div", null, /* @__PURE__ */ import_react15.default.createElement("div", {
       className: "note-content"
-    }, toggleEditNoteClicked ? editNoteForm() : individualNote.content), /* @__PURE__ */ import_react15.default.createElement("div", {
+    }, toggleEditNoteClicked ? editNoteForm() : individualNote.content), /* @__PURE__ */ import_react15.default.createElement("div", null, /* @__PURE__ */ import_react15.default.createElement("div", {
       className: "note-footer"
     }, /* @__PURE__ */ import_react15.default.createElement("div", null, individualNote.user.username), /* @__PURE__ */ import_react15.default.createElement("div", null, isAuthor ? /* @__PURE__ */ import_react15.default.createElement("button", {
       className: "button-secondary",
       onClick: handleEditNoteClick
-    }, "Edit") : null))) : null);
+    }, "Edit") : null)))) : null);
   };
   var Note_default = Note;
 

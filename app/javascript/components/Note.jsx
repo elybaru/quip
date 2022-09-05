@@ -70,9 +70,15 @@ const Note = ({individualNote, user, handleUpdateNote, handleDeleteNote}) => {
     const editNoteForm = () => {
         return (
             <form className="main-note-form" onSubmit={handleEditNoteSubmit}>
-                <input type="text" value={editNote} onChange={handleEditNoteChange} />
-                <input type='submit' value="Update Note" />
-                <button className="delete-note-click" onClick={handleDeleteNoteClick}>Delete Note</button>
+                <textarea className="note-edit-input" type="text" value={editNote} onChange={handleEditNoteChange} />
+                <div className="edit-delete-buttons-container">
+                    <div>
+                        <input type='submit' value="Update Note" />
+                    </div>
+                    <div>
+                        <button onClick={handleDeleteNoteClick}>Delete Note</button>
+                    </div>
+                </div>
             </form >
 
         )
@@ -85,16 +91,17 @@ const Note = ({individualNote, user, handleUpdateNote, handleDeleteNote}) => {
     return (
         <div className="note">
             {individualNote ? 
-                 <div>
-
-                     <div className="note-content">{toggleEditNoteClicked ? editNoteForm() : individualNote.content}</div>
-                     <div className="note-footer">
-                     <div>{individualNote.user.username}</div>
-                     <div>
-                     {isAuthor ? <button className="button-secondary" onClick={handleEditNoteClick}>Edit</button> : null}
-                    </div>
+                <div>
+                    <div className="note-content">{toggleEditNoteClicked ? editNoteForm() : individualNote.content}</div>
+                        <div>
+                            <div className="note-footer">
+                                <div>{individualNote.user.username}</div>
+                                    <div>
+                                    {isAuthor ? <button className="button-secondary" onClick={handleEditNoteClick}>Edit</button> : null}
+                                    </div>
+                            </div>
                         </div>
-                 </div>
+                    </div>
                  
                  : null}
             
