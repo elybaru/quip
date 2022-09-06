@@ -222,6 +222,21 @@ a:visited {
 a:hover {
   color: #417e70;
 }
+.login-signup-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-content: flex-start;
+}
+.signup-wrapper {
+  display: flex;
+  justify-content: center;
+  align-content: flex-start;
+}
 .main-navlinks {
   font-weight: 700;
   text-transform: uppercase;
@@ -315,6 +330,7 @@ a:hover {
 }
 .main-note-form {
   display: flex;
+  align-items: center;
 }
 .welcome-message {
   margin: 32px auto;

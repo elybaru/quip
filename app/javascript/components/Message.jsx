@@ -1,7 +1,9 @@
-import React from 'react'
+import React, {useContext} from 'react'
+import { UserContext } from './UserContext';
 
-const Message = ({msg, user}) => {
+const Message = ({msg}) => {
     console.log(msg)
+    const {user, setUser} = useContext(UserContext)
 
     const timestamp = new Date(msg.created_at).toLocaleTimeString()
 

@@ -1,7 +1,10 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
+import { UserContext } from './UserContext';
 
-const MessagesWindow = ({addConvoMessage, onMessageInput, user}) => {
+const MessagesWindow = ({addConvoMessage, onMessageInput}) => {
+	const {user, setUser} = useContext(UserContext)
 	const [newMessage, setNewMessage] = useState("")
+	
 	const conversationId = window.location.href.match(/\d+$/)[0]
 
 	const handleSubmit = (e) => {

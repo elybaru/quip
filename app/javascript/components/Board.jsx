@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import Note from './Note'
 import NoteForm from './NoteForm'
 
-const Board = ({user}) => {
+const Board = () => {
     const [notes, setNotes] = useState([])
 
     useEffect(() => {
@@ -30,11 +30,11 @@ const Board = ({user}) => {
             <h2 className="quipboard-title">Quip Board</h2>
 
         <div>
-            { notes ? notes.map(individualNote => <Note key={individualNote.id} individualNote={individualNote} user={user} handleUpdateNote={handleUpdateNote} handleDeleteNote={handleDeleteNote}/>) :  null}
+            { notes ? notes.map(individualNote => <Note key={individualNote.id} individualNote={individualNote} handleUpdateNote={handleUpdateNote} handleDeleteNote={handleDeleteNote}/>) :  null}
         </div>
 
         <div className="new-note-div">
-            <NoteForm user={user} setNotes={setNotes} notes={notes}/>
+            <NoteForm setNotes={setNotes} notes={notes}/>
         </div>
             
         </div>

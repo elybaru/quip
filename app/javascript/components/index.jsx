@@ -7,23 +7,23 @@ import Signup from './signup'
 import Home from './home'
 import MessagesBoard from './messages'
 import actionCable from "actioncable"
-// import {UserContext} from './UserContext'
+import {UserContext} from './UserContext'
 
 const cableApp = {}
 
 cableApp.cable = actionCable.createConsumer("ws://localhost:3000/cable")
 
 const Index = () => {
-    // const [user, setUser] = useState(null);
+    const [user, setUser] = useState(null);
 
-    // const value = useMemo(() => ({user, setUser}), [user, setUser]);
+    const value = useMemo(() => ({user, setUser}), [user, setUser]);
 
-    
+
     return (
         <div>
-            {/* <UserContext.Provider value={value}> */}
+            <UserContext.Provider value={value}>
             <App cableApp={cableApp}/>
-            {/* </UserContext.Provider> */}
+            </UserContext.Provider>
         </div>
     )
 }

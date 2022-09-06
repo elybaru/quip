@@ -1,7 +1,9 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
+import { UserContext } from './UserContext';
 
-const NoteForm = ({user, setNotes, notes}) => {
+const NoteForm = ({setNotes, notes}) => {
     const [newNote, setNewNote] = useState("")
+    const {user, setUser} = useContext(UserContext)
 
     const handleChange =(event) => {
 		setNewNote(event.target.value)

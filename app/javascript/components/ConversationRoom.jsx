@@ -1,15 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import MessagesWindow from './MessagesWindow'
 import ConvoWebSocket from './ConvoWebSocket'
 import Message from './Message'
+import { UserContext } from './UserContext';
 
-const ConversationRoom = ({ addConvoMessage, user, cableApp, getConversation }) => {
+const ConversationRoom = ({ addConvoMessage, cableApp }) => {
 
 	// const [search, setSearch] = useState("")
 	const [convoId, setConvoId] = useState("")
 	const [convoName, setConvoName] = useState("")
 	const [currentConvo, setCurrentConvo] = useState()
 	const [convoMessages, setConvoMessages] = useState([])
+	const {user, setUser} = useContext(UserContext)
+
+
 	const conversationId = window.location.href.match(/\d+$/)[0]
 
 	useEffect(() => {
@@ -93,7 +97,7 @@ const ConversationRoom = ({ addConvoMessage, user, cableApp, getConversation }) 
 				<div className="messages" >
 					<div>
 						{/* {displayMessages} */}
-						{convoMessages.length > 0 ? convoMessages.map(msg => <Message key={msg.id} msg={msg} user={user} />) : noMessages()}
+						{convoMessages.length > 0 ? convoMessages.map(msg => <Message key={msg.id} msg={msg} />) : noMessages()}
 					</div>
 
 					<MessagesWindow
@@ -105,7 +109,7 @@ const ConversationRoom = ({ addConvoMessage, user, cableApp, getConversation }) 
 					conversationId={conversationId}
 					cableApp={cableApp}
 					// updateApp={updateApp}
-					getConversation={getConversation}
+					// getConversation={getConversation}
 					conversationId={conversationId}
 					setConvoMessages={setConvoMessages}
 					convoMessages={convoMessages}

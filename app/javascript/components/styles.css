@@ -151,6 +151,7 @@ input[type=submit]:hover
     text-decoration: none;
     transition: color 250ms ease-in-out;
     color: #55a491;
+    /* color: white; */
   
 }
 
@@ -162,6 +163,26 @@ input[type=submit]:hover
 .navlinks a:hover, a:hover {
     color: #417e70;
 
+}
+
+.login-signup-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-wrapper {
+    display: flex;
+    justify-content: center;
+    align-content: flex-start;
+    
+}
+
+.signup-wrapper {
+    display: flex;
+    justify-content: center;
+    align-content: flex-start;
+    
 }
 
 .main-navlinks {
@@ -287,6 +308,7 @@ background-color: #405eb9;
 
 .main-note-form {
     display: flex;
+    align-items: center;
 }
 
 /* .individual-comment-wrapper {

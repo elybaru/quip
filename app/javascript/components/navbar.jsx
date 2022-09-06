@@ -1,7 +1,11 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import {Link} from 'react-router-dom'
+import { UserContext } from './UserContext';
 
-const Navbar = ({ user }) => {
+
+const Navbar = () => {
+
+    const {user, setUser} = useContext(UserContext)
     // console.log(user)
     return (
         <div>
@@ -10,7 +14,7 @@ const Navbar = ({ user }) => {
                 
                 <div className="main-navlinks">
                 
-                <Link to='/home'>Home</Link>
+                <Link to='/'>Home</Link>
                 <span>    </span>
                 <Link to='/conversations'>Conversations</Link>
                 <span>    </span>

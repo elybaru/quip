@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-// import { UserContext } from './UserContext';
+import { UserContext } from './UserContext';
 
 
-const Signup = ({ setUser }) => {
-    // const {user, setUser} = useContext(UserContext)
+const Signup = () => {
+    const {user, setUser} = useContext(UserContext)
 
     const defaultFormData = {
         username: '',
@@ -36,11 +36,13 @@ const Signup = ({ setUser }) => {
     }
 
     return (
-        <div className="content-wrapper">
+        <div className="signup-wrapper">
             <form onSubmit={handleSubmit}>
                 <div>
                     <h2>Create an Account</h2>
                 </div>
+                <br />
+                <div>
                 <label>
                     Username
                 <input
@@ -50,6 +52,9 @@ const Signup = ({ setUser }) => {
                         onChange={handleFormChange}
                     />
                 </label>
+                </div>
+                <br />
+                <div>
                 <label>
                     Password
                 <input
@@ -59,6 +64,8 @@ const Signup = ({ setUser }) => {
                         onChange={handleFormChange}
                     />
                 </label>
+                </div>
+                <br />
                 <input type='submit' value='Submit' />
             </form>
 

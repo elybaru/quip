@@ -1,7 +1,7 @@
 import React from 'react'
 import './styles.css'
 import { Routes, Route, useNavigate, Navigate, useLocation, Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import Signup from './signup'
 import Login from './login'
 import Home from './home'
@@ -16,7 +16,7 @@ import { UserContext } from './UserContext';
 
 const App = ({ cableApp }) => {
     // LOCAL STATE FOR USER, soon commenting out to try useContext
-    const [user, setUser] = useState(null);
+    // const [user, setUser] = useState(null);
     const [isLoggedin, setIsLoggedIn] = useState(null)
     const [allUsers, setAllUsers] = useState([])
     const [currentConvo, setCurrentConvo] = useState({
@@ -32,7 +32,7 @@ const App = ({ cableApp }) => {
 
 
     // USECONTEXT STATE
-    // const {user, setUser} = useContext(UserContext)
+    const {user, setUser} = useContext(UserContext)
 
 
 
@@ -133,41 +133,48 @@ const App = ({ cableApp }) => {
         }
     }
 
-    const getConversation = (id) => {
-        // fetch(`/api/conversations/${id}`, {
-        //     headers : { 
-        //         'Content-Type': 'application/json',
-        //         'Accept': 'application/json'
-        //        }
-        // })
-        // 	.then((res) => res.json())
-        // 	.then((result) => {
-        //         debugger
-        //         console.log("GET CONVERSATION", result)
-        // 		setCurrentConvo((result) => handleCurrentConvo(result))
-        //     })
+    // const getConversation = (id) => {
+    //     // fetch(`/api/conversations/${id}`, {
+    //     //     headers : { 
+    //     //         'Content-Type': 'application/json',
+    //     //         'Accept': 'application/json'
+    //     //        }
+    //     // })
+    //     // 	.then((res) => res.json())
+    //     // 	.then((result) => {
+    //     //         debugger
+    //     //         console.log("GET CONVERSATION", result)
+    //     // 		setCurrentConvo((result) => handleCurrentConvo(result))
+    //     //     })
 
-    }
+    // }
     // getRoomData(1)
+
+    // setUser={setUser} passed down to Login, Signup
+    // login, signup
+    // user
+    // home, conversations:id, board, navbar
 
     if (!user) return (
 
         <div className="wrapper">
 
             <Header />
+            <br />
             <div className="item">
 
-                <div className="item">
+                <div className="login-signup-links">
                     {/* {location.pathname === '/signup' ? <div className='navlinks'><button><Link to='/login'>Login</Link></button></div> : <div className='navlinks'><button><Link to='/signup'>Signup</Link></button></div>} */}
-                    <div className='navlinks'><button><Link to='/login'>Login</Link></button></div>
-                    <div className='navlinks'><button><Link to='/signup'>Signup</Link></button></div>
+                    <div className='navlinks'><Link to='/login'>Login</Link></div>
+                    <div className='navlinks'><Link to='/signup'>Signup</Link></div>
                 </div>
             </div>
+            <br />
 
             <Routes>
-                <Route path='/login' element={<Login setUser={setUser} />}>
+                <Route path='/login' element={<Login  />}>
                 </Route>
-                <Route path='/signup' element={<Signup setUser={setUser} />}>
+                <Route path='/signup' element={<Signup  />}>
                 </Route>
                 {/* <Route path='/' element={<Home setUser={setUser} />}>
                 </Route> */}
@@ -178,7 +185,7 @@ const App = ({ cableApp }) => {
     return (
         <div className="wrapper">
             <Header />
-            <Navbar user={user} />
+            <Navbar />
             <div className="content-header">
                 <div>
                     Hello, {user.username}
@@ -190,7 +197,7 @@ const App = ({ cableApp }) => {
 
             <div className="content">
                 <Routes>
-                    <Route exact path='/home' element={<Home setUser={setUser} />}>
+                    <Route exact path='/' element={<Home />}>
                     </Route>
                     <Route exact path='/conversations' element={<Conversations />}>
                     </Route>
@@ -199,7 +206,7 @@ const App = ({ cableApp }) => {
                         // convoMessages={convoMessages}
                         users={allUsers}
                         cableApp={cableApp}
-                        getConversation={getConversation}
+                        // getConversation={getConversation}
                         user={user}
                         addConvoMessage={addConvoMessage}
                     // setConvoMessages={setConvoMessages}

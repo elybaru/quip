@@ -1,9 +1,11 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
+import { UserContext } from './UserContext';
 
-const Note = ({individualNote, user, handleUpdateNote, handleDeleteNote}) => {
+const Note = ({individualNote, handleUpdateNote, handleDeleteNote}) => {
     const [editNote, setEditNote] = useState(individualNote.content)
     const [isAuthor, setIsAuthor] = useState(false)
     const [toggleEditNoteClicked, setToggleEditNoteClicked] = useState(false)
+    const {user, setUser} = useContext(UserContext)
 
     const checkIfAuthor = (noteId, userId) => {
         if (parseInt(noteId) === parseInt(userId)) 
