@@ -37,6 +37,7 @@ const App = ({ cableApp }) => {
 
 
     let location = useLocation()
+    const navigate = useNavigate()
 
     useEffect(() => {
         // console.log("In useEffect")
@@ -79,6 +80,7 @@ const App = ({ cableApp }) => {
         fetch("/api/logout", { method: "DELETE" }).then((r) => {
             if (r.ok) {
                 setUser(null);
+                navigate(`/`)
             }
         });
     }

@@ -26256,6 +26256,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     const [messages, setMessages] = (0, import_react20.useState)(null);
     const { user, setUser } = (0, import_react20.useContext)(UserContext);
     let location2 = useLocation();
+    const navigate = useNavigate();
     (0, import_react20.useEffect)(() => {
       fetch("/api/me").then((r) => {
         if (r.ok) {
@@ -26269,6 +26270,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       fetch("/api/logout", { method: "DELETE" }).then((r) => {
         if (r.ok) {
           setUser(null);
+          navigate(`/`);
         }
       });
     };
