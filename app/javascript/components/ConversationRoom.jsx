@@ -116,10 +116,10 @@ const ConversationRoom = ({ addConvoMessage, cableApp }) => {
 						// user={user}
 					/>
 				</div>
-				<br />
+				{/* <br />
 				<div className="delete-convo-container">
 					<div><button className="delete-convo-button" onClick={handleDeleteConvo}>Delete Conversation</button></div>
-				</div>
+				</div> */}
 				<ConvoWebSocket
 					conversationId={conversationId}
 					cableApp={cableApp}

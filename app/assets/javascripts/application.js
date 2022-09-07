@@ -26003,12 +26003,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       msg
     })) : noMessages()), /* @__PURE__ */ import_react13.default.createElement(MessagesWindow_default, {
       addConvoMessage
-    })), /* @__PURE__ */ import_react13.default.createElement("br", null), /* @__PURE__ */ import_react13.default.createElement("div", {
-      className: "delete-convo-container"
-    }, /* @__PURE__ */ import_react13.default.createElement("div", null, /* @__PURE__ */ import_react13.default.createElement("button", {
-      className: "delete-convo-button",
-      onClick: handleDeleteConvo
-    }, "Delete Conversation"))), /* @__PURE__ */ import_react13.default.createElement(ConvoWebSocket_default, {
+    })), /* @__PURE__ */ import_react13.default.createElement(ConvoWebSocket_default, {
       conversationId,
       cableApp: cableApp2,
       conversationId,
