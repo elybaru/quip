@@ -25972,6 +25972,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     const [convoMessages, setConvoMessages] = (0, import_react13.useState)([]);
     const { user, setUser } = (0, import_react13.useContext)(UserContext);
     const conversationId = window.location.href.match(/\d+$/)[0];
+    const navigate = useNavigate();
+    console.log(conversationId);
     (0, import_react13.useEffect)(() => {
       fetch(`/api/conversations/${conversationId}`).then((r) => r.json()).then((data) => {
         console.log(`In Conversation Room ${conversationId}`, data);
@@ -25986,6 +25988,12 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     const noMessages = () => {
       return /* @__PURE__ */ import_react13.default.createElement("div", null, /* @__PURE__ */ import_react13.default.createElement("br", null), /* @__PURE__ */ import_react13.default.createElement("p", null, "There are no messages in the conversation yet! Use the form below to send the first message."), /* @__PURE__ */ import_react13.default.createElement("br", null));
     };
+    const handleDeleteConvo = (e) => {
+      e.preventDefault();
+      fetch(`/api/conversations/${conversationId}`, {
+        method: "DELETE"
+      }).then(navigate("/conversations"));
+    };
     return /* @__PURE__ */ import_react13.default.createElement("div", null, /* @__PURE__ */ import_react13.default.createElement("div", null, /* @__PURE__ */ import_react13.default.createElement("div", null, /* @__PURE__ */ import_react13.default.createElement("h2", {
       className: "convo-name"
     }, convoName ? convoName : null)), /* @__PURE__ */ import_react13.default.createElement("div", {
@@ -25994,9 +26002,13 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       key: msg.id,
       msg
     })) : noMessages()), /* @__PURE__ */ import_react13.default.createElement(MessagesWindow_default, {
-      addConvoMessage,
-      user
-    })), /* @__PURE__ */ import_react13.default.createElement(ConvoWebSocket_default, {
+      addConvoMessage
+    })), /* @__PURE__ */ import_react13.default.createElement("br", null), /* @__PURE__ */ import_react13.default.createElement("div", {
+      className: "delete-convo-container"
+    }, /* @__PURE__ */ import_react13.default.createElement("div", null, /* @__PURE__ */ import_react13.default.createElement("button", {
+      className: "delete-convo-button",
+      onClick: handleDeleteConvo
+    }, "Delete Conversation"))), /* @__PURE__ */ import_react13.default.createElement(ConvoWebSocket_default, {
       conversationId,
       cableApp: cableApp2,
       conversationId,

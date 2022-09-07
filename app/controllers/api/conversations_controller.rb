@@ -33,6 +33,10 @@ class Api::ConversationsController < ApplicationController
     #     # ConversationSerializer.new(conversation).serialized_json
     # end
     
+    def destroy
+        conversation = Conversation.find(params[:id])
+        conversation.destroy
+    end
     
    
 

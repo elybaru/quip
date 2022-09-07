@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react'
+import {useNavigate} from 'react-router-dom'
 import MessagesWindow from './MessagesWindow'
 import ConvoWebSocket from './ConvoWebSocket'
 import Message from './Message'
@@ -15,6 +16,9 @@ const ConversationRoom = ({ addConvoMessage, cableApp }) => {
 
 
 	const conversationId = window.location.href.match(/\d+$/)[0]
+
+	const navigate = useNavigate()
+	console.log(conversationId)
 
 	useEffect(() => {
 		// console.log("In useEffect")
@@ -85,6 +89,13 @@ const ConversationRoom = ({ addConvoMessage, cableApp }) => {
 		)
 	}
 
+	const handleDeleteConvo = (e) => {
+		e.preventDefault()
+		fetch(`/api/conversations/${conversationId}`, {
+			method: 'DELETE'
+		})
+		.then(navigate('/conversations'))
+	}
 
 
 	return (
@@ -102,8 +113,12 @@ const ConversationRoom = ({ addConvoMessage, cableApp }) => {
 
 					<MessagesWindow
 						addConvoMessage={addConvoMessage}
-						user={user}
+						// user={user}
 					/>
+				</div>
+				<br />
+				<div className="delete-convo-container">
+					<div><button className="delete-convo-button" onClick={handleDeleteConvo}>Delete Conversation</button></div>
 				</div>
 				<ConvoWebSocket
 					conversationId={conversationId}
